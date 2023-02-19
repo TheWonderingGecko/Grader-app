@@ -1,0 +1,43 @@
+/* Nav Bar styling */
+:root {
+  --umkc-light-blue: #0066cc;
+  --umkc-dark-blue: #04487f;
+  --umkc-yellow: #ffd52f;
+  --standard-umkc-font: 'Roboto', serif;
+}
+
+.Nav-bar {
+  display: flex;
+  justify-content: space-between;
+
+  position: relative;
+  background-color: var(--umkc-light-blue);
+  border-bottom: var(--umkc-yellow) 2vh solid;
+}
+
+.Login-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  vertical-align: bottom;
+  position: absolute;
+  bottom: 10px;
+  right: 35px;
+  color: white;
+  font-weight: bolder;
+}
+
+.Login-btn span {
+  position: absolute;
+  right: -5;
+  bottom: -5px;
+}
+
+.Login-btn:hover,
+.Login-btn:focus {
+  color: var(--umkc-yellow);
+  transform: translate(0, 5px);
+  text-decoration: underline;
+}
+
+/* Nav bar styling end */
