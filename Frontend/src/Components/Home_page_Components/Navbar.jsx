@@ -6,7 +6,7 @@ const Navbar = () => {
     <header className="Nav-bar">
       <img src={logo} className="school-name " />
       <button type="button" className="Login-btn">
-        Login <span class="material-symbols-outlined">login</span>
+        Login <span className="material-symbols-outlined">login</span>
       </button>
     </header>
   )
