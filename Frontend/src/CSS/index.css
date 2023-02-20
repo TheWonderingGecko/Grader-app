@@ -17,3 +17,7 @@
   font-family: 'Sono', sans-serif;
   scroll-behavior: smooth;
 }
+
+body {
+  background-color: #efefef;
+}
