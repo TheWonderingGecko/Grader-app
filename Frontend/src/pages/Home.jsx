@@ -1,4 +1,10 @@
+import Content from '../Components/Home_page_Components/Content'
+
 const Home = () => {
-  return <div></div>
+  return (
+    <div>
+      <Content />
+    </div>
+  )
 }
 export default Home
