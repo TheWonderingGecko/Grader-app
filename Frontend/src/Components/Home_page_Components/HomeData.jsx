@@ -1,0 +1,17 @@
+export const classes = [
+  { id: 2, name: 'CS131', sem: 'Fall' },
+  { id: 3, name: 'CS121', sem: 'Fall' },
+  { id: 4, name: 'CS111', sem: 'Fall' },
+  { id: 5, name: 'CS141', sem: 'Fall' },
+  { id: 6, name: 'CS151', sem: 'Fall' },
+  { id: 7, name: 'CS161', sem: 'Fall' },
+  { id: 8, name: 'CS171', sem: 'Fall' },
+  { id: 9, name: 'CS181', sem: 'Fall' },
+  { id: 10, name: 'CS191', sem: 'Fall' },
+  { id: 11, name: 'CS201', sem: 'Fall' },
+  { id: 12, name: 'CS211', sem: 'Fall' },
+  { id: 13, name: 'CS221', sem: 'Fall' },
+  { id: 14, name: 'CS231', sem: 'Fall' },
+  { id: 15, name: 'CS241', sem: 'Fall' },
+  { id: 16, name: 'CS251', sem: 'Fall' },
+]
