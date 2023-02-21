@@ -17,7 +17,69 @@
   border-bottom: var(--umkc-yellow) 2vh solid;
 }
 
-.Login-btn {
+.school_department {
+  display: flex;
+  align-items: center;
+}
+
+.school-name {
+}
+
+.department {
+  font-size: 2em;
+  color: white;
+  align-self: flex-end;
+}
+
+/* default button implementation */
+.btn {
+  --background-hue: 0;
+  --background-saturation: 0%;
+  --initial-background-lightness: 90%;
+  --background-lightness: var(--initial-background-lightness);
+  --border-lightness: calc(var(--initial-background-lightness) - 20%);
+
+  background-color: hsl(
+    var(--background-hue),
+    var(--background-saturation),
+    var(--background-lightness)
+  );
+  border: 1px solid
+    hsl(
+      var(--background-hue),
+      var(--background-saturation),
+      var(--border-lightness)
+    );
+  outline: none;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  border-radius: 0.3em;
+}
+
+.btn:hover,
+.btn:focus {
+  --background-lightness: calc(var(--initial-background-lightness) - 10%);
+  box-shadow: 0 0 5px 0
+    hsl(
+      var(--background-hue),
+      var(--background-saturation),
+      var(--border-lightness)
+    );
+}
+
+.btn.btn-login {
+  --background-hue: 48;
+  --background-saturation: 100%;
+  --initial-background-lightness: 50%;
+  color: var(--umkc-light-blue);
+  height: fit-content;
+  position: absolute;
+  bottom: 10px;
+  font-weight: 900;
+  right: 35px;
+}
+
+/* .Login-btn {
   border: none;
   background: none;
   cursor: pointer;
@@ -27,19 +89,16 @@
   right: 35px;
   color: white;
   font-weight: bolder;
-}
+} */
 
 .Login-btn span {
-  position: absolute;
-  right: -5;
-  bottom: -5px;
 }
 
-.Login-btn:hover,
+/* .Login-btn:hover,
 .Login-btn:focus {
   color: var(--umkc-yellow);
   transform: translate(0, 5px);
   text-decoration: underline;
-}
+} */
 
 /* Nav bar styling end */

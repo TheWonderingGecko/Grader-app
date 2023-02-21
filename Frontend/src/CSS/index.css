@@ -2,6 +2,7 @@
   --umkc-light-blue: #0066cc;
   --umkc-dark-blue: #04487f;
   --umkc-yellow: #ffd52f;
+  --umkc-dark-yellow: #bd9e22;
   --standard-umkc-font: 'Roboto', serif;
 }
 
@@ -20,4 +21,16 @@
 
 body {
   background-color: #efefef;
+}
+
+a {
+  color: black;
+
+  font-weight: bolder;
+}
+
+a:hover {
+  color: var(--umkc-yellow);
+
+  cursor: pointer;
 }

@@ -1,0 +1,17 @@
+.loginPage-content {
+  margin-top: 20vh;
+  text-align: center;
+  padding: 40vh 0;
+}
+
+.loginPage-content a {
+  color: black;
+
+  font-weight: bolder;
+}
+
+.loginPage-content a:hover {
+  color: black;
+
+  cursor: pointer;
+}
