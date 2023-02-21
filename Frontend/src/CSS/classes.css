@@ -17,21 +17,38 @@
   gap: 1vw;
 }
 
-.class {
+.class-container {
   border: var(--border-color) solid 1px;
   border-radius: 4px;
-  height: 6vh;
+  height: 100%;
   width: 100%;
   background-color: var(--white);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  cursor: pointer;
+
   align-items: center;
   padding: 5%;
   box-shadow: 2px 2px 5px var(--box-shadow);
 }
 
-.class:hover,
-.class:focus {
+.class-container:hover,
+.class-container:focus {
   background-color: var(--hover-background);
   color: var(--hover-font-color);
+}
+
+.class {
+  display: flex;
+  width: 100%;
+
+  justify-content: space-between;
+}
+
+.Extra-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5vh;
+  padding-top: 2vh;
+  border-top: solid black 1px;
 }
