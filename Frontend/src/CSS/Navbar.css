@@ -10,7 +10,9 @@
   display: flex;
   justify-content: space-between;
 
-  position: relative;
+  position: fixed; /* Make it stick/fixed */
+  top: 0; /* Hide the navbar 50 px outside of the top view */
+  width: 100%;
   background-color: var(--umkc-light-blue);
   border-bottom: var(--umkc-yellow) 2vh solid;
 }
