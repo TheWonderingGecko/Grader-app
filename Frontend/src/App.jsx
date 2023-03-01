@@ -3,6 +3,8 @@ import Home from './pages/Home'
 import './CSS/index.css'
 import Navbar from './Components/Home_page_Components/Navbar'
 import Login from './pages/Login'
+import Application from './pages/Application'
+import Admin from './pages/Admin'
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="login" element={<Login />} />
+            <Route path="application" element={<Application />} />
+            <Route path="admin" element={<Admin />} />
           </Routes>
         </div>
       </BrowserRouter>

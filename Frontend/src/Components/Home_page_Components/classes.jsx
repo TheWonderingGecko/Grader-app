@@ -3,11 +3,11 @@ import { useState } from 'react'
 import '../../CSS/classes.css'
 
 const Classes = () => {
-  // const [showMore, setShowMore] = useState('')
+  const [showMore, setShowMore] = useState('')
 
-  // const changeDetails = () => {
-  //   setShowMore('Extra-details')
-  // }
+  const changeDetails = () => {
+    setShowMore('Extra-details')
+  }
 
   return (
     <div className="classes">
@@ -17,7 +17,7 @@ const Classes = () => {
             <label
               key={id}
               className="class-container"
-              // onClick={() => setShowMore(id)}
+              onClick={() => setShowMore(id)}
             >
               <div className="class">
                 <p className="class-name">
@@ -28,15 +28,15 @@ const Classes = () => {
                 </p>
               </div>
 
-              {/* {showMore == id && ( */}
-              <div className="Extra-details">
-                <p className="position">Position: {position}</p>
-                <p className="Notes">Notes: {Notes}</p>
-                <a href={Course_Description} target="_blank">
-                  Course Description
-                </a>
-              </div>
-              {/* )} */}
+              {showMore == id && (
+                <div className="Extra-details">
+                  <p className="position">Position: {position}</p>
+                  <p className="Notes">Notes: {Notes}</p>
+                  <a href={Course_Description} target="_blank">
+                    Course Description
+                  </a>
+                </div>
+              )}
             </label>
           </>
         )
