@@ -8,6 +8,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'BS',
   },
   {
     id: 3,
@@ -18,6 +19,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'MS',
   },
   {
     id: 4,
@@ -28,6 +30,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'MS',
   },
   {
     id: 5,
@@ -38,6 +41,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'BS',
   },
   {
     id: 6,
@@ -48,6 +52,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'MS',
   },
   {
     id: 7,
@@ -58,6 +63,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'BS',
   },
   {
     id: 8,
@@ -68,6 +74,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'PHD',
   },
   {
     id: 9,
@@ -78,6 +85,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'PHD',
   },
   {
     id: 10,
@@ -88,6 +96,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'BS',
   },
   {
     id: 11,
@@ -98,6 +107,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'PHD',
   },
   {
     id: 12,
@@ -108,6 +118,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'BS',
   },
   {
     id: 13,
@@ -118,6 +129,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'BS',
   },
   {
     id: 14,
@@ -128,6 +140,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'BS',
   },
   {
     id: 15,
@@ -138,6 +151,7 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'PHD',
   },
   {
     id: 16,
@@ -148,5 +162,6 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
+    Current_Level: 'MS',
   },
 ]

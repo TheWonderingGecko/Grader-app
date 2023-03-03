@@ -12,6 +12,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
 
+  flex-basis: 75%;
   justify-items: center;
   align-items: center;
   gap: 1vw;
@@ -51,4 +52,21 @@
   gap: 5vh;
   padding-top: 2vh;
   border-top: solid black 1px;
+}
+
+.filter {
+  background-color: var(--hover-background);
+  flex-basis: 25%;
+  margin: 2rem;
+  text-align: center;
+}
+
+.level {
+}
+
+.div_container {
+  display: flex;
+  justify-content: space-between;
+
+  background-color: #ffd52f;
 }
