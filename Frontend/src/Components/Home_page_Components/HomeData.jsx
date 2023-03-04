@@ -8,106 +8,116 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'BS',
+    major: 'CS',
+    level: 'Undergraduate',
   },
   {
     id: 3,
-    name: 'CS121',
+    name: 'ECE 216',
     sem: 'Fall',
-    position: 'Grader',
+    position: 'Instructor',
     Notes:
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'MS',
+    major: 'ECE',
+    level: 'Undergraduate',
   },
   {
     id: 4,
-    name: 'CS111',
-    sem: 'Fall',
+    name: 'ECE 276',
+    sem: 'Spring',
     position: 'Grader',
     Notes:
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'MS',
+    major: 'ECE',
+    level: 'Undergraduate',
   },
   {
     id: 5,
     name: 'CS141',
     sem: 'Fall',
-    position: 'Grader',
+    position: 'Instructor',
     Notes:
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'BS',
+    major: 'CS',
+    level: 'Undergraduate',
   },
   {
     id: 6,
-    name: 'CS151',
-    sem: 'Fall',
+    name: 'ECE 341R',
+    sem: 'Spring',
     position: 'Grader',
     Notes:
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'MS',
+    major: 'ECE',
+    level: 'Undergraduate',
   },
   {
     id: 7,
     name: 'CS161',
     sem: 'Fall',
-    position: 'Grader',
+    position: 'Instructor',
     Notes:
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'BS',
+    major: 'CS',
+    level: 'Undergraduate',
   },
   {
     id: 8,
-    name: 'CS171',
+    name: 'IT 222',
     sem: 'Fall',
-    position: 'Grader',
+    position: 'Instructor',
     Notes:
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'PHD',
+    major: 'IT',
+    level: 'Undergraduate',
   },
   {
     id: 9,
-    name: 'CS181',
-    sem: 'Fall',
+    name: 'IT 321',
+    sem: 'Spring',
     position: 'Grader',
     Notes:
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'PHD',
+    major: 'IT',
+    level: 'Undergraduate',
   },
   {
     id: 10,
-    name: 'CS191',
+    name: 'ECE 5558',
     sem: 'Fall',
     position: 'Grader',
     Notes:
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'BS',
+    major: 'ECE',
+    level: 'Graduate',
   },
   {
     id: 11,
     name: 'CS201',
-    sem: 'Fall',
+    sem: 'Summer',
     position: 'Grader',
     Notes:
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'PHD',
+    major: 'CS',
+    level: 'Undergraduate',
   },
   {
     id: 12,
@@ -118,18 +128,20 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'BS',
+    major: 'CS',
+    level: 'Undergraduate',
   },
   {
     id: 13,
-    name: 'CS221',
-    sem: 'Fall',
+    name: 'CS 5592',
+    sem: 'Spring',
     position: 'Grader',
     Notes:
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'BS',
+    major: 'CS',
+    level: 'Graduate',
   },
   {
     id: 14,
@@ -140,7 +152,8 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'BS',
+    major: 'CS',
+    level: 'Undergraduate',
   },
   {
     id: 15,
@@ -151,17 +164,19 @@ export const classes = [
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'PHD',
+    major: 'CS',
+    level: 'Undergraduate',
   },
   {
     id: 16,
-    name: 'CS251',
-    sem: 'Fall',
+    name: 'ECE 330',
+    sem: 'Summer',
     position: 'Grader',
     Notes:
       'Any who has taken this class and passed with a B or higher may apply',
     Course_Description:
       'https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/',
-    Current_Level: 'MS',
+    major: 'ECE',
+    level: 'Undergraduate',
   },
 ]

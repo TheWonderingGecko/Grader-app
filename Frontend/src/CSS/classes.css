@@ -55,10 +55,30 @@
 }
 
 .filter {
-  background-color: var(--hover-background);
   flex-basis: 25%;
   margin: 2rem;
   text-align: center;
+  background-color: white;
+  height: fit-content;
+  margin-left: 0;
+  border-top: 1px solid var(--hover-background);
+  border-right: 1px solid var(--hover-background);
+  border-bottom: 1px solid var(--hover-background);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.filter fieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 2vw;
+  margin-bottom: 2vh;
+}
+
+.filter label {
+  width: fit-content;
 }
 
 .level {
@@ -67,6 +87,4 @@
 .div_container {
   display: flex;
   justify-content: space-between;
-
-  background-color: #ffd52f;
 }
