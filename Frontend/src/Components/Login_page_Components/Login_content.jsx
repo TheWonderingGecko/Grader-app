@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './../../CSS/loginPage.css'
-const Login = () => {
+const Login_content = () => {
   const userRef = useRef()
   const errRef = useRef()
 
@@ -82,4 +82,4 @@ const Login = () => {
     </>
   )
 }
-export default Login
+export default Login_content
