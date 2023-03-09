@@ -2,8 +2,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import './CSS/index.css'
 import Navbar from './Components/Home_page_Components/Navbar'
-import Login from './Components/Login_page_Components/Login'
+
 import Application from './pages/Application'
+import Login from './pages/Login'
 import Admin from './pages/Admin'
 
 function App() {
