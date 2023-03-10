@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import '../../CSS/applicationPage.css'
 
 const Application_content = () => {
@@ -188,6 +189,9 @@ const Application_content = () => {
             </label>
           </fieldset>
           <button className="btn btn-submit"> Submit</button>
+          <Link to="/">
+            <strong className="home_link_app">Return to Homepage</strong>
+          </Link>
         </form>
       </div>
     </div>
