@@ -40,6 +40,12 @@ const Login_content = () => {
                 <strong>Return to Homepage</strong>
               </Link>
             </p>
+
+            <p>
+              <Link to="/app_form">
+                <strong>Go to application page</strong>
+              </Link>
+            </p>
           </section>
         </div>
       ) : (

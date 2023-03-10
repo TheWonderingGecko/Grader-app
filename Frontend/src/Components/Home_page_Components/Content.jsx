@@ -4,7 +4,7 @@ import Classes from './classes'
 const Content = () => {
   return (
     <div className="HomePage-content">
-      <h1 className="Title">CSEE GTA/Grader Application</h1>
+      <h1 className="home-title ">CSEE GTA/Grader Application</h1>
       <div className="main">
         <div></div>
         <Classes />
