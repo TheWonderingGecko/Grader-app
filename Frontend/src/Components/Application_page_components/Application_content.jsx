@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { classes } from '../Home_page_Components/HomeData'
 import '../../CSS/applicationPage.css'
 
 const Application_content = () => {
@@ -9,15 +10,39 @@ const Application_content = () => {
   const [umkcEmail, setUMKCEmail] = useState('')
   const [degree, setDegree] = useState('')
   const [gpa, setGpa] = useState('')
+  const [selectedClasses, setSelectedClasses] = useState([])
   const [major, setMajor] = useState('')
   const [level, setLevel] = useState('')
   const [term, setTerm] = useState('')
   const [gta, setGta] = useState('')
 
+  const onSubmit = async (e) => {
+    e.preventDefault()
+  }
+
+  const selectClass = (id) => {
+    const selectedClass = classes.find((cls) => cls.id === id)
+
+    if (selectedClasses.find((cls) => cls.id === id)) {
+      return // Exit the function without updating the state
+    }
+
+    if (selectedClasses.length >= 5) {
+      // Remove the first element of the array using slice method
+      const updatedClasses = selectedClasses.slice(1)
+      // Add the selected class to the end of the updatedClasses array
+      updatedClasses.push(selectedClass)
+      setSelectedClasses(updatedClasses)
+    } else {
+      // Add the selected class to the end of the selectedClasses array
+      setSelectedClasses([...selectedClasses, selectedClass])
+    }
+  }
+
   return (
     <div className="applicationPage-content">
       <div className="form-container">
-        <form>
+        <form onSubmit={onSubmit}>
           <h2 className="Title">Application form</h2>
           <label>
             <h3>First Name:</h3>
@@ -188,6 +213,41 @@ const Application_content = () => {
               NO
             </label>
           </fieldset>
+
+          <fieldset>
+            <div className="classes">
+              {classes.map(({ id, name, sem }) => {
+                return (
+                  <>
+                    <div
+                      key={id}
+                      className={`class-container ${
+                        selectedClasses.some((cls) => cls.id === id)
+                          ? 'selected'
+                          : ''
+                      }`}
+                      onClick={(e) => selectClass(id)}
+                    >
+                      <div className="class">
+                        <p className="class-name">
+                          <strong>{name}</strong>
+                        </p>
+                        <p className="class-sem">
+                          (<strong>{sem}</strong>)
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                )
+              })}
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Resume Document</legend>
+            <input type="file" name="resume" accept=".pdf,.doc,.docx" />
+          </fieldset>
+
           <button className="btn btn-submit"> Submit</button>
           <Link to="/">
             <strong className="home_link_app">Return to Homepage</strong>

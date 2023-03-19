@@ -1,7 +1,7 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, HashRouter } from 'react-router-dom'
 import Home from './pages/Home'
 import './CSS/index.css'
-import Navbar from './Components/Home_page_Components/Navbar'
+import Navbar from './Components/Global_components/Navbar'
 
 import Application from './pages/Application'
 import Login from './pages/Login'
@@ -10,7 +10,7 @@ import Admin from './pages/Admin'
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <Navbar />
         <div className="pages">
           <Routes>
@@ -20,7 +20,7 @@ function App() {
             <Route path="admin" element={<Admin />} />
           </Routes>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   )
 }
