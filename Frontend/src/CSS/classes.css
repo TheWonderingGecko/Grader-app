@@ -39,6 +39,11 @@
   color: var(--hover-font-color);
 }
 
+.selected {
+  background-color: var(--hover-background);
+  color: var(--hover-font-color);
+}
+
 .class {
   display: flex;
   width: 100%;

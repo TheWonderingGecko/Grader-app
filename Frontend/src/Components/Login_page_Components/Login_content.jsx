@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useLogin } from '../../hooks/useLogin'
 import './../../CSS/loginPage.css'
 const Login_content = () => {
   const userRef = useRef()
@@ -8,24 +9,12 @@ const Login_content = () => {
   const [user, setUser] = useState('')
   const [pwd, setPwd] = useState('')
   const [errMsg, setErrMsg] = useState('')
-  const [success, setSuccess] = useState(false)
-
-  useEffect(() => {
-    userRef.current.focus()
-  }, [])
-  useEffect(() => {
-    setErrMsg('')
-  }, [user, pwd])
+  const { login, success, error } = useLogin()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(user, pwd)
-    setUser('')
-    setPwd('')
-    setSuccess(true)
+    await login(user, pwd)
   }
-
-  useEffect(() => console.log('logging here'), [])
 
   return (
     <>
@@ -81,6 +70,7 @@ const Login_content = () => {
                 required
               />
               <button> Log In </button>
+              {error && <div className="error">{error}</div>}
             </form>
           </section>
         </div>
