@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const graderSchema = new Schema({
   title: {
@@ -17,9 +17,9 @@ const graderSchema = new Schema({
   },
   user: {
     type: mongoose.Types.ObjectId,
-    ref:"User",
+    ref: 'User',
     required: true,
-  }
-});
+  },
+})
 
-export default mongoose.model("Grader", graderSchema);
+module.exports = mongoose.model('Grader', graderSchema)

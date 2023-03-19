@@ -277,7 +277,7 @@ const Classes = () => {
             ({ id, name, sem, position, Notes, Course_Description, major }) => {
               return (
                 <>
-                  <label
+                  <div
                     key={id}
                     className="class-container"
                     onClick={() => setShowMore(id)}
@@ -301,7 +301,7 @@ const Classes = () => {
                         </a>
                       </div>
                     )}
-                  </label>
+                  </div>
                 </>
               )
             }

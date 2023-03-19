@@ -1,73 +1,82 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose')
 
 const userV2Schema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   firstName: {
     type: String,
-    required: true
+    required: true,
   },
   lastName: {
     type: String,
-    required: true
+    required: true,
   },
   studentId: {
     type: Number,
-    required: true
+    required: true,
   },
   undergradDegree: {
     type: String,
-    required: false
+    required: false,
   },
   gpa: {
     type: Number,
-    required: true
+    required: true,
   },
   hoursCompleted: {
     type: Number,
-    required: true
+    required: true,
   },
   graduatingSemester: {
     type: String,
-    enum: ['fall23', 'spring23', 'summer23',
-          'fall24', 'spring24', 'summer24',
-          'fall25', 'spring25', 'summer25',
-          'fall26', 'spring26', 'summer26']
+    enum: [
+      'fall23',
+      'spring23',
+      'summer23',
+      'fall24',
+      'spring24',
+      'summer24',
+      'fall25',
+      'spring25',
+      'summer25',
+      'fall26',
+      'spring26',
+      'summer26',
+    ],
   },
   major: {
     type: String,
     enum: ['cs', 'ece', 'it'],
-    required: true
+    required: true,
   },
   level: {
     type: String,
-    enum: ['undergraduate', 'graduate', 'doctoral']
+    enum: ['undergraduate', 'graduate', 'doctoral'],
   },
   applySemester: {
     type: String,
-    enum: ['fall', 'spring', 'summer']
+    enum: ['fall', 'spring', 'summer'],
   },
   gtaCertified: {
     type: String,
     enum: ['yes', 'no', 'not interested'],
-    required: false
+    required: false,
   },
   resumeFilePath: {
     type: String,
-    required: false
+    required: false,
   },
   transcriptFilePath: {
     type: String,
-    required: false
-  }
-});
+    required: false,
+  },
+})
 
-export default mongoose.model('UserV2', userV2Schema);
-
+module.exports = mongoose.model('UserV2', userV2Schema)
