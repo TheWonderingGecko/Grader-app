@@ -15,6 +15,7 @@
   width: 100%;
   background-color: var(--umkc-light-blue);
   border-bottom: var(--umkc-yellow) 2vh solid;
+  z-index: 100;
 }
 
 .school_department {

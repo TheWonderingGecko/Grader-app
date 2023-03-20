@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { classes } from '../Home_page_Components/HomeData'
 import '../../CSS/applicationPage.css'
@@ -11,19 +11,34 @@ const Application_content = () => {
   const [degree, setDegree] = useState('')
   const [gpa, setGpa] = useState('')
   const [selectedClasses, setSelectedClasses] = useState([])
+  const [courses, setCourses] = useState(null)
   const [major, setMajor] = useState('')
   const [level, setLevel] = useState('')
   const [term, setTerm] = useState('')
   const [gta, setGta] = useState('')
 
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const response = await fetch('http://localhost:5000/api/courses')
+      const json = await response.json()
+
+      if (response.ok) {
+        setCourses(json)
+        console.log(courses)
+      }
+    }
+
+    fetchCourses()
+  }, [])
+
   const onSubmit = async (e) => {
     e.preventDefault()
   }
 
-  const selectClass = (id) => {
-    const selectedClass = classes.find((cls) => cls.id === id)
+  const selectClass = (_id) => {
+    const selectedClass = courses.find((cls) => cls._id === _id)
 
-    if (selectedClasses.find((cls) => cls.id === id)) {
+    if (selectedClasses.find((cls) => cls.id === _id)) {
       return // Exit the function without updating the state
     }
 
@@ -216,30 +231,31 @@ const Application_content = () => {
 
           <fieldset>
             <div className="classes">
-              {classes.map(({ id, name, sem }) => {
-                return (
-                  <>
-                    <div
-                      key={id}
-                      className={`class-container ${
-                        selectedClasses.some((cls) => cls.id === id)
-                          ? 'selected'
-                          : ''
-                      }`}
-                      onClick={(e) => selectClass(id)}
-                    >
-                      <div className="class">
-                        <p className="class-name">
-                          <strong>{name}</strong>
-                        </p>
-                        <p className="class-sem">
-                          (<strong>{sem}</strong>)
-                        </p>
+              {courses &&
+                courses.map(({ _id, code, semester }) => {
+                  return (
+                    <>
+                      <div
+                        key={_id}
+                        className={`class-container ${
+                          selectedClasses.some((cls) => cls._id === _id)
+                            ? 'selected'
+                            : ''
+                        }`}
+                        onClick={(e) => selectClass(_id)}
+                      >
+                        <div className="class">
+                          <p className="class-name">
+                            <strong>{code}</strong>
+                          </p>
+                          <p className="class-sem">
+                            (<strong>{semester}</strong>)
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </>
-                )
-              })}
+                    </>
+                  )
+                })}
             </div>
           </fieldset>
 

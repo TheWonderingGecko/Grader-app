@@ -12,6 +12,7 @@ const Classes = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [allClasses, setAllClasses] = useState(courses)
   const [filteredClasses, setFilteredClasses] = useState(courses)
+  const [enableFilter, setEnableFilter] = useState(false)
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -93,7 +94,7 @@ const Classes = () => {
         allClasses.filter((cls) => {
           return (
             (!selectedMajor || cls.major === selectedMajor) &&
-            (!selectedSemester || cls.semesterester === selectedSemester) &&
+            (!selectedSemester || cls.semester === selectedSemester) &&
             (!selectedLevel || cls.level === selectedLevel)
           )
         })
@@ -142,150 +143,170 @@ const Classes = () => {
     }
   }
 
+  const filterHandler = () => {
+    setEnableFilter(!enableFilter)
+    setSelectedMajor('')
+    setSelectedSemester('')
+    setSelectedPosition('')
+    setSelectedLevel('')
+    setShowMore('')
+    setFilteredClasses(courses)
+  }
+
   return (
     <>
+      {!enableFilter && (
+        <button className=" btn filter-btn" onClick={filterHandler}>
+          Filter
+        </button>
+      )}
       <div className="div_container">
-        <form className="filter">
-          <fieldset>
+        {enableFilter && (
+          <form className="filter">
+            <button className="btn close-btn" onClick={filterHandler}>
+              Close
+            </button>
             <legend>
               <h3>Major</h3>
             </legend>
-            <label htmlFor="cs">
-              <input
-                type="radio"
-                id="cs"
-                name="Major"
-                value="cs"
-                checked={selectedMajor === 'cs'}
-                onClick={() => sortByMajor('cs')}
-              />
-              CS
-            </label>
+            <fieldset>
+              <label htmlFor="cs">
+                <input
+                  type="radio"
+                  id="cs"
+                  name="Major"
+                  value="cs"
+                  checked={selectedMajor === 'cs'}
+                  onClick={() => sortByMajor('cs')}
+                />
+                CS
+              </label>
 
-            <label htmlFor="ece">
-              <input
-                type="radio"
-                id="ece"
-                name="Major"
-                value="ece"
-                checked={selectedMajor === 'ece'}
-                onClick={() => sortByMajor('ece')}
-              />
-              ECE
-            </label>
+              <label htmlFor="ece">
+                <input
+                  type="radio"
+                  id="ece"
+                  name="Major"
+                  value="ece"
+                  checked={selectedMajor === 'ece'}
+                  onClick={() => sortByMajor('ece')}
+                />
+                ECE
+              </label>
 
-            <label htmlFor="it">
-              <input
-                type="radio"
-                id="it"
-                name="Major"
-                value="it"
-                checked={selectedMajor === 'it'}
-                onClick={() => sortByMajor('it')}
-              />
-              IT
-            </label>
-          </fieldset>
+              <label htmlFor="it">
+                <input
+                  type="radio"
+                  id="it"
+                  name="Major"
+                  value="it"
+                  checked={selectedMajor === 'it'}
+                  onClick={() => sortByMajor('it')}
+                />
+                IT
+              </label>
+            </fieldset>
 
-          <fieldset>
-            <legend>
-              <h3>Position</h3>
-            </legend>
-            <label htmlFor="instructor">
-              <input
-                type="radio"
-                id="instructor"
-                name="position"
-                value="instructor"
-                checked={selectedPosition === 'instructor'}
-                onClick={() => sortByPosition('instructor')}
-              />
-              Instructor
-            </label>
+            <fieldset>
+              <legend>
+                <h3>Position</h3>
+              </legend>
+              <label htmlFor="instructor">
+                <input
+                  type="radio"
+                  id="instructor"
+                  name="position"
+                  value="instructor"
+                  checked={selectedPosition === 'instructor'}
+                  onClick={() => sortByPosition('instructor')}
+                />
+                Instructor
+              </label>
 
-            <label htmlFor="grader">
-              <input
-                type="radio"
-                id="grader"
-                name="position"
-                value="grader"
-                checked={selectedPosition === 'grader'}
-                onClick={() => sortByPosition('grader')}
-              />
-              grader
-            </label>
-          </fieldset>
+              <label htmlFor="grader">
+                <input
+                  type="radio"
+                  id="grader"
+                  name="position"
+                  value="grader"
+                  checked={selectedPosition === 'grader'}
+                  onClick={() => sortByPosition('grader')}
+                />
+                grader
+              </label>
+            </fieldset>
 
-          <fieldset>
-            <legend>
-              <h3>Semester</h3>
-            </legend>
-            <label htmlFor="fall">
-              <input
-                type="radio"
-                id="fall"
-                name="semester"
-                value="fall"
-                checked={selectedSemester === 'fall'}
-                onClick={() => sortBySemester('fall')}
-              />
-              Fall
-            </label>
+            <fieldset>
+              <legend>
+                <h3>Semester</h3>
+              </legend>
+              <label htmlFor="fall">
+                <input
+                  type="radio"
+                  id="fall"
+                  name="semester"
+                  value="fall"
+                  checked={selectedSemester === 'fall'}
+                  onClick={() => sortBySemester('fall')}
+                />
+                Fall
+              </label>
 
-            <label htmlFor="spring">
-              <input
-                type="radio"
-                id="spring"
-                name="semester"
-                value="spring"
-                checked={selectedSemester === 'spring'}
-                onClick={() => sortBySemester('spring')}
-              />
-              Spring
-            </label>
+              <label htmlFor="spring">
+                <input
+                  type="radio"
+                  id="spring"
+                  name="semester"
+                  value="spring"
+                  checked={selectedSemester === 'spring'}
+                  onClick={() => sortBySemester('spring')}
+                />
+                Spring
+              </label>
 
-            <label htmlFor="summer">
-              <input
-                type="radio"
-                id="summer"
-                name="semester"
-                value="summer"
-                checked={selectedSemester === 'summer'}
-                onClick={() => sortBySemester('summer')}
-              />
-              Summer
-            </label>
-          </fieldset>
+              <label htmlFor="summer">
+                <input
+                  type="radio"
+                  id="summer"
+                  name="semester"
+                  value="summer"
+                  checked={selectedSemester === 'summer'}
+                  onClick={() => sortBySemester('summer')}
+                />
+                Summer
+              </label>
+            </fieldset>
 
-          <fieldset>
-            <legend>
-              <h3>Level</h3>
-            </legend>
-            <label htmlFor="undergraduate">
-              <input
-                type="radio"
-                id="undergraduate"
-                name="level"
-                value="underGraduate"
-                checked={selectedLevel === 'undergraduate'}
-                onClick={() => sortByLevel('undergraduate')}
-              />
-              UnderGraduate
-            </label>
+            <fieldset>
+              <legend>
+                <h3>Level</h3>
+              </legend>
+              <label htmlFor="undergraduate">
+                <input
+                  type="radio"
+                  id="undergraduate"
+                  name="level"
+                  value="underGraduate"
+                  checked={selectedLevel === 'undergraduate'}
+                  onClick={() => sortByLevel('undergraduate')}
+                />
+                UnderGraduate
+              </label>
 
-            <label htmlFor="Graduate">
-              <input
-                type="radio"
-                id="Graduate"
-                name="level"
-                value="Graduate"
-                checked={selectedLevel === 'Graduate'}
-                onClick={() => sortByLevel('Graduate')}
-              />
-              Graduate
-            </label>
-          </fieldset>
-        </form>
+              <label htmlFor="Graduate">
+                <input
+                  type="radio"
+                  id="Graduate"
+                  name="level"
+                  value="Graduate"
+                  checked={selectedLevel === 'Graduate'}
+                  onClick={() => sortByLevel('Graduate')}
+                />
+                Graduate
+              </label>
+            </fieldset>
+          </form>
+        )}
 
         <div className="classes">
           {console.log(allClasses)}

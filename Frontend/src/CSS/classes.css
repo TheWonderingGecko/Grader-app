@@ -10,9 +10,13 @@
   margin-top: 2vh;
   padding: 2vh 2vw;
   display: grid;
+  height: 100vh;
+  width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
+  background-image: url('../assets/Big_roo.png');
+  background-position: center center;
+  background-size: cover;
 
-  flex-basis: 75%;
   justify-items: center;
   align-items: center;
   gap: 1vw;
@@ -58,12 +62,33 @@
   padding-top: 2vh;
   border-top: solid black 1px;
 }
+.btn.filter-btn {
+  --background-hue: 48;
+  margin-left: 50px;
+  --background-saturation: 100%;
+  --initial-background-lightness: 50%;
+  color: var(--umkc-light-blue);
+  bottom: 10px;
+  font-weight: 900;
+  right: 35px;
+}
 
+.btn.close-btn {
+  height: fit-content;
+  position: absolute;
+  font-size: small;
+  z-index: 5;
+  top: 0;
+  right: 15px;
+}
 .filter {
   flex-basis: 25%;
   margin: 2rem;
-  text-align: center;
+  padding-left: 2em;
+  text-align: left;
   background-color: white;
+  padding-top: 15px;
+  position: relative;
   height: fit-content;
   margin-left: 0;
   border-top: 1px solid var(--hover-background);
@@ -76,10 +101,8 @@
 .filter fieldset {
   border: none;
   display: flex;
-  flex-direction: column;
+  column-gap: 2em;
   justify-content: flex-start;
-  margin-left: 2vw;
-  margin-bottom: 2vh;
 }
 
 .filter label {
@@ -92,6 +115,12 @@
 .div_container {
   display: flex;
   justify-content: space-between;
+}
+
+.div_container input,
+.div_container label {
+  margin: 0;
+  padding: 0;
 }
 
 a {
