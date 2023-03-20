@@ -1,6 +1,6 @@
-import { classes } from './HomeData'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../../CSS/classes.css'
+import { useCoursesContext } from '../../hooks/useCoursesContext'
 
 const Classes = () => {
   const [showMore, setShowMore] = useState('')
@@ -8,12 +8,27 @@ const Classes = () => {
   const [selectedSemester, setSelectedSemester] = useState('')
   const [selectedPosition, setSelectedPosition] = useState('')
   const [selectedLevel, setSelectedLevel] = useState('')
-  const [allClasses, setAllClasses] = useState(classes)
-  const [filteredClasses, setFilteredClasses] = useState(classes)
+  const [courses, setCourses] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [allClasses, setAllClasses] = useState(courses)
+  const [filteredClasses, setFilteredClasses] = useState(courses)
 
-  // const changeDetails = () => {
-  //   setShowMore('Extra-details')
-  // }
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const response = await fetch('http://localhost:5000/api/courses')
+      const json = await response.json()
+
+      if (response.ok) {
+        setIsLoading(false)
+        setCourses(json)
+        setAllClasses(json)
+        setFilteredClasses(json)
+        console.log(courses)
+      }
+    }
+
+    fetchCourses()
+  }, [])
 
   const sortByMajor = (Major) => {
     setShowMore('')
@@ -21,7 +36,7 @@ const Classes = () => {
       setFilteredClasses(
         allClasses.filter((cls) => {
           return (
-            (!selectedSemester || cls.sem === selectedSemester) &&
+            (!selectedSemester || cls.semester === selectedSemester) &&
             (!selectedPosition || cls.position === selectedPosition) &&
             (!selectedLevel || cls.level === selectedLevel)
           )
@@ -33,7 +48,7 @@ const Classes = () => {
       setFilteredClasses(
         newClasses.filter((cls) => {
           return (
-            (!selectedSemester || cls.sem === selectedSemester) &&
+            (!selectedSemester || cls.semester === selectedSemester) &&
             (!selectedPosition || cls.position === selectedPosition) &&
             (!selectedLevel || cls.level === selectedLevel)
           )
@@ -57,7 +72,7 @@ const Classes = () => {
       )
       setSelectedSemester(null)
     } else {
-      const newClasses = allClasses.filter((cls) => cls.sem === semester)
+      const newClasses = allClasses.filter((cls) => cls.semester === semester)
       setFilteredClasses(
         newClasses.filter((cls) => {
           return (
@@ -78,7 +93,7 @@ const Classes = () => {
         allClasses.filter((cls) => {
           return (
             (!selectedMajor || cls.major === selectedMajor) &&
-            (!selectedSemester || cls.sem === selectedSemester) &&
+            (!selectedSemester || cls.semesterester === selectedSemester) &&
             (!selectedLevel || cls.level === selectedLevel)
           )
         })
@@ -90,7 +105,7 @@ const Classes = () => {
         newClasses.filter((cls) => {
           return (
             (!selectedMajor || cls.major === selectedMajor) &&
-            (!selectedSemester || cls.sem === selectedSemester) &&
+            (!selectedSemester || cls.semester === selectedSemester) &&
             (!selectedLevel || cls.level === selectedLevel)
           )
         })
@@ -106,7 +121,7 @@ const Classes = () => {
         allClasses.filter((cls) => {
           return (
             (!selectedMajor || cls.major === selectedMajor) &&
-            (!selectedSemester || cls.sem === selectedSemester) &&
+            (!selectedSemester || cls.semester === selectedSemester) &&
             (!selectedPosition || cls.position === selectedPosition)
           )
         })
@@ -118,7 +133,7 @@ const Classes = () => {
         newClasses.filter((cls) => {
           return (
             (!selectedMajor || cls.major === selectedMajor) &&
-            (!selectedSemester || cls.sem === selectedSemester) &&
+            (!selectedSemester || cls.semester === selectedSemester) &&
             (!selectedPosition || cls.position === selectedPosition)
           )
         })
@@ -135,38 +150,38 @@ const Classes = () => {
             <legend>
               <h3>Major</h3>
             </legend>
-            <label htmlFor="CS">
+            <label htmlFor="cs">
               <input
                 type="radio"
-                id="CS"
+                id="cs"
                 name="Major"
-                value="CS"
-                checked={selectedMajor === 'CS'}
-                onClick={() => sortByMajor('CS')}
+                value="cs"
+                checked={selectedMajor === 'cs'}
+                onClick={() => sortByMajor('cs')}
               />
               CS
             </label>
 
-            <label htmlFor="ECE">
+            <label htmlFor="ece">
               <input
                 type="radio"
-                id="ECE"
+                id="ece"
                 name="Major"
-                value="ECE"
-                checked={selectedMajor === 'ECE'}
-                onClick={() => sortByMajor('ECE')}
+                value="ece"
+                checked={selectedMajor === 'ece'}
+                onClick={() => sortByMajor('ece')}
               />
               ECE
             </label>
 
-            <label htmlFor="IT">
+            <label htmlFor="it">
               <input
                 type="radio"
-                id="IT"
+                id="it"
                 name="Major"
-                value="IT"
-                checked={selectedMajor === 'IT'}
-                onClick={() => sortByMajor('IT')}
+                value="it"
+                checked={selectedMajor === 'it'}
+                onClick={() => sortByMajor('it')}
               />
               IT
             </label>
@@ -176,28 +191,28 @@ const Classes = () => {
             <legend>
               <h3>Position</h3>
             </legend>
-            <label htmlFor="Instructor">
+            <label htmlFor="instructor">
               <input
                 type="radio"
-                id="Instructor"
+                id="instructor"
                 name="position"
-                value="Instructor"
-                checked={selectedPosition === 'Instructor'}
-                onClick={() => sortByPosition('Instructor')}
+                value="instructor"
+                checked={selectedPosition === 'instructor'}
+                onClick={() => sortByPosition('instructor')}
               />
               Instructor
             </label>
 
-            <label htmlFor="Grader">
+            <label htmlFor="grader">
               <input
                 type="radio"
-                id="Grader"
+                id="grader"
                 name="position"
-                value="Grader"
-                checked={selectedPosition === 'Grader'}
-                onClick={() => sortByPosition('Grader')}
+                value="grader"
+                checked={selectedPosition === 'grader'}
+                onClick={() => sortByPosition('grader')}
               />
-              Grader
+              grader
             </label>
           </fieldset>
 
@@ -205,38 +220,38 @@ const Classes = () => {
             <legend>
               <h3>Semester</h3>
             </legend>
-            <label htmlFor="Fall">
+            <label htmlFor="fall">
               <input
                 type="radio"
-                id="Fall"
+                id="fall"
                 name="semester"
-                value="Fall"
-                checked={selectedSemester === 'Fall'}
-                onClick={() => sortBySemester('Fall')}
+                value="fall"
+                checked={selectedSemester === 'fall'}
+                onClick={() => sortBySemester('fall')}
               />
               Fall
             </label>
 
-            <label htmlFor="Spring">
+            <label htmlFor="spring">
               <input
                 type="radio"
-                id="Spring"
+                id="spring"
                 name="semester"
-                value="Spring"
-                checked={selectedSemester === 'Spring'}
-                onClick={() => sortBySemester('Spring')}
+                value="spring"
+                checked={selectedSemester === 'spring'}
+                onClick={() => sortBySemester('spring')}
               />
               Spring
             </label>
 
-            <label htmlFor="Summer">
+            <label htmlFor="summer">
               <input
                 type="radio"
-                id="Summer"
+                id="summer"
                 name="semester"
-                value="Summer"
-                checked={selectedSemester === 'Summer'}
-                onClick={() => sortBySemester('Summer')}
+                value="summer"
+                checked={selectedSemester === 'summer'}
+                onClick={() => sortBySemester('summer')}
               />
               Summer
             </label>
@@ -246,16 +261,16 @@ const Classes = () => {
             <legend>
               <h3>Level</h3>
             </legend>
-            <label htmlFor="Undergraduate">
+            <label htmlFor="undergraduate">
               <input
                 type="radio"
-                id="Undergraduate"
+                id="undergraduate"
                 name="level"
-                value="Undergraduate"
-                checked={selectedLevel === 'Undergraduate'}
-                onClick={() => sortByLevel('Undergraduate')}
+                value="underGraduate"
+                checked={selectedLevel === 'undergraduate'}
+                onClick={() => sortByLevel('undergraduate')}
               />
-              Undergraduate
+              UnderGraduate
             </label>
 
             <label htmlFor="Graduate">
@@ -273,39 +288,50 @@ const Classes = () => {
         </form>
 
         <div className="classes">
-          {filteredClasses.map(
-            ({ id, name, sem, position, Notes, Course_Description, major }) => {
-              return (
-                <>
-                  <div
-                    key={id}
-                    className="class-container"
-                    onClick={() => setShowMore(id)}
-                  >
-                    <div className="class">
-                      <p className="class-name">
-                        <strong>{name}</strong>
-                      </p>
-                      <p className="class-sem">
-                        (<strong>{sem}</strong>)
-                      </p>
-                    </div>
-
-                    {showMore == id && (
-                      <div className="Extra-details">
-                        <p className="position">Position: {position}</p>
-                        <p className="Major">Course Major: {major}</p>
-                        <p className="Notes">Notes: {Notes}</p>
-                        <a href={Course_Description} target="_blank">
-                          Course Description
-                        </a>
+          {console.log(allClasses)}
+          {!isLoading &&
+            filteredClasses.map(
+              ({
+                _id,
+                code,
+                name,
+                major,
+                notes,
+                position,
+                semester,
+                level,
+              }) => {
+                return (
+                  <>
+                    <div
+                      key={_id}
+                      className="class-container"
+                      onClick={() => setShowMore(_id)}
+                    >
+                      <div className="class">
+                        <p className="class-name">
+                          <strong>{code}</strong>
+                        </p>
+                        <p className="class-sem">
+                          (<strong>{semester}</strong>)
+                        </p>
                       </div>
-                    )}
-                  </div>
-                </>
-              )
-            }
-          )}
+
+                      {showMore == _id && (
+                        <div className="Extra-details">
+                          <p className="position">Position: {position}</p>
+                          <p className="Major">Course Major: {major}</p>
+                          <p className="Notes">Notes: {notes}</p>
+                          <a href="" target="_blank">
+                            Course Description
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )
+              }
+            )}
         </div>
       </div>
     </>

@@ -3,6 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const graderRouter = require('./routes/grader-routes')
+const courseRouter = require('./routes/course-routes')
 const router = require('./routes/user-routes')
 
 const app = express()
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 })
 app.use('/api/user', router)
 app.use('/api/grader', graderRouter)
+app.use('/api/courses', courseRouter)
 mongoose
   .connect(
     'mongodb+srv://admin:4UJ9ha9pRNjfIEBc@cluster0.ggy9cda.mongodb.net/GraderApp?retryWrites=true&w=majority'
