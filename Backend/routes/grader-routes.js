@@ -1,12 +1,12 @@
-import express from 'express'
-import {
+const express = require('express')
+const {
   getAllGraders,
   addGrade,
   updateGrade,
   getById,
   deleteGrade,
   getByUserId,
-} from '../../Backend/controllers/grader-controller'
+} = require('../controllers/grader-controller')
 
 const graderRouter = express.Router()
 
@@ -17,4 +17,4 @@ graderRouter.get('/:id', getById)
 graderRouter.delete('/:id', deleteGrade)
 graderRouter.get('/user/:id', getByUserId)
 
-export default graderRouter
+module.exports = graderRouter

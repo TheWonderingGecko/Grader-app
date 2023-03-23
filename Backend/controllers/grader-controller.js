@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const Grader = require('../../Backend-2/model/Grader')
-const User = require('../../Backend-2/model/User')
+const Grader = require('../model/Grader')
+const User = require('../model/User')
 
 const getAllGraders = async (req, res, next) => {
   let graders
