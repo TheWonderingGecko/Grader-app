@@ -1,4 +1,4 @@
-const User = require('../../Backend-2/model/User')
+const User = require('../model/User')
 const bcrypt = require('bcrypt')
 
 const getAllUsers = async (req, res, next) => {

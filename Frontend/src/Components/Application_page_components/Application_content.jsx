@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { classes } from '../Home_page_Components/HomeData'
+
 import '../../CSS/applicationPage.css'
 
 const Application_content = () => {
@@ -230,6 +230,9 @@ const Application_content = () => {
           </fieldset>
 
           <fieldset>
+            <legend>
+              <h3>Please select up to 5 classes you'd like to apple for:</h3>
+            </legend>
             <div className="classes">
               {courses &&
                 courses.map(({ _id, code, semester }) => {

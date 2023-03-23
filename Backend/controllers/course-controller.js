@@ -1,4 +1,4 @@
-const Course = require('../../Backend-2/model/Course')
+const Course = require('../model/Course')
 
 const getAllCourses = async (req, res, next) => {
   let courses

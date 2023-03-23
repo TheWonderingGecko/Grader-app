@@ -327,7 +327,9 @@ const Classes = () => {
                     <div
                       key={_id}
                       className="class-container"
-                      onClick={() => setShowMore(_id)}
+                      onClick={() => {
+                        showMore === _id ? setShowMore('') : setShowMore(_id)
+                      }}
                     >
                       <div className="class">
                         <p className="class-name">
@@ -338,7 +340,7 @@ const Classes = () => {
                         </p>
                       </div>
 
-                      {showMore == _id && (
+                      {showMore === _id && (
                         <div className="Extra-details">
                           <p className="position">Position: {position}</p>
                           <p className="Major">Course Major: {major}</p>
