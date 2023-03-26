@@ -10,23 +10,26 @@
   margin-top: 2vh;
   padding: 2vh 2vw;
   display: grid;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
+  grid-auto-rows: min-content;
   background-image: url('../assets/Big_roo.png');
   background-position: center center;
   background-size: cover;
 
   justify-items: center;
   align-items: center;
-  gap: 1vw;
+  gap: 1vh;
 }
 
 .class-container {
   border: var(--border-color) solid 1px;
   border-radius: 4px;
+  /* opacity: 0.85; */
   /* height: 100%; */
   width: 100%;
+
   background-color: var(--white);
   display: flex;
   flex-direction: column;
@@ -40,6 +43,12 @@
 .class-container:hover,
 .class-container:focus {
   background-color: var(--hover-background);
+  color: var(--hover-font-color);
+  opacity: 1;
+}
+
+.class-container:hover a,
+.class-container:focus a {
   color: var(--hover-font-color);
 }
 
@@ -58,10 +67,12 @@
 .Extra-details {
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 5vh;
   padding-top: 2vh;
   border-top: solid black 1px;
 }
+
 .btn.filter-btn {
   --background-hue: 48;
   margin-left: 50px;

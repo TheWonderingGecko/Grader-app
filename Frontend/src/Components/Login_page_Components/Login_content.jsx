@@ -1,11 +1,12 @@
 import { useRef, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
 import { useLogin } from '../../hooks/useLogin'
 import './../../CSS/loginPage.css'
 const Login_content = () => {
   const userRef = useRef()
   const errRef = useRef()
-
+  const navigate = useNavigate()
   const [user, setUser] = useState('')
   const [pwd, setPwd] = useState('')
   const [errMsg, setErrMsg] = useState('')
@@ -15,6 +16,12 @@ const Login_content = () => {
     e.preventDefault()
     await login(user, pwd)
   }
+
+  useEffect(() => {
+    if (success) {
+      navigate('/app_form')
+    }
+  }, [success, navigate])
 
   return (
     <>
@@ -49,7 +56,7 @@ const Login_content = () => {
               {errMsg}{' '}
             </p>
 
-            <h1> Login In </h1>
+            <h1> Login</h1>
             <form onSubmit={handleSubmit}>
               <label htmlFor="username"> Username:</label>
               <input

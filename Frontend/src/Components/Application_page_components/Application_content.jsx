@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 import '../../CSS/applicationPage.css'
@@ -12,10 +12,11 @@ const Application_content = () => {
   const [gpa, setGpa] = useState('')
   const [selectedClasses, setSelectedClasses] = useState([])
   const [courses, setCourses] = useState(null)
-  const [major, setMajor] = useState('')
-  const [level, setLevel] = useState('')
-  const [term, setTerm] = useState('')
-  const [gta, setGta] = useState('')
+  const formRef = useRef(null)
+  // const [major, setMajor] = useState('')
+  // const [level, setLevel] = useState('')
+  // const [term, setTerm] = useState('')
+  // const [gta, setGta] = useState('')
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -33,12 +34,20 @@ const Application_content = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault()
+    setSelectedClasses([])
+    setFirstName('')
+    setLastName('')
+    setStudentID('')
+    setUMKCEmail('')
+    setDegree('')
+    setGpa('')
+    formRef.current.reset()
   }
 
   const selectClass = (_id) => {
     const selectedClass = courses.find((cls) => cls._id === _id)
 
-    if (selectedClasses.find((cls) => cls.id === _id)) {
+    if (selectedClasses.find((cls) => cls._id === _id)) {
       return // Exit the function without updating the state
     }
 
@@ -57,8 +66,8 @@ const Application_content = () => {
   return (
     <div className="applicationPage-content">
       <div className="form-container">
-        <form onSubmit={onSubmit}>
-          <h2 className="Title">Application form</h2>
+        <form onSubmit={onSubmit} ref={formRef}>
+          <h2 className="Title">CSEE GTA/Grader Application</h2>
           <label>
             <h3>First Name:</h3>
           </label>
@@ -231,7 +240,7 @@ const Application_content = () => {
 
           <fieldset>
             <legend>
-              <h3>Please select up to 5 classes you'd like to apple for:</h3>
+              <h3>Please select up to 5 classes you'd like to apply for:</h3>
             </legend>
             <div className="classes">
               {courses &&
@@ -263,7 +272,9 @@ const Application_content = () => {
           </fieldset>
 
           <fieldset>
-            <legend>Resume Document</legend>
+            <legend>
+              <h3>Resume Document</h3>
+            </legend>
             <input type="file" name="resume" accept=".pdf,.doc,.docx" />
           </fieldset>
 

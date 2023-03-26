@@ -293,14 +293,14 @@ const Classes = () => {
                 UnderGraduate
               </label>
 
-              <label htmlFor="Graduate">
+              <label htmlFor="graduate">
                 <input
                   type="radio"
-                  id="Graduate"
+                  id="graduate"
                   name="level"
-                  value="Graduate"
-                  checked={selectedLevel === 'Graduate'}
-                  onClick={() => sortByLevel('Graduate')}
+                  value="graduate"
+                  checked={selectedLevel === 'graduate'}
+                  onClick={() => sortByLevel('graduate')}
                 />
                 Graduate
               </label>
@@ -345,7 +345,10 @@ const Classes = () => {
                           <p className="position">Position: {position}</p>
                           <p className="Major">Course Major: {major}</p>
                           <p className="Notes">Notes: {notes}</p>
-                          <a href="" target="_blank">
+                          <a
+                            href="https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/"
+                            target="_blank"
+                          >
                             Course Description
                           </a>
                         </div>
