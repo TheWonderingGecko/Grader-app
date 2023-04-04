@@ -10,7 +10,7 @@ const Navbar = () => {
         <p className="department">Science and Engineering</p>
       </div>
       <Link to="/login">
-        <button type="button" className="btn btn-login">
+        <button type="button" className="btn login-btn">
           {' '}
           <strong>APPLY NOW</strong>
         </button>

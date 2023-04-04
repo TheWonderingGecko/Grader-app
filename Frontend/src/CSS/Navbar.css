@@ -33,46 +33,15 @@
 }
 
 /* default button implementation */
-.btn {
-  --background-hue: 0;
-  --background-saturation: 0%;
-  --initial-background-lightness: 90%;
-  --background-lightness: var(--initial-background-lightness);
-  --border-lightness: calc(var(--initial-background-lightness) - 20%);
 
-  background-color: hsl(
-    var(--background-hue),
-    var(--background-saturation),
-    var(--background-lightness)
-  );
-  border: 1px solid
-    hsl(
-      var(--background-hue),
-      var(--background-saturation),
-      var(--border-lightness)
-    );
-  outline: none;
-  cursor: pointer;
-  padding: 0.5em 1em;
-  border-radius: 0.3em;
-}
-
-.btn:hover,
-.btn:focus {
-  --background-lightness: calc(var(--initial-background-lightness) - 10%);
-  box-shadow: 0 0 5px 0
-    hsl(
-      var(--background-hue),
-      var(--background-saturation),
-      var(--border-lightness)
-    );
-}
-
-.btn.btn-login {
+.btn.login-btn {
   --background-hue: 48;
   --background-saturation: 100%;
   --initial-background-lightness: 50%;
+  background-color: hsl(48, 100%, 50%);
+  margin-left: 50px;
   color: var(--umkc-light-blue);
+
   height: fit-content;
   position: absolute;
   bottom: 10px;
@@ -80,26 +49,18 @@
   right: 35px;
 }
 
-/* .Login-btn {
-  border: none;
-  background: none;
-  cursor: pointer;
-  vertical-align: bottom;
-  position: absolute;
-  bottom: 10px;
-  right: 35px;
-  color: white;
-  font-weight: bolder;
-} */
-
-.Login-btn span {
+.btn.login-btn:hover,
+.btn.login-btn:focus {
+  --background-color: hsl(48, 100%, 0%);
+  box-shadow: 0 0 5px 0 hsl(hsl(48, 100%, 30%));
 }
 
-/* .Login-btn:hover,
-.Login-btn:focus {
-  color: var(--umkc-yellow);
+.login-btn:hover,
+.login-btn:focus {
   transform: translate(0, 5px);
   text-decoration: underline;
-} */
+  background-color: hsl(48, 100%, 40%);
+  box-shadow: 0 0 5px 0 hsl(hsl(48, 100%, 30%));
+}
 
 /* Nav bar styling end */
