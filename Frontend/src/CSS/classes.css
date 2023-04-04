@@ -74,13 +74,8 @@
 }
 
 .btn.filter-btn {
-  margin-left: 50px;
-
   background-color: hsl(48, 100%, 50%);
   color: var(--umkc-light-blue);
-  bottom: 10px;
-  font-weight: 900;
-  right: 35px;
 }
 
 .filter-btn:hover,

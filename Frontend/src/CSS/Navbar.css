@@ -27,7 +27,6 @@
 }
 
 .department {
-  font-size: 2em;
   color: white;
   align-self: flex-end;
 }
@@ -39,14 +38,8 @@
   --background-saturation: 100%;
   --initial-background-lightness: 50%;
   background-color: hsl(48, 100%, 50%);
-  margin-left: 50px;
-  color: var(--umkc-light-blue);
 
-  height: fit-content;
-  position: absolute;
-  bottom: 10px;
-  font-weight: 900;
-  right: 35px;
+  color: var(--umkc-light-blue);
 }
 
 .btn.login-btn:hover,
@@ -57,7 +50,6 @@
 
 .login-btn:hover,
 .login-btn:focus {
-  transform: translate(0, 5px);
   text-decoration: underline;
   background-color: hsl(48, 100%, 40%);
   box-shadow: 0 0 5px 0 hsl(hsl(48, 100%, 30%));
