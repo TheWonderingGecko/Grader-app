@@ -26,7 +26,7 @@ const Login_content = () => {
   return (
     <>
       {success ? (
-        <div className="centered-aligned-sections">
+        <div className="centered-aligned-sections log_in">
           <section>
             <h1> Welcome! </h1>
             <br />

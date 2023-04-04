@@ -16,7 +16,7 @@
   cursor: pointer;
 }
 
-section {
+.centered-aligned-sections section {
   width: 100%;
   max-width: 420px;
   min-height: 400px;
@@ -27,7 +27,7 @@ section {
   background-color: var(--umkc-light-blue);
 }
 
-form {
+.centered-aligned-sections form {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -35,10 +35,10 @@ form {
   padding-bottom: 1rem;
 }
 
-input[type='text'],
-input[type='password'],
-button,
-textarea {
+.centered-aligned-sections input[type='text'],
+.centered-aligned-sections input[type='password'],
+.centered-aligned-sections button,
+.centered-aligned-sections textarea {
   font-family: 'Roboto', serif;
   font-size: 22px;
   color: black;
@@ -46,12 +46,12 @@ textarea {
   border-radius: 0.5rem;
 }
 
-label,
-button {
+.centered-aligned-sections label,
+.centered-aligned-sections button {
   margin-top: 1rem;
 }
 
-button {
+.centered-aligned-sections button {
   padding: 0.75rem;
 }
 

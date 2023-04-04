@@ -92,21 +92,21 @@
   cursor: pointer;
 }
 
-fieldset {
+.applicationPage-content fieldset {
   border: none;
 }
 
-form {
+.applicationPage-content form {
   display: flex;
   flex-direction: column;
   row-gap: 2vh;
 }
 
-legend {
+.applicationPage-content legend {
   margin-bottom: 1rem;
 }
 
-form label {
+.applicationPage-content form label {
   margin-right: 2vw;
 }
 
