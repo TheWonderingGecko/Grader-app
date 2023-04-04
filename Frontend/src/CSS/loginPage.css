@@ -1,7 +1,4 @@
 .loginPage-content {
-  margin-top: 20vh;
-  text-align: center;
-  padding: 40vh 0;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -70,7 +67,7 @@ button {
 
 .centered-aligned-sections {
   display: flex;
-  margin-top: 8rem;
+  margin-top: 2rem;
   justify-content: center;
   color: white !important;
 }

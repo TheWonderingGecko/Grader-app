@@ -74,14 +74,20 @@
 }
 
 .btn.filter-btn {
-  --background-hue: 48;
   margin-left: 50px;
-  --background-saturation: 100%;
-  --initial-background-lightness: 50%;
+
+  background-color: hsl(48, 100%, 50%);
   color: var(--umkc-light-blue);
   bottom: 10px;
   font-weight: 900;
   right: 35px;
+}
+
+.filter-btn:hover,
+.filter-btn:focus {
+  text-decoration: underline;
+  background-color: hsl(48, 100%, 40%);
+  box-shadow: 0 0 5px 0 hsl(hsl(48, 100%, 30%));
 }
 
 .btn.close-btn {

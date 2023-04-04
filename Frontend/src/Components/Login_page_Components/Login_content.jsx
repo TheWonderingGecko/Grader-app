@@ -25,7 +25,6 @@ const Login_content = () => {
 
   return (
     <>
-      <h2>lOGIN sCREEN TEST</h2>
       {success ? (
         <div className="centered-aligned-sections">
           <section>

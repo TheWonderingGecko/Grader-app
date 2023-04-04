@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Admin_Link_Test = () => {
   return (
-    <div className="adminPage-content bg-red-200">
+    <div className="adminPage-content lg:bg-red-500">
       <Link to="/">
         <strong>Return to Homepage</strong>
       </Link>
