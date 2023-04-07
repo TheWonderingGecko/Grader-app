@@ -1,16 +1,18 @@
 import '../../CSS/tailwind.css'
 import Position_card from './Position_card'
 import { classes } from '../../HomeData'
+import BigRoo from '../../assets/Big_roo.png'
 
 const Admin_Link_Test = () => {
   return (
-    <div className="  flex text-umkc_dark_blue font-bold text-center ">
-      <div className=" h-screen basis-1/4 bg-slate-400 flex flex-col justify-center items-center">
-        <form className=" flex flex-col  h-full text-center p-2">
+    <div className="relative flex h-screen overflow-hidden font-bold text-center text-black">
+      <div className="flex flex-col items-center justify-center h-full p-4 basis-1/4 bg-slate-400">
+        <img src={BigRoo} alt="Umkc" />
+        <form className="flex flex-col h-full p-2 text-center ">
           <legend className="pb-2">
             <h3>Major</h3>
           </legend>
-          <fieldset className="flex  justify-between pb-4">
+          <fieldset className="flex justify-between pb-4">
             <label htmlFor="cs" className="">
               <input type="radio" id="cs" name="Major" value="cs" />
               CS
@@ -30,7 +32,7 @@ const Admin_Link_Test = () => {
           <legend className="pb-2">
             <h3>Position</h3>
           </legend>
-          <fieldset className="flex flex-col justify-start items-start pb-4">
+          <fieldset className="flex flex-col items-start justify-start pb-4">
             <label htmlFor="instructor">
               <input
                 type="radio"
@@ -51,10 +53,7 @@ const Admin_Link_Test = () => {
             <h3>Semester</h3>
           </legend>
 
-          <fieldset
-            className=" flex flex-col pb-4 items-start
-          "
-          >
+          <fieldset className="flex flex-col items-start pb-4 ">
             <label htmlFor="fall">
               <input type="radio" id="fall" name="semester" value="fall" />
               Fall
@@ -92,15 +91,21 @@ const Admin_Link_Test = () => {
           </fieldset>
         </form>
       </div>
-      <div className="  basis-3/4  max-h-screen bg-slate-200 flex flex-col items-center p-4 gap-3 overflow-auto ">
-        {classes.map((item) => (
-          <Position_card
-            title={item.name}
-            sem={item.sem}
-            position={item.position}
-            notes={item.Notes}
-          />
-        ))}
+      <div className="flex flex-col justify-center basis-3/4 bg-slate-300">
+        <div className="flex items-center justify-center p-4 text-3xl">
+          Open Courses
+        </div>
+        <div className="grid h-full grid-cols-1 gap-3 pt-4 overflow-auto bg-slate-200 landscape:grid-cols-2 justify-items-center md:grid-cols-2 md:bg-red-600">
+          {classes.map((item) => (
+            <Position_card
+              title={item.name}
+              sem={item.sem}
+              position={item.position}
+              notes={item.Notes}
+              id={item.id}
+            />
+          ))}
+        </div>
       </div>
     </div>
   )

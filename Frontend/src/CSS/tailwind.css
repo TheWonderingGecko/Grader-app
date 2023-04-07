@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.mobile-h {
+  height: 100svh;
+}
+
+body {
+  overflow: hidden;
+}
