@@ -6,13 +6,14 @@ import BigRoo from '../../assets/Big_roo.png'
 const Admin_Link_Test = () => {
   return (
     <div className="relative flex h-screen overflow-hidden font-bold text-center text-black">
-      <div className="flex flex-col items-center justify-center h-full p-4 basis-1/4 bg-slate-400">
+      <div className="flex flex-col items-center h-full basis-1/4 bg-slate-400">
         <img src={BigRoo} alt="Umkc" />
-        <form className="flex flex-col h-full p-2 text-center ">
-          <legend className="pb-2">
+
+        <form className="flex flex-col gap-4 pl-1 text-center">
+          <legend className="">
             <h3>Major</h3>
           </legend>
-          <fieldset className="flex justify-between pb-4">
+          <fieldset className="flex flex-col items-start justify-between pb-4">
             <label htmlFor="cs" className="">
               <input type="radio" id="cs" name="Major" value="cs" />
               CS
@@ -70,7 +71,7 @@ const Admin_Link_Test = () => {
             </label>
           </fieldset>
 
-          <legend className="pb-2">
+          <legend className="pb-2 ">
             <h3>Level</h3>
           </legend>
           <fieldset className="flex flex-col items-start">
@@ -86,16 +87,29 @@ const Admin_Link_Test = () => {
 
             <label htmlFor="graduate">
               <input type="radio" id="graduate" name="level" value="graduate" />
-              Graduate
+              MS
+            </label>
+
+            <label htmlFor="Doctorate">
+              <input
+                type="radio"
+                id="Doctorate"
+                name="level"
+                value="Doctorate"
+              />
+              PHD
             </label>
           </fieldset>
         </form>
+        <button className="w-3/4 mt-8 rounded-md bg-umkc_yellow text-umkc_dark_blue">
+          Open Position
+        </button>
       </div>
-      <div className="flex flex-col justify-center basis-3/4 bg-slate-300">
-        <div className="flex items-center justify-center p-4 text-3xl">
+      <div className="flex flex-col basis-3/4 bg-slate-200">
+        <div className="flex items-center justify-center p-4 text-3xl border-b-2 shadow-lg border-umkc_light_blue bg-umkc_light_blue text-umkc_yellow">
           Open Courses
         </div>
-        <div className="grid h-full grid-cols-1 gap-3 pt-4 overflow-auto bg-slate-200 landscape:grid-cols-2 justify-items-center md:grid-cols-2 md:bg-red-600">
+        <div className="grid grid-cols-1 gap-3 pt-4 overflow-auto h-5/6 justify-items-center md:grid-cols-2 md:bg-red-600">
           {classes.map((item) => (
             <Position_card
               title={item.name}
