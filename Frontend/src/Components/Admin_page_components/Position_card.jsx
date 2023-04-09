@@ -6,23 +6,23 @@ const Position_card = (props) => {
 
   return (
     <div
-      className="relative flex flex-col items-center justify-center w-3/4 p-4 bg-white border-2 rounded-lg border-umkc_light_blue group md:hover:bg-umkc_dark_blue gap-y-2"
+      className="relative flex flex-col items-center justify-center w-3/4 p-4 bg-white border-2 rounded-lg border-umkc_light_blue group lg:hover:bg-umkc_dark_blue gap-y-2"
       key={props.id}
     >
-      <div className="md:group-hover:hidden">
+      <div className="lg:group-hover:hidden">
         {props.title} ({props.sem})
       </div>
-      <div className="md:group-hover:hidden">8 applicants </div>{' '}
-      <div className="md:group-hover:hidden">Position: {props.position}</div>
-      <div className="flex items-center justify-center gap-2 text-umkc_dark_blue md:hidden md:group-hover:flex">
+      <div className="lg:group-hover:hidden">8 applicants </div>{' '}
+      <div className="lg:group-hover:hidden">Position: {props.position}</div>
+      <div className="flex items-center justify-center gap-2 text-umkc_dark_blue lg:hidden lg:group-hover:flex">
         <button
-          className="w-full p-2 rounded-lg bg-umkc_yellow"
+          className="w-full p-2 rounded-lg bg-umkc_yellow lg:h-20"
           onClick={() => setEdit(props.id)}
         >
           Edit course
         </button>
         <button
-          className="w-full p-2 rounded-lg bg-umkc_yellow"
+          className="w-full p-2 rounded-lg bg-umkc_yellow lg:h-20"
           onClick={() => setView(props.id)}
         >
           View applicants

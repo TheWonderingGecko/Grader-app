@@ -5,15 +5,15 @@ import BigRoo from '../../assets/Big_roo.png'
 
 const Admin_Link_Test = () => {
   return (
-    <div className="relative flex h-screen overflow-hidden font-bold text-center text-black">
-      <div className="flex flex-col items-center h-full basis-1/4 bg-slate-400">
+    <div className="relative flex h-screen overflow-hidden font-bold text-center text-black lg:text-xl ">
+      <div className="flex flex-col items-center h-full basis-1/4 bg-slate-400 md:justify-start md:pl-4 lg:basis-1/6 ">
         <img src={BigRoo} alt="Umkc" />
 
-        <form className="flex flex-col gap-4 pl-1 text-center">
+        <form className="flex flex-col gap-4 pl-1 text-center md:text-left md:p-2">
           <legend className="">
             <h3>Major</h3>
           </legend>
-          <fieldset className="flex flex-col items-start justify-between pb-4">
+          <fieldset className="flex flex-col items-start justify-between pb-4 md:flex-row md:gap-2">
             <label htmlFor="cs" className="">
               <input type="radio" id="cs" name="Major" value="cs" />
               CS
@@ -33,7 +33,7 @@ const Admin_Link_Test = () => {
           <legend className="pb-2">
             <h3>Position</h3>
           </legend>
-          <fieldset className="flex flex-col items-start justify-start pb-4">
+          <fieldset className="flex flex-col items-start justify-start pb-4 md:flex-row md:gap-2">
             <label htmlFor="instructor">
               <input
                 type="radio"
@@ -54,7 +54,7 @@ const Admin_Link_Test = () => {
             <h3>Semester</h3>
           </legend>
 
-          <fieldset className="flex flex-col items-start pb-4 ">
+          <fieldset className="flex flex-col items-start pb-4 md:flex-row md:gap-2">
             <label htmlFor="fall">
               <input type="radio" id="fall" name="semester" value="fall" />
               Fall
@@ -74,7 +74,7 @@ const Admin_Link_Test = () => {
           <legend className="pb-2 ">
             <h3>Level</h3>
           </legend>
-          <fieldset className="flex flex-col items-start">
+          <fieldset className="flex flex-col items-start md:flex-row md:gap-2">
             <label htmlFor="undergraduate">
               <input
                 type="radio"
@@ -105,11 +105,11 @@ const Admin_Link_Test = () => {
           Open Position
         </button>
       </div>
-      <div className="flex flex-col basis-3/4 bg-slate-200">
+      <div className="flex flex-col basis-3/4 bg-slate-200 lg:basis-5/6">
         <div className="flex items-center justify-center p-4 text-3xl border-b-2 shadow-lg border-umkc_light_blue bg-umkc_light_blue text-umkc_yellow">
           Open Courses
         </div>
-        <div className="grid grid-cols-1 gap-3 pt-4 overflow-auto h-5/6 justify-items-center md:grid-cols-2 md:bg-red-600">
+        <div className="grid grid-cols-1 gap-3 pt-4 overflow-auto h-5/6 justify-items-center md:grid-cols-2 lg:grid-cols-3 ">
           {classes.map((item) => (
             <Position_card
               title={item.name}
