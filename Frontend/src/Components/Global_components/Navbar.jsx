@@ -12,7 +12,7 @@ const Navbar = () => {
       <Link to="/login">
         <button
           type="button"
-          className="w-32 h-10 mr-4 text-sm font-semibold btn login-btn md:w-auto md:h-fit md:text-xl"
+          className="w-32 h-10 mr-4 text-sm font-semibold rounded-md btn login-btn md:w-auto md:h-fit md:text-xl md:p-2"
         >
           {' '}
           <strong>APPLY NOW</strong>
