@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
-import '../../CSS/applicationPage.css'
-
 const Application_content = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')

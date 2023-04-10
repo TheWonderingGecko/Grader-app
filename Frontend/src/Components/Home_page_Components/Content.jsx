@@ -1,4 +1,3 @@
-import '../../CSS/homePage.css'
 import Classes from './classes'
 
 const Content = () => {

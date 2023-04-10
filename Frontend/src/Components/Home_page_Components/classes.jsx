@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import BigRoo from '../../assets/Big_roo.png'
-import '../../CSS/classes.css'
+
 import { useCoursesContext } from '../../hooks/useCoursesContext'
 
 const Classes = () => {
