@@ -1,9 +1,25 @@
 import '../../CSS/tailwind.css'
 import Position_card from './Position_card'
 import { classes } from '../../HomeData'
+import { useState, useEffect } from 'react'
 import BigRoo from '../../assets/Big_roo.png'
 
 const Admin_Link_Test = () => {
+  const [newClass, setNewClass] = useState(null)
+
+  useEffect(() => {
+    const getClasses = async () => {
+      const classesFromServer = await fetch('http://localhost:5000/api/courses')
+      const data = await classesFromServer.json()
+
+      if (classesFromServer.ok) {
+        setNewClass(data)
+      }
+    }
+    getClasses()
+    console.log(newClass)
+  }, [])
+
   return (
     <div className="relative flex h-screen overflow-hidden font-bold text-center text-black lg:text-xl ">
       <div className="flex flex-col items-center h-full basis-1/4 bg-slate-400 md:justify-start md:pl-4 lg:basis-1/6 ">
@@ -110,15 +126,27 @@ const Admin_Link_Test = () => {
           Open Courses
         </div>
         <div className="grid grid-cols-1 gap-3 pt-4 overflow-auto h-5/6 justify-items-center md:grid-cols-2 lg:grid-cols-3 ">
-          {classes.map((item) => (
-            <Position_card
-              title={item.name}
-              sem={item.sem}
-              position={item.position}
-              notes={item.Notes}
-              id={item.id}
-            />
-          ))}
+          {newClass &&
+            newClass.map(
+              ({
+                _id,
+                code,
+                name,
+                major,
+                notes,
+                position,
+                semester,
+                level,
+              }) => (
+                <Position_card
+                  title={code}
+                  sem={semester}
+                  position={position}
+                  notes={notes}
+                  id={_id}
+                />
+              )
+            )}
         </div>
       </div>
     </div>

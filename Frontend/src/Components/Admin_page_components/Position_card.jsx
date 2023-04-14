@@ -59,7 +59,7 @@ const Position_card = (props) => {
               </button>
             </div>
 
-            <table class=" text-center bg-slate-300 border-2 rounded-md">
+            <table className="text-center border-2 rounded-md  bg-slate-300">
               <thead className="">
                 <tr>
                   <th>Name</th>
