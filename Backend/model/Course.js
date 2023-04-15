@@ -32,7 +32,7 @@ const courseSchema = new Schema({
   level: {
     type: String,
     enum: ['undergraduate', 'graduate'],
-    required: true,
+    required: false,
   },
 })
 

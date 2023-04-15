@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 const Position_card = (props) => {
   const [edit, setEdit] = useState('')
-  const [view, setView] = useState()
+  const [view, setView] = useState('')
 
   return (
     <div
@@ -51,7 +51,7 @@ const Position_card = (props) => {
       )}
       {view === props.id && (
         <div className="fixed top-0 left-0 z-30 flex items-center justify-center w-screen h-screen bg-black/95 ">
-          <div className="z-50 flex flex-col w-5/6 p-2 overflow-hidden border-4 rounded-lg -mt-60 bg-slate-100 border-umkc_light_blue gap-y-4">
+          <div className="z-50 flex flex-col w-5/6 p-2 overflow-hidden border-4 rounded-lg bg-slate-100 border-umkc_light_blue gap-y-4">
             <div className="flex justify-between px-2">
               {props.title} <div>8 applicants</div>
               <button className="text-black " onClick={() => setView('')}>
@@ -59,7 +59,7 @@ const Position_card = (props) => {
               </button>
             </div>
 
-            <table className="text-center border-2 rounded-md  bg-slate-300">
+            <table className="text-center border-2 rounded-md bg-slate-300">
               <thead className="">
                 <tr>
                   <th>Name</th>
