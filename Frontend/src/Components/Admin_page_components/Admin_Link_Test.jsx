@@ -7,6 +7,7 @@ import { usePostPosition } from '../../hooks/usePostPosition'
 
 const Admin_Link_Test = () => {
   const [newClass, setNewClass] = useState(null)
+
   const [createCourse, setCreateCourse] = useState(false)
   const { coursePost, success, error } = usePostPosition()
 
@@ -20,7 +21,6 @@ const Admin_Link_Test = () => {
       }
     }
     getClasses()
-    console.log(newClass)
   }, [])
 
   const handleSubmit = async (e) => {
@@ -234,7 +234,7 @@ const Admin_Link_Test = () => {
         <div className="flex items-center justify-center p-4 text-3xl border-b-2 shadow-lg border-umkc_light_blue bg-umkc_light_blue text-umkc_yellow">
           Open Courses
         </div>
-        <div className="grid grid-cols-1 gap-3 pt-4 overflow-auto h-5/6 justify-items-center md:grid-cols-2 lg:grid-cols-3 ">
+        <div className="grid grid-cols-1 gap-3 pt-4 overflow-auto h-5/6 justify-items-center md:grid-cols-2 lg:grid-cols-3 lg:h-3/4 ">
           {newClass &&
             newClass.map(
               ({
@@ -252,6 +252,7 @@ const Admin_Link_Test = () => {
                   sem={semester}
                   position={position}
                   notes={notes}
+                  major={major}
                   id={_id}
                   key={_id}
                 />
