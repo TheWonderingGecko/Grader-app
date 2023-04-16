@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import '../../CSS/classes.css'
+import BigRoo from '../../assets/Big_roo.png'
+
 import { useCoursesContext } from '../../hooks/useCoursesContext'
 
 const Classes = () => {
@@ -154,22 +155,37 @@ const Classes = () => {
   }
 
   return (
-    <>
-      {!enableFilter && (
-        <button className=" btn filter-btn" onClick={filterHandler}>
-          Filter
-        </button>
-      )}
-      <div className="div_container">
+    <div className="relative flex items-start w-screen h-screen overflow-hidden">
+      <div className="relative flex flex-col items-start w-full text-center h-5/6 basis-1/3">
+        <img
+          src={BigRoo}
+          alt="Big Roo"
+          className="absolute h-32 bottom-6 md:w-full md:h-48 lg:hidden"
+        />
+        {!enableFilter && (
+          <div className="flex justify-center w-full">
+            <button
+              className="w-3/4 p-2 font-bold rounded-lg shadow-md bg-umkc_yellow text-umkc_light_blue"
+              onClick={filterHandler}
+            >
+              Filter
+            </button>
+          </div>
+        )}
+
         {enableFilter && (
-          <form className="filter">
-            <button className="btn close-btn" onClick={filterHandler}>
+          <form className="flex flex-col gap-2 p-4 bg-white border-4 border-l-0 rounded-r-lg border-umkc_light_blue md:w-full">
+            <button
+              className="p-2 font-bold rounded-lg shadow-md bg-umkc_yellow text-umkc_light_blue"
+              onClick={filterHandler}
+            >
               Close
             </button>
-            <legend>
-              <h3>Major</h3>
-            </legend>
-            <fieldset>
+
+            <fieldset className="flex flex-col items-start gap-1 text-lg md:flex-row md:gap-4">
+              <legend className="text-xl font-semibold">
+                <h3>Major</h3>
+              </legend>
               <label htmlFor="cs">
                 <input
                   type="radio"
@@ -207,8 +223,8 @@ const Classes = () => {
               </label>
             </fieldset>
 
-            <fieldset>
-              <legend>
+            <fieldset className="flex flex-col items-start gap-1 text-lg md:flex-row md:gap-4">
+              <legend className="text-xl font-semibold">
                 <h3>Position</h3>
               </legend>
               <label htmlFor="instructor">
@@ -232,12 +248,12 @@ const Classes = () => {
                   checked={selectedPosition === 'grader'}
                   onClick={() => sortByPosition('grader')}
                 />
-                grader
+                Grader
               </label>
             </fieldset>
 
-            <fieldset>
-              <legend>
+            <fieldset className="flex flex-col items-start gap-1 text-lg md:flex-row md:gap-4">
+              <legend className="text-xl font-semibold">
                 <h3>Semester</h3>
               </legend>
               <label htmlFor="fall">
@@ -277,8 +293,8 @@ const Classes = () => {
               </label>
             </fieldset>
 
-            <fieldset>
-              <legend>
+            <fieldset className="flex flex-col items-start gap-1 text-lg md:flex-row md:gap-4 ">
+              <legend className="text-xl font-semibold">
                 <h3>Level</h3>
               </legend>
               <label htmlFor="undergraduate">
@@ -290,74 +306,69 @@ const Classes = () => {
                   checked={selectedLevel === 'undergraduate'}
                   onClick={() => sortByLevel('undergraduate')}
                 />
-                UnderGraduate
+                B.S
               </label>
 
-              <label htmlFor="Graduate">
+              <label htmlFor="graduate">
                 <input
                   type="radio"
-                  id="Graduate"
+                  id="graduate"
                   name="level"
-                  value="Graduate"
-                  checked={selectedLevel === 'Graduate'}
-                  onClick={() => sortByLevel('Graduate')}
+                  value="graduate"
+                  checked={selectedLevel === 'graduate'}
+                  onClick={() => sortByLevel('graduate')}
                 />
-                Graduate
+                MS
               </label>
             </fieldset>
           </form>
         )}
-
-        <div className="classes">
-          {console.log(allClasses)}
-          {!isLoading &&
-            filteredClasses.map(
-              ({
-                _id,
-                code,
-                name,
-                major,
-                notes,
-                position,
-                semester,
-                level,
-              }) => {
-                return (
-                  <>
-                    <div
-                      key={_id}
-                      className="class-container"
-                      onClick={() => {
-                        showMore === _id ? setShowMore('') : setShowMore(_id)
-                      }}
-                    >
-                      <div className="class">
-                        <p className="class-name">
-                          <strong>{code}</strong>
-                        </p>
-                        <p className="class-sem">
-                          (<strong>{semester}</strong>)
-                        </p>
-                      </div>
-
-                      {showMore === _id && (
-                        <div className="Extra-details">
-                          <p className="position">Position: {position}</p>
-                          <p className="Major">Course Major: {major}</p>
-                          <p className="Notes">Notes: {notes}</p>
-                          <a href="" target="_blank">
-                            Course Description
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  </>
-                )
-              }
-            )}
-        </div>
       </div>
-    </>
+
+      <div className=" bg-center grid grid-cols-1 gap-3 overflow-auto h-3/4 justify-items-center basis-2/3 md:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8 ">
+        {console.log(allClasses)}
+        {!isLoading &&
+          filteredClasses.map(
+            ({ _id, code, name, major, notes, position, semester, level }) => {
+              return (
+                <div
+                  key={_id}
+                  className="text-center bg-white border-4 rounded-lg shadow-xl w-60 border-umkc_light_blue h-fit lg:hover:bg-umkc_dark_blue lg:hover:text-umkc_yellow group"
+                  onClick={() => {
+                    showMore === _id ? setShowMore('') : setShowMore(_id)
+                  }}
+                >
+                  <div className="">
+                    <div className="flex flex-wrap items-center justify-between h-20 p-4 text-lg">
+                      <p className="">
+                        <strong>{code}</strong>
+                      </p>
+                      <p className="uppercase ">
+                        (<strong>{semester}</strong>)
+                      </p>
+                    </div>
+
+                    {showMore === _id && (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 font-semibold text-l">
+                        <p className="">Position: {position}</p>
+                        <p className="">Course Major: {major}</p>
+                        <p className="">Notes: {notes}</p>
+                        <a
+                          href="https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/"
+                          target="_blank"
+                          className="underline text-umkc_light_blue group-hover:text-umkc_yellow"
+                        >
+                          Course Description
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )
+            }
+          )}
+      </div>
+    </div>
   )
 }
 export default Classes

@@ -1,11 +1,13 @@
 import { useRef, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import logo from '../../assets/Logo.png'
+import { Link, useNavigate } from 'react-router-dom'
+
 import { useLogin } from '../../hooks/useLogin'
-import './../../CSS/loginPage.css'
+
 const Login_content = () => {
   const userRef = useRef()
   const errRef = useRef()
-
+  const navigate = useNavigate()
   const [user, setUser] = useState('')
   const [pwd, setPwd] = useState('')
   const [errMsg, setErrMsg] = useState('')
@@ -16,66 +18,74 @@ const Login_content = () => {
     await login(user, pwd)
   }
 
-  return (
-    <>
-      <h2>lOGIN sCREEN TEST</h2>
-      {success ? (
-        <div className="centered-aligned-sections">
-          <section>
-            <h1> Welcome! </h1>
-            <br />
-            <p>
-              <Link to="/">
-                <strong>Return to Homepage</strong>
-              </Link>
-            </p>
+  useEffect(() => {
+    if (success) {
+      navigate('/app_form')
+    }
+  }, [success, navigate])
 
-            <p>
-              <Link to="/app_form">
-                <strong>Go to application page</strong>
-              </Link>
-            </p>
-          </section>
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-slate-200 ">
+      <div className="w-5/6 p-8 pt-0 rounded-md bg-umkc_light_blue text-umkc_yellow lg:w-1/2 lg:shadow-xl">
+        <div className="items-center justify-center p-4 md:flex">
+          <img src={logo} className="" />
         </div>
-      ) : (
-        <div className="centered-aligned-sections">
-          <section>
-            <p
-              ref={errRef}
-              className={errMsg ? 'errmsg' : 'offscreen'}
-              aria-live="assertive"
+
+        <section className="flex flex-col gap-3">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-8 text-left"
+          >
+            <label
+              htmlFor="username"
+              className="text-2xl font-bold tracking-wider "
             >
               {' '}
-              {errMsg}{' '}
-            </p>
-
-            <h1> Login In </h1>
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="username"> Username:</label>
-              <input
-                type="text"
-                id="username"
-                ref={userRef}
-                autoComplete="off"
-                onChange={(e) => setUser(e.target.value)}
-                value={user}
-                required
-              />
-              <label htmlFor="password"> Password:</label>
-              <input
-                type="password"
-                id="password"
-                onChange={(e) => setPwd(e.target.value)}
-                value={pwd}
-                required
-              />
-              <button> Log In </button>
-              {error && <div className="error">{error}</div>}
-            </form>
-          </section>
-        </div>
-      )}
-    </>
+              Username:
+            </label>
+            <input
+              type="text"
+              id="username"
+              ref={userRef}
+              autoComplete="off"
+              onChange={(e) => setUser(e.target.value)}
+              value={user}
+              className={
+                'p-2 text-lg font-semibold text-black bg-white border-2 rounded-md shadow-md border-umkc_dark_blue focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent ' +
+                (error && error.includes('email') ? 'border-red-500' : '')
+              }
+              required
+            />
+            <label
+              htmlFor="password"
+              className="text-2xl font-bold tracking-wider "
+            >
+              {' '}
+              Password:
+            </label>
+            <input
+              type="password"
+              id="password"
+              onChange={(e) => setPwd(e.target.value)}
+              value={pwd}
+              className={
+                'p-2 text-lg font-semibold text-black bg-white border-2 rounded-md shadow-md border-umkc_dark_blue focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent ' +
+                (error && error.includes('password') ? 'border-red-500' : '')
+              }
+              required
+            />
+            <button className="p-2 font-bold rounded-lg shadow-md bg-umkc_yellow text-umkc_light_blue">
+              Log In
+            </button>
+            {error && (
+              <div className="p-2 font-bold bg-red-100 border rounded-md error text-error border-error">
+                {error}
+              </div>
+            )}
+          </form>
+        </section>
+      </div>
+    </div>
   )
 }
 export default Login_content
