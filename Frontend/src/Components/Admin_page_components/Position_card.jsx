@@ -33,7 +33,7 @@ const Position_card = (props) => {
 
   return (
     <div
-      className="relative flex flex-col items-center justify-center w-3/4 p-4 bg-white border-2 rounded-lg border-umkc_light_blue group lg:hover:bg-umkc_dark_blue gap-y-2"
+      className="relative flex flex-col items-center justify-center w-3/4 p-4 bg-white border-4 rounded-lg border-umkc_light_blue group lg:hover:bg-umkc_dark_blue gap-y-2 max-h-[15rem]"
       key={props.id}
     >
       <div className="lg:group-hover:hidden">
@@ -112,7 +112,7 @@ const Position_card = (props) => {
               </button>
             </div>
 
-            <table className="text-left border-2 rounded-md bg-slate-300">
+            <table className="text-left border-2 rounded-md bg-slate-300 md:text-center">
               <thead className="">
                 <tr>
                   <th>Name</th>
