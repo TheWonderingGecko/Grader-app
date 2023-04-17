@@ -247,7 +247,6 @@ const Admin_Link_Test = () => {
                 position,
                 semester,
                 applications,
-                level,
               }) => (
                 <Position_card
                   title={code}
