@@ -141,6 +141,7 @@ const Admin_Link_Test = () => {
         >
           Open Position
         </button>
+
         {createCourse && (
           <div className="fixed top-0 left-0 z-30 flex items-center justify-center w-screen h-screen bg-black/95">
             <div className="relative z-50 flex flex-col w-5/6 p-4 overflow-hidden border-4 rounded-lg bg-slate-100 border-umkc_light_blue gap-y-4">
@@ -245,6 +246,7 @@ const Admin_Link_Test = () => {
                 notes,
                 position,
                 semester,
+                applications,
                 level,
               }) => (
                 <Position_card
@@ -253,6 +255,7 @@ const Admin_Link_Test = () => {
                   position={position}
                   notes={notes}
                   major={major}
+                  applications={applications}
                   id={_id}
                   key={_id}
                 />

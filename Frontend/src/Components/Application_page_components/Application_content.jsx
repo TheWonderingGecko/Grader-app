@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useApplication } from '../../hooks/useApplication'
 import { Link } from 'react-router-dom'
 
 const Application_content = () => {
@@ -8,13 +9,15 @@ const Application_content = () => {
   const [umkcEmail, setUMKCEmail] = useState('')
   const [degree, setDegree] = useState('')
   const [gpa, setGpa] = useState('')
+  const [major, setMajor] = useState('')
+  const [level, setLevel] = useState('')
+  const [semester, setSemester] = useState('')
+  const [isGTA, setIsGTA] = useState(false)
+  const [resumeFile, setResumeFile] = useState('')
   const [selectedClasses, setSelectedClasses] = useState([])
   const [courses, setCourses] = useState(null)
   const formRef = useRef(null)
-  // const [major, setMajor] = useState('')
-  // const [level, setLevel] = useState('')
-  // const [term, setTerm] = useState('')
-  // const [gta, setGta] = useState('')
+  const { addAPP, successApp, errorApp } = useApplication()
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -23,7 +26,6 @@ const Application_content = () => {
 
       if (response.ok) {
         setCourses(json)
-        console.log(courses)
       }
     }
 
@@ -58,6 +60,30 @@ const Application_content = () => {
     } else {
       // Add the selected class to the end of the selectedClasses array
       setSelectedClasses([...selectedClasses, selectedClass])
+    }
+  }
+
+  const handleApplication = (e) => {
+    e.preventDefault()
+    const application = {
+      firstName: firstName,
+      lastName: lastName,
+      studentID: studentID,
+      umkcEmail: umkcEmail,
+      degree: degree,
+      gpa: gpa,
+      major: major,
+      level: level,
+      semester: semester,
+      isGTA: isGTA,
+      resumeFile: resumeFile,
+    }
+
+    for (let cls of selectedClasses) {
+      const applications = courses.find(
+        (course) => course._id === cls._id
+      ).applications
+      addAPP(cls._id, applications, application)
     }
   }
 
@@ -143,7 +169,7 @@ const Application_content = () => {
               </h3>
             </label>
             <input
-              type="text"
+              type="float"
               onChange={(e) => setGpa(e.target.value)}
               value={gpa}
               className="w-3/4 p-2 border-2 rounded-md border-umkc_light_blue"
@@ -159,6 +185,7 @@ const Application_content = () => {
             <select
               id="major"
               className="w-3/4 p-2 bg-white border-2 rounded-md border-umkc_light_blue"
+              onChange={(e) => setMajor(e.target.value)}
               required
             >
               <option value="">--Select an option--</option>
@@ -175,6 +202,7 @@ const Application_content = () => {
             <select
               id="level"
               className="w-3/4 p-2 bg-white border-2 rounded-md border-umkc_light_blue"
+              onChange={(e) => setLevel(e.target.value)}
               required
             >
               <option value="">--Select an option--</option>
@@ -189,6 +217,7 @@ const Application_content = () => {
             <select
               id="semester"
               className="w-3/4 p-2 bg-white border-2 rounded-md border-umkc_light_blue"
+              onChange={(e) => setSemester(e.target.value)}
               required
             >
               <option value="">--Select an option--</option>
@@ -206,11 +235,12 @@ const Application_content = () => {
             <select
               id="GTA"
               className="w-3/4 p-2 bg-white border-2 rounded-md border-umkc_light_blue"
+              onChange={(e) => setIsGTA(e.target.value)}
               required
             >
               <option value="">--Select an option--</option>
-              <option value="No">No</option>
-              <option value="Yes">Yes</option>
+              <option value="false">No</option>
+              <option value="true">Yes</option>
             </select>
 
             <label
@@ -223,37 +253,43 @@ const Application_content = () => {
             </label>
             <div className="grid grid-cols-3 gap-3 p-2 overflow-auto h-60 lg:border-black lg:border-2 ">
               {courses &&
-                courses.map(({ _id, code, semester }) => {
+                courses.map(({ _id, code, semester, applications }) => {
                   return (
-                    <>
-                      <div
-                        key={_id}
-                        className={` p-2 bg-white border-2 rounded-md border-umkc_light_blue text-center ${
-                          selectedClasses.some((cls) => cls._id === _id)
-                            ? 'bg-umkc_dark_blue text-umkc_yellow'
-                            : ''
-                        }`}
-                        onClick={(e) => selectClass(_id)}
-                      >
-                        <div className="class">
-                          <p className="class-name">
-                            <strong>{code}</strong>
-                          </p>
-                          <p className="class-sem">
-                            (<strong>{semester}</strong>)
-                          </p>
-                        </div>
+                    <div
+                      key={_id}
+                      className={` p-2  border-2 rounded-md border-umkc_light_blue text-center ${
+                        selectedClasses.some((cls) => cls._id === _id)
+                          ? ' bg-umkc_dark_blue text-umkc_yellow'
+                          : ' bg-white'
+                      }`}
+                      onClick={() => selectClass(_id)}
+                    >
+                      <div className="class">
+                        <p className="class-name">
+                          <strong>{code}</strong>
+                        </p>
+                        <p className="class-sem">
+                          (<strong>{semester}</strong>)
+                        </p>
                       </div>
-                    </>
+                    </div>
                   )
                 })}
             </div>
 
-            <label>
+            <label htmlFor="resume">
               <h3>Resume Document</h3>
             </label>
-            <input type="file" name="resume" accept=".pdf,.doc,.docx" />
-            <button className="p-2 text-2xl font-bold rounded-lg shadow-md bg-umkc_yellow text-umkc_light_blue md:col-span-2">
+            <input
+              type="text"
+              id="resume"
+              name="resume"
+              onChange={(e) => setResumeFile(e.target.value)}
+            />
+            <button
+              className="p-2 text-2xl font-bold rounded-lg shadow-md bg-umkc_yellow text-umkc_light_blue md:col-span-2"
+              onClick={handleApplication}
+            >
               {' '}
               Submit
             </button>

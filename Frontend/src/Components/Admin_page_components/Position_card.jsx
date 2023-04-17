@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useCourseDeletion } from '../../hooks/useCourseDeletion'
 import { useCourseEdit } from '../../hooks/useCourseEdit'
-import { useCoursesContext } from '../../hooks/useCoursesContext'
+import { useApplication } from '../../hooks/useApplication'
 
 const Position_card = (props) => {
   const [edit, setEdit] = useState('')
@@ -9,8 +9,23 @@ const Position_card = (props) => {
 
   const [deleteCourse, setDeleteCourse] = useState(false)
   const { courseDelete, success, error } = useCourseDeletion()
+  const { addAPP, successApp, errorApp } = useApplication()
   const { courseEdit, successEdit, errorEdit } = useCourseEdit()
   const [editNotes, setEditNotes] = useState(props.notes)
+  const courseId = '6417f437a2a9b2886f7b6008'
+  const application = {
+    firstName: 'John',
+    lastName: 'Doe',
+    studentID: '1234567',
+    umkcEmail: 'johndoe@umkc.edu',
+    degree: 'Bachelor of Science',
+    gpa: '3.5',
+    major: 'cs',
+    level: 'undergraduate',
+    semester: 'Fall',
+    isGTA: false,
+    resumeFile: 'resume_filename_here.pdf',
+  }
 
   const handleDelete = async () => {
     setDeleteCourse(true)
@@ -21,6 +36,11 @@ const Position_card = (props) => {
   const handleEdit = async () => {
     console.log(editNotes)
     await courseEdit(props.id, editNotes)
+  }
+
+  const handleApplication = async (e) => {
+    e.preventDefault()
+    await addAPP(courseId, props.applications, application)
   }
 
   return (
