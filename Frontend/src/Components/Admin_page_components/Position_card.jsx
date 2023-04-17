@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useCourseDeletion } from '../../hooks/useCourseDeletion'
 import { useCourseEdit } from '../../hooks/useCourseEdit'
-import { useApplication } from '../../hooks/useApplication'
 
 const Position_card = (props) => {
   const [edit, setEdit] = useState('')
