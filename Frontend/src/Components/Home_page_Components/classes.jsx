@@ -11,8 +11,8 @@ const Classes = () => {
   const [selectedLevel, setSelectedLevel] = useState('')
   const [courses, setCourses] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [allClasses, setAllClasses] = useState(courses)
-  const [filteredClasses, setFilteredClasses] = useState(courses)
+  const [allClasses, setAllClasses] = useState(null)
+  const [filteredClasses, setFilteredClasses] = useState(null)
   const [enableFilter, setEnableFilter] = useState(false)
 
   useEffect(() => {
@@ -25,7 +25,6 @@ const Classes = () => {
         setCourses(json)
         setAllClasses(json)
         setFilteredClasses(json)
-        console.log(courses)
       }
     }
 
@@ -326,7 +325,6 @@ const Classes = () => {
       </div>
 
       <div className=" bg-center grid grid-cols-1 gap-3 overflow-auto h-3/4 justify-items-center basis-2/3 md:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8 ">
-        {console.log(allClasses)}
         {!isLoading &&
           filteredClasses.map(
             ({ _id, code, name, major, notes, position, semester, level }) => {
