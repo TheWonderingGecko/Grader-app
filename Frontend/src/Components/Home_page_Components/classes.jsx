@@ -155,12 +155,7 @@ const Classes = () => {
 
   return (
     <div className="relative flex items-start w-screen h-screen overflow-hidden">
-      <div className="relative flex flex-col items-start w-full text-center h-5/6 basis-1/3">
-        <img
-          src={BigRoo}
-          alt="Big Roo"
-          className="absolute h-32 bottom-6 md:w-full md:h-48 lg:hidden"
-        />
+      <div className="relative flex flex-col items-start w-full overflow-auto text-center h-5/6 basis-1/3">
         {!enableFilter && (
           <div className="flex justify-center w-full">
             <button
@@ -293,16 +288,21 @@ const Classes = () => {
             </fieldset>
           </form>
         )}
+        <img
+          src={BigRoo}
+          alt="Big Roo"
+          className="h-32 md:w-full md:h-48 lg:hidden"
+        />
       </div>
 
-      <div className=" bg-center grid grid-cols-1 gap-3 overflow-auto h-3/4 justify-items-center basis-2/3 md:grid-cols-2 landscape:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8 ">
+      <div className="  grid grid-cols-1 gap-3 overflow-auto h-3/4 justify-items-center basis-2/3 md:grid-cols-2 landscape:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8  lg:landscape:h-[70vh] rounded-md lg:landscape:bg-[10%,60%] p-2 pt-0">
         {!isLoading &&
           filteredClasses.map(
             ({ _id, code, name, major, notes, position, semester, level }) => {
               return (
                 <div
                   key={_id}
-                  className="text-center bg-white border-4 rounded-lg shadow-xl cursor-pointer w-60 border-umkc_light_blue h-fit lg:hover:bg-umkc_dark_blue lg:hover:text-umkc_yellow group "
+                  className="w-full text-center bg-white border-4 rounded-lg shadow-xl cursor-pointer border-umkc_light_blue h-fit lg:hover:bg-umkc_dark_blue lg:hover:text-umkc_yellow group lg:w-60 "
                   onClick={() => {
                     showMore === _id ? setShowMore('') : setShowMore(_id)
                   }}

@@ -25,8 +25,8 @@ const Login_content = () => {
   }, [success, navigate])
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-slate-200 ">
-      <div className="w-5/6 p-8 pt-0 rounded-md bg-umkc_light_blue text-umkc_yellow lg:w-1/2 lg:shadow-xl">
+    <div className="flex flex-col items-center h-screen bg-slate-200 ">
+      <div className="w-5/6 p-8 pt-0 rounded-md bg-umkc_light_blue text-umkc_yellow lg:w-1/2 lg:shadow-xl mt-[10vh]">
         <div className="items-center justify-center p-4 md:flex">
           <img src={logo} className="" />
         </div>
@@ -34,7 +34,7 @@ const Login_content = () => {
         <section className="flex flex-col gap-3">
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-8 text-left"
+            className="flex flex-col gap-8 text-left md:gap-3"
           >
             <label
               htmlFor="username"

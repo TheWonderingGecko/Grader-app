@@ -158,16 +158,16 @@ const Admin_Link_Test = () => {
   }
 
   return (
-    <div className="relative flex h-screen overflow-hidden font-bold text-center text-black lg:text-xl ">
-      <div className="flex flex-col items-center h-full basis-1/4 bg-slate-400 md:justify-start md:pl-4 lg:basis-1/6 ">
-        <img src={BigRoo} alt="Umkc" />
+    <div className="relative flex h-screen overflow-hidden font-bold text-center text-black ">
+      <div className="flex flex-col items-center h-full basis-1/4 bg-slate-400 md:justify-start md:pl-4 ">
+        <img src={BigRoo} alt="Umkc" className=" lg:landscape:w-40" />
 
-        <form className="flex flex-col gap-4 pl-1 text-center md:text-left md:p-2 md:text-xl">
+        <form className="flex flex-col gap-4 pl-1 text-center md:text-left md:p-2 ">
           <legend className="">
             <h3>Major</h3>
           </legend>
           <fieldset
-            className="flex flex-col items-start justify-between pb-4 md:gap-2 md:flex-row"
+            className="flex flex-col items-start justify-between pb-4 md:gap-2 md:flex-row lg:landscape:pb-2"
             onChange={(e) => sortByMajor(e.target.value)}
           >
             <label htmlFor="cs" className="">
@@ -176,7 +176,7 @@ const Admin_Link_Test = () => {
                 id="cs"
                 name="Major"
                 value="cs"
-                className=" md:w-6 md:h-6"
+                className=""
               />
               CS
             </label>
@@ -187,7 +187,7 @@ const Admin_Link_Test = () => {
                 id="ece"
                 name="Major"
                 value="ece"
-                className="md:w-6 md:h-6"
+                className=""
               />
               ECE
             </label>
@@ -198,7 +198,7 @@ const Admin_Link_Test = () => {
                 id="it"
                 name="Major"
                 value="it"
-                className="md:w-6 md:h-6"
+                className=""
               />
               IT
             </label>
@@ -208,7 +208,7 @@ const Admin_Link_Test = () => {
             <h3>Position</h3>
           </legend>
           <fieldset
-            className="flex flex-col items-start justify-start pb-4 md:gap-2"
+            className="flex flex-col items-start justify-start pb-4 md:gap-2 lg:landscape:flex-row lg:landscape:pb-2"
             onChange={(e) => sortByPosition(e.target.value)}
           >
             <label htmlFor="instructor">
@@ -217,7 +217,7 @@ const Admin_Link_Test = () => {
                 id="instructor"
                 name="position"
                 value="instructor"
-                className="md:w-6 md:h-6"
+                className=""
               />
               Inst.
             </label>
@@ -228,7 +228,7 @@ const Admin_Link_Test = () => {
                 id="grader"
                 name="position"
                 value="grader"
-                className="md:w-6 md:h-6"
+                className=""
               />
               grader
             </label>
@@ -239,7 +239,7 @@ const Admin_Link_Test = () => {
           </legend>
 
           <fieldset
-            className="flex flex-col items-start pb-4 md:gap-2"
+            className="flex flex-col items-start pb-4 md:gap-2 lg:landscape:flex-row lg:landscape:pb-2"
             onChange={(e) => sortBySemester(e.target.value)}
           >
             <label htmlFor="fall">
@@ -248,7 +248,7 @@ const Admin_Link_Test = () => {
                 id="fall"
                 name="semester"
                 value="fall"
-                className="md:w-6 md:h-6"
+                className=""
               />
               Fall
             </label>
@@ -259,7 +259,7 @@ const Admin_Link_Test = () => {
                 id="spring"
                 name="semester"
                 value="spring"
-                className="md:w-6 md:h-6"
+                className=""
               />
               Spring
             </label>
@@ -270,14 +270,14 @@ const Admin_Link_Test = () => {
                 id="summer"
                 name="semester"
                 value="summer"
-                className="md:w-6 md:h-6"
+                className=""
               />
               Summer
             </label>
           </fieldset>
         </form>
         <button
-          className="w-3/4 mt-8 rounded-md bg-umkc_yellow text-umkc_dark_blue md:text-2xl"
+          className="w-3/4 mt-8 rounded-md bg-umkc_yellow text-umkc_dark_blue md:text-2xl lg:landscape:mt-2"
           onClick={() => setCreateCourse(true)}
         >
           Open Position
@@ -372,7 +372,7 @@ const Admin_Link_Test = () => {
           </div>
         )}
       </div>
-      <div className="flex flex-col basis-3/4 bg-slate-200 lg:basis-5/6">
+      <div className="flex flex-col basis-3/4 bg-slate-200 ">
         <div className="flex items-center justify-center p-4 text-3xl border-b-2 shadow-lg border-umkc_light_blue bg-umkc_light_blue text-umkc_yellow">
           Open Courses
         </div>
