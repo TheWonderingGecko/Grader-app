@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useCourseDeletion } from '../../hooks/useCourseDeletion'
 import { useCourseEdit } from '../../hooks/useCourseEdit'
-import { useApplication } from '../../hooks/useApplication'
 
 const Position_card = (props) => {
   const [edit, setEdit] = useState('')
@@ -9,23 +8,11 @@ const Position_card = (props) => {
 
   const [deleteCourse, setDeleteCourse] = useState(false)
   const { courseDelete, success, error } = useCourseDeletion()
-  const { addAPP, successApp, errorApp } = useApplication()
+
   const { courseEdit, successEdit, errorEdit } = useCourseEdit()
   const [editNotes, setEditNotes] = useState(props.notes)
-  const courseId = '6417f437a2a9b2886f7b6008'
-  const application = {
-    firstName: 'John',
-    lastName: 'Doe',
-    studentID: '1234567',
-    umkcEmail: 'johndoe@umkc.edu',
-    degree: 'Bachelor of Science',
-    gpa: '3.5',
-    major: 'cs',
-    level: 'undergraduate',
-    semester: 'Fall',
-    isGTA: false,
-    resumeFile: 'resume_filename_here.pdf',
-  }
+
+  const order = ['PHD', 'MS', 'BS']
 
   const handleDelete = async () => {
     setDeleteCourse(true)
@@ -45,13 +32,15 @@ const Position_card = (props) => {
 
   return (
     <div
-      className="relative flex flex-col items-center justify-center w-3/4 p-4 bg-white border-2 rounded-lg border-umkc_light_blue group lg:hover:bg-umkc_dark_blue gap-y-2"
+      className="relative flex flex-col items-center justify-center w-3/4 p-4 bg-white border-4 rounded-lg border-umkc_light_blue group lg:hover:bg-umkc_dark_blue gap-y-2 max-h-[15rem]"
       key={props.id}
     >
       <div className="lg:group-hover:hidden">
         {props.title} ({props.sem})
       </div>
-      <div className="lg:group-hover:hidden">8 applicants </div>{' '}
+      <div className="lg:group-hover:hidden">
+        {props.applications.length} applicants{' '}
+      </div>{' '}
       <div className="lg:group-hover:hidden">Position: {props.position}</div>
       <div className="flex items-center justify-center gap-2 text-umkc_dark_blue lg:hidden lg:group-hover:flex">
         <button
@@ -114,66 +103,41 @@ const Position_card = (props) => {
       )}
       {view === props.id && (
         <div className="fixed top-0 left-0 z-30 flex items-center justify-center w-screen h-screen bg-black/95 ">
-          <div className="z-50 flex flex-col w-5/6 p-2 overflow-hidden border-4 rounded-lg bg-slate-100 border-umkc_light_blue gap-y-4">
+          <div className="z-50 flex flex-col w-5/6 p-2 overflow-auto border-4 rounded-lg bg-slate-100 border-umkc_light_blue gap-y-4 max-h-[40vh]">
             <div className="flex justify-between px-2">
-              {props.title} <div>8 applicants</div>
+              {props.title} <div>{props.applications.length} applicants</div>
               <button className="text-black " onClick={() => setView('')}>
                 Close
               </button>
             </div>
 
-            <table className="text-center border-2 rounded-md bg-slate-300">
+            <table className="text-left border-2 rounded-md bg-slate-300 md:text-center">
               <thead className="">
                 <tr>
                   <th>Name</th>
-                  <th>Position</th>
+                  <th>Level</th>
+
                   <th>Resume</th>
                 </tr>
               </thead>
               <tbody className="bg-slate-100 ">
-                <tr className=" odd:bg-umkc_yellow">
-                  <td>Jahmir Swopes</td>
-                  <td>MS</td>
-                  <td className="text-blue-500">Resume.pdf</td>
-                </tr>
-                <tr className="p odd:bg-umkc_yellow">
-                  <td> Katie Ngo </td>
-                  <td>BA</td>
-                  <td className="text-blue-500 ">Resume.pdf</td>
-                </tr>
-                <tr className="p odd:bg-umkc_yellow">
-                  <td> Michael Wright </td>
-                  <td>PHD</td>
-                  <td className="text-blue-500 ">Resume.pdf</td>
-                </tr>
+                {props.applications.sort(
+                  (a, b) => order.indexOf(a.level) - order.indexOf(b.level)
+                ) &&
+                  props.applications.map((app) => {
+                    return (
+                      <tr className=" odd:bg-umkc_yellow">
+                        <td className="pl-2">
+                          {app.firstName} <br /> {app.lastName}
+                        </td>
+                        <td className="uppercase"> {app.level} </td>
 
-                <tr className="p odd:bg-umkc_yellow">
-                  <td> Salma Omar </td>
-                  <td>BA</td>
-                  <td className="text-blue-500 ">Resume.pdf</td>
-                </tr>
-
-                <tr className=" odd:bg-umkc_yellow">
-                  <td>Jahmir Swopes</td>
-                  <td>MS</td>
-                  <td className="text-blue-500">Resume.pdf</td>
-                </tr>
-                <tr className="p odd:bg-umkc_yellow">
-                  <td> Katie Ngo </td>
-                  <td>BA</td>
-                  <td className="text-blue-500 ">Resume.pdf</td>
-                </tr>
-                <tr className="p odd:bg-umkc_yellow">
-                  <td> Michael Wright </td>
-                  <td>PHD</td>
-                  <td className="text-blue-500 ">Resume.pdf</td>
-                </tr>
-
-                <tr className="p odd:bg-umkc_yellow">
-                  <td> Salma Omar </td>
-                  <td>BA</td>
-                  <td className="text-blue-500 ">Resume.pdf</td>
-                </tr>
+                        <td className="text-blue-500 pointed cursor">
+                          View Resume
+                        </td>
+                      </tr>
+                    )
+                  })}
               </tbody>
             </table>
           </div>

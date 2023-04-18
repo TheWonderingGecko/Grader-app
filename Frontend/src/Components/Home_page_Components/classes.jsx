@@ -11,9 +11,9 @@ const Classes = () => {
   const [selectedLevel, setSelectedLevel] = useState('')
   const [courses, setCourses] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [allClasses, setAllClasses] = useState(courses)
-  const [filteredClasses, setFilteredClasses] = useState(courses)
-  const [enableFilter, setEnableFilter] = useState(false)
+  const [allClasses, setAllClasses] = useState(null)
+  const [filteredClasses, setFilteredClasses] = useState(null)
+  const [enableFilter, setEnableFilter] = useState(true)
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -25,7 +25,6 @@ const Classes = () => {
         setCourses(json)
         setAllClasses(json)
         setFilteredClasses(json)
-        console.log(courses)
       }
     }
 
@@ -156,12 +155,7 @@ const Classes = () => {
 
   return (
     <div className="relative flex items-start w-screen h-screen overflow-hidden">
-      <div className="relative flex flex-col items-start w-full text-center h-5/6 basis-1/3">
-        <img
-          src={BigRoo}
-          alt="Big Roo"
-          className="absolute h-32 bottom-6 md:w-full md:h-48 lg:hidden"
-        />
+      <div className="relative flex flex-col items-start w-full overflow-auto text-center h-5/6 basis-1/3">
         {!enableFilter && (
           <div className="flex justify-center w-full">
             <button
@@ -292,48 +286,23 @@ const Classes = () => {
                 Summer
               </label>
             </fieldset>
-
-            <fieldset className="flex flex-col items-start gap-1 text-lg md:flex-row md:gap-4 ">
-              <legend className="text-xl font-semibold">
-                <h3>Level</h3>
-              </legend>
-              <label htmlFor="undergraduate">
-                <input
-                  type="radio"
-                  id="undergraduate"
-                  name="level"
-                  value="underGraduate"
-                  checked={selectedLevel === 'undergraduate'}
-                  onClick={() => sortByLevel('undergraduate')}
-                />
-                B.S
-              </label>
-
-              <label htmlFor="graduate">
-                <input
-                  type="radio"
-                  id="graduate"
-                  name="level"
-                  value="graduate"
-                  checked={selectedLevel === 'graduate'}
-                  onClick={() => sortByLevel('graduate')}
-                />
-                MS
-              </label>
-            </fieldset>
           </form>
         )}
+        <img
+          src={BigRoo}
+          alt="Big Roo"
+          className="h-32 md:w-full md:h-48 lg:hidden"
+        />
       </div>
 
-      <div className=" bg-center grid grid-cols-1 gap-3 overflow-auto h-3/4 justify-items-center basis-2/3 md:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8 ">
-        {console.log(allClasses)}
+      <div className="  grid grid-cols-1 gap-3 overflow-auto h-3/4 justify-items-center basis-2/3 md:grid-cols-2 landscape:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8  lg:landscape:h-[70vh] rounded-md lg:landscape:bg-[10%,60%] p-2 pt-0">
         {!isLoading &&
           filteredClasses.map(
             ({ _id, code, name, major, notes, position, semester, level }) => {
               return (
                 <div
                   key={_id}
-                  className="text-center bg-white border-4 rounded-lg shadow-xl w-60 border-umkc_light_blue h-fit lg:hover:bg-umkc_dark_blue lg:hover:text-umkc_yellow group"
+                  className="w-full text-center bg-white border-4 rounded-lg shadow-xl cursor-pointer border-umkc_light_blue h-fit lg:hover:bg-umkc_dark_blue lg:hover:text-umkc_yellow group lg:w-60 "
                   onClick={() => {
                     showMore === _id ? setShowMore('') : setShowMore(_id)
                   }}
