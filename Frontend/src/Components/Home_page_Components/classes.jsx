@@ -13,7 +13,7 @@ const Classes = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [allClasses, setAllClasses] = useState(null)
   const [filteredClasses, setFilteredClasses] = useState(null)
-  const [enableFilter, setEnableFilter] = useState(false)
+  const [enableFilter, setEnableFilter] = useState(true)
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -291,47 +291,18 @@ const Classes = () => {
                 Summer
               </label>
             </fieldset>
-
-            <fieldset className="flex flex-col items-start gap-1 text-lg md:flex-row md:gap-4 ">
-              <legend className="text-xl font-semibold">
-                <h3>Level</h3>
-              </legend>
-              <label htmlFor="undergraduate">
-                <input
-                  type="radio"
-                  id="undergraduate"
-                  name="level"
-                  value="underGraduate"
-                  checked={selectedLevel === 'undergraduate'}
-                  onClick={() => sortByLevel('undergraduate')}
-                />
-                B.S
-              </label>
-
-              <label htmlFor="graduate">
-                <input
-                  type="radio"
-                  id="graduate"
-                  name="level"
-                  value="graduate"
-                  checked={selectedLevel === 'graduate'}
-                  onClick={() => sortByLevel('graduate')}
-                />
-                MS
-              </label>
-            </fieldset>
           </form>
         )}
       </div>
 
-      <div className=" bg-center grid grid-cols-1 gap-3 overflow-auto h-3/4 justify-items-center basis-2/3 md:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8 ">
+      <div className=" bg-center grid grid-cols-1 gap-3 overflow-auto h-3/4 justify-items-center basis-2/3 md:grid-cols-2 landscape:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8 ">
         {!isLoading &&
           filteredClasses.map(
             ({ _id, code, name, major, notes, position, semester, level }) => {
               return (
                 <div
                   key={_id}
-                  className="text-center bg-white border-4 rounded-lg shadow-xl w-60 border-umkc_light_blue h-fit lg:hover:bg-umkc_dark_blue lg:hover:text-umkc_yellow group"
+                  className="text-center bg-white border-4 rounded-lg shadow-xl cursor-pointer w-60 border-umkc_light_blue h-fit lg:hover:bg-umkc_dark_blue lg:hover:text-umkc_yellow group "
                   onClick={() => {
                     showMore === _id ? setShowMore('') : setShowMore(_id)
                   }}
