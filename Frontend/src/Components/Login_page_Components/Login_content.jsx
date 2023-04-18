@@ -26,7 +26,7 @@ const Login_content = () => {
 
   return (
     <div className="flex flex-col items-center h-screen bg-slate-200 ">
-      <div className="w-5/6 p-8 pt-0 rounded-md bg-umkc_light_blue text-umkc_yellow lg:w-1/2 lg:shadow-xl mt-[10vh]">
+      <div className="w-5/6 p-8 pt-0 rounded-md bg-umkc_light_blue text-umkc_yellow lg:w-1/2 lg:shadow-xl mt-[5vh]">
         <div className="items-center justify-center p-4 md:flex">
           <img src={logo} className="" />
         </div>
