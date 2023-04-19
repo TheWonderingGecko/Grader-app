@@ -376,7 +376,7 @@ const Admin_Link_Test = () => {
         <div className="flex items-center justify-center p-4 text-3xl border-b-2 shadow-lg border-umkc_light_blue bg-umkc_light_blue text-umkc_yellow">
           Open Courses
         </div>
-        <div className="grid grid-cols-1 gap-3 pt-4 overflow-auto h-5/6 justify-items-center md:grid-cols-2 lg:grid-cols-3 lg:h-3/4 ">
+        <div className="grid grid-cols-1 gap-3 pt-4 overflow-auto h-3/4 md:h-5/6 justify-items-center md:grid-cols-2 lg:grid-cols-3 lg:h-3/4 ">
           {filteredClasses &&
             filteredClasses.map(
               ({
