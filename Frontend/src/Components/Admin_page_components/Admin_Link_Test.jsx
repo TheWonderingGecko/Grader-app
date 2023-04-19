@@ -159,10 +159,10 @@ const Admin_Link_Test = () => {
 
   return (
     <div className="relative flex h-screen overflow-hidden font-bold text-center text-black ">
-      <div className="flex flex-col items-center h-full basis-1/4 bg-slate-400 md:justify-start md:pl-4 ">
+      <div className="flex flex-col items-center h-full basis-1/4 bg-slate-400 md:justify-start md:pl-4">
         <img src={BigRoo} alt="Umkc" className=" lg:landscape:w-40" />
 
-        <form className="flex flex-col gap-4 pl-1 text-center md:text-left md:p-2 ">
+        <form className="flex flex-col gap-4 pl-1 text-center md:text-left md:p-2">
           <legend className="">
             <h3>Major</h3>
           </legend>
