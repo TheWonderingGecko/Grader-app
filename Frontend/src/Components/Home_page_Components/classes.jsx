@@ -13,7 +13,7 @@ const Classes = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [allClasses, setAllClasses] = useState(null)
   const [filteredClasses, setFilteredClasses] = useState(null)
-  const [enableFilter, setEnableFilter] = useState(true)
+  const [enableFilter, setEnableFilter] = useState(false)
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -143,8 +143,8 @@ const Classes = () => {
     }
   }
 
-  const filterHandler = () => {
-    setEnableFilter(!enableFilter)
+  const clearFilter = (e) => {
+    e.preventDefault()
     setSelectedMajor('')
     setSelectedSemester('')
     setSelectedPosition('')
@@ -153,140 +153,160 @@ const Classes = () => {
     setFilteredClasses(courses)
   }
 
+  const setFilterHandler = () => {
+    setEnableFilter(!enableFilter)
+  }
+
   return (
-    <div className="relative flex items-start w-screen h-screen overflow-hidden">
-      <div className="relative flex flex-col items-start w-full overflow-auto text-center h-5/6 basis-1/3">
+    <div className="relative flex items-start w-screen h-full ">
+      <div className="relative flex flex-col items-start w-full h-full overflow-auto text-center basis-1/3">
         {!enableFilter && (
-          <div className="flex justify-center w-full">
+          <div className="flex flex-col items-center justify-center w-full gap-4">
             <button
               className="w-3/4 p-2 font-bold rounded-lg shadow-md bg-umkc_yellow text-umkc_light_blue"
-              onClick={filterHandler}
+              onClick={setFilterHandler}
             >
               Filter
+            </button>
+
+            <button
+              className="w-3/4 p-2 font-bold rounded-lg shadow-md bg-umkc_light_blue text-umkc_yellow"
+              onClick={clearFilter}
+            >
+              Clear
             </button>
           </div>
         )}
 
         {enableFilter && (
-          <form className="flex flex-col gap-2 p-4 bg-white border-4 border-l-0 rounded-r-lg border-umkc_light_blue md:w-full">
-            <button
-              className="p-2 font-bold rounded-lg shadow-md bg-umkc_yellow text-umkc_light_blue"
-              onClick={filterHandler}
+          <div className="fixed top-0 z-30 flex items-center justify-center w-screen h-screen md:h-full bg-black/95 md:w-full md:static md:bg-white md:border-l-0 md:rounded-r-lg md:border-umkc_light_blue md:border-4 ">
+            <form
+              className="relative flex flex-col gap-2 p-4 bg-white border-4 rounded-lg md:rounded-r-lg md:border-l-0 border-umkc_light_blue md:w-full md:border-none"
+              onSubmit={clearFilter}
             >
-              Close
-            </button>
+              <button
+                className="p-2 font-bold rounded-lg shadow-md bg-umkc_yellow text-umkc_light_blue"
+                onClick={setFilterHandler}
+              >
+                Close
+              </button>
 
-            <fieldset className="flex flex-col items-start gap-1 text-lg md:flex-row md:gap-4">
-              <legend className="text-xl font-semibold">
-                <h3>Major</h3>
-              </legend>
-              <label htmlFor="cs">
-                <input
-                  type="radio"
-                  id="cs"
-                  name="Major"
-                  value="cs"
-                  checked={selectedMajor === 'cs'}
-                  onClick={() => sortByMajor('cs')}
-                />
-                CS
-              </label>
+              <button className="hidden p-2 font-bold rounded-lg shadow-md md:block bg-umkc_light_blue text-umkc_yellow">
+                Clear
+              </button>
 
-              <label htmlFor="ece">
-                <input
-                  type="radio"
-                  id="ece"
-                  name="Major"
-                  value="ece"
-                  checked={selectedMajor === 'ece'}
-                  onClick={() => sortByMajor('ece')}
-                />
-                ECE
-              </label>
+              <fieldset className="flex items-start gap-1 text-lg md:gap-4">
+                <legend className="text-xl font-semibold">
+                  <h3>Major</h3>
+                </legend>
+                <label htmlFor="cs">
+                  <input
+                    type="radio"
+                    id="cs"
+                    name="Major"
+                    value="cs"
+                    checked={selectedMajor === 'cs'}
+                    onClick={() => sortByMajor('cs')}
+                  />
+                  CS
+                </label>
 
-              <label htmlFor="it">
-                <input
-                  type="radio"
-                  id="it"
-                  name="Major"
-                  value="it"
-                  checked={selectedMajor === 'it'}
-                  onClick={() => sortByMajor('it')}
-                />
-                IT
-              </label>
-            </fieldset>
+                <label htmlFor="ece">
+                  <input
+                    type="radio"
+                    id="ece"
+                    name="Major"
+                    value="ece"
+                    checked={selectedMajor === 'ece'}
+                    onClick={() => sortByMajor('ece')}
+                  />
+                  ECE
+                </label>
 
-            <fieldset className="flex flex-col items-start gap-1 text-lg md:flex-row md:gap-4">
-              <legend className="text-xl font-semibold">
-                <h3>Position</h3>
-              </legend>
-              <label htmlFor="instructor">
-                <input
-                  type="radio"
-                  id="instructor"
-                  name="position"
-                  value="instructor"
-                  checked={selectedPosition === 'instructor'}
-                  onClick={() => sortByPosition('instructor')}
-                />
-                Instructor
-              </label>
+                <label htmlFor="it">
+                  <input
+                    type="radio"
+                    id="it"
+                    name="Major"
+                    value="it"
+                    checked={selectedMajor === 'it'}
+                    onClick={() => sortByMajor('it')}
+                  />
+                  IT
+                </label>
+              </fieldset>
 
-              <label htmlFor="grader">
-                <input
-                  type="radio"
-                  id="grader"
-                  name="position"
-                  value="grader"
-                  checked={selectedPosition === 'grader'}
-                  onClick={() => sortByPosition('grader')}
-                />
-                Grader
-              </label>
-            </fieldset>
+              <fieldset className="flex items-start gap-1 text-lg md:flex-col md:gap-4">
+                <legend className="text-xl font-semibold">
+                  <h3>Position</h3>
+                </legend>
+                <label htmlFor="instructor">
+                  <input
+                    type="radio"
+                    id="instructor"
+                    name="position"
+                    value="instructor"
+                    checked={selectedPosition === 'instructor'}
+                    onClick={() => sortByPosition('instructor')}
+                  />
+                  Instructor
+                </label>
 
-            <fieldset className="flex flex-col items-start gap-1 text-lg md:flex-row md:gap-4">
-              <legend className="text-xl font-semibold">
-                <h3>Semester</h3>
-              </legend>
-              <label htmlFor="fall">
-                <input
-                  type="radio"
-                  id="fall"
-                  name="semester"
-                  value="fall"
-                  checked={selectedSemester === 'fall'}
-                  onClick={() => sortBySemester('fall')}
-                />
-                Fall
-              </label>
+                <label htmlFor="grader">
+                  <input
+                    type="radio"
+                    id="grader"
+                    name="position"
+                    value="grader"
+                    checked={selectedPosition === 'grader'}
+                    onClick={() => sortByPosition('grader')}
+                  />
+                  Grader
+                </label>
+              </fieldset>
 
-              <label htmlFor="spring">
-                <input
-                  type="radio"
-                  id="spring"
-                  name="semester"
-                  value="spring"
-                  checked={selectedSemester === 'spring'}
-                  onClick={() => sortBySemester('spring')}
-                />
-                Spring
-              </label>
+              <fieldset className="flex flex-col items-start gap-1 text-lg md:flex-row md:gap-4">
+                <legend className="text-xl font-semibold">
+                  <h3>Semester</h3>
+                </legend>
+                <label htmlFor="fall">
+                  <input
+                    type="radio"
+                    id="fall"
+                    name="semester"
+                    value="fall"
+                    checked={selectedSemester === 'fall'}
+                    onClick={() => sortBySemester('fall')}
+                  />
+                  Fall
+                </label>
 
-              <label htmlFor="summer">
-                <input
-                  type="radio"
-                  id="summer"
-                  name="semester"
-                  value="summer"
-                  checked={selectedSemester === 'summer'}
-                  onClick={() => sortBySemester('summer')}
-                />
-                Summer
-              </label>
-            </fieldset>
-          </form>
+                <label htmlFor="spring">
+                  <input
+                    type="radio"
+                    id="spring"
+                    name="semester"
+                    value="spring"
+                    checked={selectedSemester === 'spring'}
+                    onClick={() => sortBySemester('spring')}
+                  />
+                  Spring
+                </label>
+
+                <label htmlFor="summer">
+                  <input
+                    type="radio"
+                    id="summer"
+                    name="semester"
+                    value="summer"
+                    checked={selectedSemester === 'summer'}
+                    onClick={() => sortBySemester('summer')}
+                  />
+                  Summer
+                </label>
+              </fieldset>
+            </form>
+          </div>
         )}
         <img
           src={BigRoo}
@@ -295,20 +315,20 @@ const Classes = () => {
         />
       </div>
 
-      <div className="  grid grid-cols-1 gap-3 overflow-auto h-3/4 justify-items-center basis-2/3 md:grid-cols-2 landscape:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8  lg:landscape:h-[70vh] rounded-md lg:landscape:bg-[10%,60%] p-2 pt-0">
+      <div className=" h-full w-full  grid grid-cols-1 gap-3 overflow-auto  justify-items-center basis-2/3 md:grid-cols-2 landscape:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8  lg:landscape:h-[70vh] rounded-md lg:landscape:bg-[10%,60%] p-2 pt-0">
         {!isLoading &&
           filteredClasses.map(
             ({ _id, code, name, major, notes, position, semester, level }) => {
               return (
                 <div
                   key={_id}
-                  className="w-full text-center bg-white border-4 rounded-lg shadow-xl cursor-pointer border-umkc_light_blue h-fit lg:hover:bg-umkc_dark_blue lg:hover:text-umkc_yellow group lg:w-60 "
+                  className="w-5/6 text-center bg-white border-4 rounded-lg shadow-xl cursor-pointer border-umkc_light_blue h-fit lg:hover:bg-umkc_dark_blue lg:hover:text-umkc_yellow group lg:w-60 "
                   onClick={() => {
                     showMore === _id ? setShowMore('') : setShowMore(_id)
                   }}
                 >
-                  <div className="">
-                    <div className="flex flex-wrap items-center justify-between h-20 p-4 text-lg">
+                  <div className="h-fit min-h-[5rem]">
+                    <div className="flex flex-wrap items-center justify-between p-4 text-lg text-left md:h-20">
                       <p className="">
                         <strong>{code}</strong>
                       </p>
@@ -318,7 +338,7 @@ const Classes = () => {
                     </div>
 
                     {showMore === _id && (
-                      <div className="flex flex-col items-center justify-center gap-2 p-4 font-semibold text-l">
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 font-semibold text-left text-l">
                         <p className="">Position: {position}</p>
                         <p className="">Course Major: {major}</p>
                         <p className="">Notes: {notes}</p>

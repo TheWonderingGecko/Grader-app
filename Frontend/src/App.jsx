@@ -9,10 +9,10 @@ import Admin from './pages/Admin'
 
 function App() {
   return (
-    <div className="App">
+    <div className="h-screen App bg-slate-300">
       <HashRouter>
         <Navbar />
-        <div className="pages">
+        <div className="h-3/4 pages">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="login" element={<Login />} />
