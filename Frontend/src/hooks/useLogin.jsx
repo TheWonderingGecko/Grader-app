@@ -1,9 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { json } from 'react-router-dom'
 
 export const useLogin = () => {
   const [error, setError] = useState('')
+  const [user, setUser] = useState('')
   const [success, setSuccess] = useState(false)
   //   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    console.log(user) // This will log the updated value of the `user` state.
+  }, [user])
 
   const login = async (email, password) => {
     // setIsLoading(true)
@@ -21,7 +27,13 @@ export const useLogin = () => {
     }
 
     if (response.ok) {
-      //   const json = await response.json()
+      const json = await response.json()
+      const value = json
+
+      console.log(json)
+      setUser(value)
+
+      console.log(user)
       setSuccess(true)
       //save user to local storage
       //   localStorage.setItem('user', JSON.stringify(json))
@@ -29,6 +41,8 @@ export const useLogin = () => {
       //   //update the authContext
       //   dispatch({ type: 'LOGIN', payload: json })
     }
+    console.log(user)
   }
-  return { login, success, error }
+
+  return { login, success, error, user_value: user }
 }

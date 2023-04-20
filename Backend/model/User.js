@@ -18,6 +18,12 @@ const userSchema = new Schema({
     required: true,
     minLength: 6,
   },
+
+  position: {
+    type: String,
+    enum: ['Admin', 'Student'],
+    required: true,
+  },
   grades: [{ type: mongoose.Types.ObjectId, ref: 'Grader', required: true }],
 })
 module.exports = mongoose.model('User', userSchema)

@@ -11,7 +11,7 @@ const Login_content = () => {
   const [user, setUser] = useState('')
   const [pwd, setPwd] = useState('')
   const [errMsg, setErrMsg] = useState('')
-  const { login, success, error } = useLogin()
+  const { login, success, error, user_value } = useLogin()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -20,7 +20,11 @@ const Login_content = () => {
 
   useEffect(() => {
     if (success) {
-      navigate('/app_form')
+      if (user_value.position === 'Student') {
+        navigate('/app_form')
+      } else if (user_value.position === 'Admin') {
+        navigate('/admin')
+      }
     }
   }, [success, navigate])
 
