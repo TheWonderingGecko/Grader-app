@@ -97,7 +97,7 @@ const Application_content = () => {
       tempEmptyFields.push('GTA')
     }
 
-    if (selectedFile === null) {
+    if (selectedFile === null || selectedFile.type !== 'application/pdf') {
       tempEmptyFields.push('Resume')
     }
 
@@ -354,15 +354,17 @@ const Application_content = () => {
             <div className="flex flex-col justify-end w-3/4 h-full gap-3">
               <label htmlFor="resume">
                 <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 '>
-                  Resume Document
+                  Resume Document{' '}
+                  <span className="text-sm text-error">(.pdf) only</span>
                 </h3>
               </label>
               <input
                 type="file"
                 id="resume"
                 name="resume"
+                accept=".pdf"
                 className={
-                  'w-full p-2 border-2 rounded-md ' +
+                  'w-full bg-white p-2 border-2 rounded-md ' +
                   (emptyFields.includes('Resume')
                     ? 'border-error'
                     : 'border-umkc_light_blue')
