@@ -4,6 +4,7 @@ import { useCourseEdit } from '../../hooks/useCourseEdit'
 
 const Position_card = (props) => {
   const [edit, setEdit] = useState('')
+  const [resumeUrl, setResumeUrl] = useState('')
   const [view, setView] = useState('')
 
   const [deleteCourse, setDeleteCourse] = useState(false)
@@ -13,6 +14,10 @@ const Position_card = (props) => {
   const [editNotes, setEditNotes] = useState(props.notes)
 
   const order = ['PHD', 'MS', 'BS']
+
+  const handleViewResume = (resumePath) => {
+    setResumeUrl(`http://localhost:5000/${resumePath}`)
+  }
 
   const handleDelete = async () => {
     setDeleteCourse(true)
@@ -44,13 +49,13 @@ const Position_card = (props) => {
       <div className="lg:group-hover:hidden">Position: {props.position}</div>
       <div className="flex items-center justify-center gap-2 text-umkc_dark_blue lg:hidden lg:group-hover:flex">
         <button
-          className="w-full p-2 rounded-lg bg-umkc_yellow lg:h-20"
+          className="w-full p-2 rounded-lg bg-umkc_yellow md:h-20"
           onClick={() => setEdit(props.id)}
         >
           Edit course
         </button>
         <button
-          className="w-full p-2 rounded-lg bg-umkc_yellow lg:h-20"
+          className="w-full p-2 rounded-lg bg-umkc_yellow md:h-20"
           onClick={() => setView(props.id)}
         >
           View applicants
@@ -103,44 +108,64 @@ const Position_card = (props) => {
       )}
       {view === props.id && (
         <div className="fixed top-0 left-0 z-30 flex items-center justify-center w-screen h-screen bg-black/95 ">
-          <div className="z-50 flex flex-col w-5/6 p-2 overflow-auto border-4 rounded-lg bg-slate-100 border-umkc_light_blue gap-y-4 max-h-[40vh]">
-            <div className="flex justify-between px-2">
-              {props.title} <div>{props.applications.length} applicants</div>
-              <button className="text-black " onClick={() => setView('')}>
+          {!resumeUrl && (
+            <div className="z-50 flex flex-col w-5/6 p-2 overflow-auto border-4 rounded-lg bg-slate-100 border-umkc_light_blue gap-y-4 max-h-[40vh]">
+              <div className="flex justify-between px-2">
+                {props.title} <div>{props.applications.length} applicants</div>
+                <button className="text-black " onClick={() => setView('')}>
+                  Close
+                </button>
+              </div>
+
+              <table className="text-left border-2 rounded-md bg-slate-300 md:text-center">
+                <thead className="">
+                  <tr>
+                    <th>Name</th>
+                    <th>Level</th>
+
+                    <th>Resume</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-slate-100 ">
+                  {props.applications.sort(
+                    (a, b) => order.indexOf(a.level) - order.indexOf(b.level)
+                  ) &&
+                    props.applications.map((app) => {
+                      return (
+                        <tr className=" odd:bg-umkc_yellow">
+                          <td className="pl-2">
+                            {app.firstName} <br /> {app.lastName}
+                          </td>
+                          <td className="uppercase"> {app.level} </td>
+
+                          <td
+                            className="text-blue-500 cursor-pointer"
+                            onClick={() => handleViewResume(app.resumeFile)}
+                          >
+                            View Resume
+                          </td>
+                        </tr>
+                      )
+                    })}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {resumeUrl && (
+            <div className="z-[60] p-4 bg-white rounded-lg w-3/4 h-3/4">
+              <button
+                className="mb-4 text-black"
+                onClick={() => setResumeUrl('')}
+              >
                 Close
               </button>
+              <embed
+                src={resumeUrl}
+                type="application/pdf"
+                className="w-full h-5/6"
+              />
             </div>
-
-            <table className="text-left border-2 rounded-md bg-slate-300 md:text-center">
-              <thead className="">
-                <tr>
-                  <th>Name</th>
-                  <th>Level</th>
-
-                  <th>Resume</th>
-                </tr>
-              </thead>
-              <tbody className="bg-slate-100 ">
-                {props.applications.sort(
-                  (a, b) => order.indexOf(a.level) - order.indexOf(b.level)
-                ) &&
-                  props.applications.map((app) => {
-                    return (
-                      <tr className=" odd:bg-umkc_yellow">
-                        <td className="pl-2">
-                          {app.firstName} <br /> {app.lastName}
-                        </td>
-                        <td className="uppercase"> {app.level} </td>
-
-                        <td className="text-blue-500 pointed cursor">
-                          View Resume
-                        </td>
-                      </tr>
-                    )
-                  })}
-              </tbody>
-            </table>
-          </div>
+          )}
         </div>
       )}
     </div>

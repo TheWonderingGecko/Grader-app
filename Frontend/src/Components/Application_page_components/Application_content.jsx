@@ -16,6 +16,7 @@ const Application_content = () => {
   const [level, setLevel] = useState('')
   const [semester, setSemester] = useState('')
   const [isGTA, setIsGTA] = useState(null)
+  const [selectedFile, setSelectedFile] = useState(null)
   const [resumeFile, setResumeFile] = useState('')
   const [selectedClasses, setSelectedClasses] = useState([])
   const [courses, setCourses] = useState('')
@@ -68,7 +69,11 @@ const Application_content = () => {
     }
   }
 
-  const handleApplication = (e) => {
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0])
+  }
+
+  const handleApplication = async (e) => {
     e.preventDefault()
     let tempEmptyFields = []
 
@@ -92,7 +97,7 @@ const Application_content = () => {
       tempEmptyFields.push('GTA')
     }
 
-    if (!resumeFile) {
+    if (selectedFile === null) {
       tempEmptyFields.push('Resume')
     }
 
@@ -102,7 +107,7 @@ const Application_content = () => {
 
     if (tempEmptyFields.length > 0) {
       setEmptyFields(tempEmptyFields)
-      console.log(tempEmptyFields)
+
       return setError('Please fill out all required fields')
     }
 
@@ -111,20 +116,39 @@ const Application_content = () => {
         firstName: user.firstName,
         lastName: user.lastName,
         studentID: user.student_id,
-        umkcEmail: user.umkcEmail,
+        umkcEmail: user.email,
         gpa: gpa,
         major: major,
         level: level,
         semester: semester,
         isGTA: isGTA,
-        resumeFile: resumeFile,
+        resumeFile: selectedFile,
+      }
+
+      if (selectedFile) {
+        const formData = new FormData()
+        formData.append('file', selectedFile)
+
+        const uploadResponse = await fetch('http://localhost:5000/uploads', {
+          method: 'POST',
+          body: formData,
+        })
+
+        if (uploadResponse.ok) {
+          const uploadedFileData = await uploadResponse.json()
+          // Set the path of the uploaded file in the application object
+          application.resumeFile = uploadedFileData.file
+        } else {
+          setError('Error uploading file.')
+          return
+        }
       }
 
       for (let cls of selectedClasses) {
         const applications = courses.find(
           (course) => course._id === cls._id
         ).applications
-        addAPP(cls._id, applications, application)
+        await addAPP(cls._id, applications, application)
         navigate('/thanks')
       }
     } catch (err) {
@@ -335,7 +359,7 @@ const Application_content = () => {
                 </h3>
               </label>
               <input
-                type="text"
+                type="file"
                 id="resume"
                 name="resume"
                 className={
@@ -344,7 +368,7 @@ const Application_content = () => {
                     ? 'border-error'
                     : 'border-umkc_light_blue')
                 }
-                onChange={(e) => setResumeFile(e.target.value)}
+                onChange={handleFileChange}
               />
             </div>
 
