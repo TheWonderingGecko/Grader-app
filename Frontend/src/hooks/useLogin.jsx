@@ -8,7 +8,7 @@ export const useLogin = () => {
   //   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    console.log(user) // This will log the updated value of the `user` state.
+    // This will log the updated value of the `user` state.
   }, [user])
 
   const login = async (email, password) => {
@@ -23,17 +23,15 @@ export const useLogin = () => {
 
     if (!response.ok) {
       const json = await response.json()
-      setError(json.message)
+      setError(json.error)
     }
 
     if (response.ok) {
       const json = await response.json()
-      const value = json
 
-      console.log(json)
-      setUser(value)
+      localStorage.setItem('user', JSON.stringify(json))
 
-      console.log(user)
+      setUser(json)
       setSuccess(true)
       //save user to local storage
       //   localStorage.setItem('user', JSON.stringify(json))
@@ -41,7 +39,6 @@ export const useLogin = () => {
       //   //update the authContext
       //   dispatch({ type: 'LOGIN', payload: json })
     }
-    console.log(user)
   }
 
   return { login, success, error, user_value: user }

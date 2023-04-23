@@ -20,6 +20,8 @@ export const useApplication = () => {
       }
     )
 
+    const json = await response.json()
+
     if (!response.ok) {
       const json = await response.json()
       setError(json.message)
@@ -29,6 +31,7 @@ export const useApplication = () => {
     if (response.ok) {
       //   const json = await response.json()
       setSuccess(true)
+      console.log(application)
       console.log('success')
       //save user to local storage
       //   localStorage.setItem('user', JSON.stringify(json))

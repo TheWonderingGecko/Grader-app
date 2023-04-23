@@ -3,19 +3,23 @@ import { useApplication } from '../../hooks/useApplication'
 import { Link } from 'react-router-dom'
 
 const Application_content = () => {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [studentID, setStudentID] = useState('')
-  const [umkcEmail, setUMKCEmail] = useState('')
+  const userString = localStorage.getItem('user')
+  const user = JSON.parse(userString)
+  const userEmail = user.email
+  const userId = user.student_id
+  const userFirstName = user.firstName
+  const userLastName = user.lastName
   const [degree, setDegree] = useState('')
   const [gpa, setGpa] = useState('')
   const [major, setMajor] = useState('')
   const [level, setLevel] = useState('')
   const [semester, setSemester] = useState('')
-  const [isGTA, setIsGTA] = useState(false)
+  const [isGTA, setIsGTA] = useState(null)
   const [resumeFile, setResumeFile] = useState('')
   const [selectedClasses, setSelectedClasses] = useState([])
-  const [courses, setCourses] = useState(null)
+  const [courses, setCourses] = useState('')
+  const [emptyFields, setEmptyFields] = useState([])
+  const [error, setError] = useState('')
   const formRef = useRef(null)
   const { addAPP, successApp, errorApp } = useApplication()
 
@@ -65,25 +69,64 @@ const Application_content = () => {
 
   const handleApplication = (e) => {
     e.preventDefault()
-    const application = {
-      firstName: firstName,
-      lastName: lastName,
-      studentID: studentID,
-      umkcEmail: umkcEmail,
-      degree: degree,
-      gpa: gpa,
-      major: major,
-      level: level,
-      semester: semester,
-      isGTA: isGTA,
-      resumeFile: resumeFile,
+    let tempEmptyFields = []
+
+    if (!gpa) {
+      tempEmptyFields.push('GPA')
     }
 
-    for (let cls of selectedClasses) {
-      const applications = courses.find(
-        (course) => course._id === cls._id
-      ).applications
-      addAPP(cls._id, applications, application)
+    if (!major) {
+      tempEmptyFields.push('Major')
+    }
+
+    if (!semester) {
+      tempEmptyFields.push('Semester')
+    }
+
+    if (!level) {
+      tempEmptyFields.push('Degree')
+    }
+
+    if (isGTA === null) {
+      tempEmptyFields.push('GTA')
+    }
+
+    if (!resumeFile) {
+      tempEmptyFields.push('Resume')
+    }
+
+    if (selectedClasses.length === 0) {
+      tempEmptyFields.push('Classes')
+    }
+
+    if (tempEmptyFields.length > 0) {
+      setEmptyFields(tempEmptyFields)
+      console.log(tempEmptyFields)
+      return setError('Please fill out all required fields')
+    }
+
+    try {
+      const application = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        studentID: user.studentID,
+        umkcEmail: user.umkcEmail,
+        gpa: gpa,
+        major: major,
+        level: level,
+        semester: semester,
+        isGTA: isGTA,
+        resumeFile: resumeFile,
+      }
+
+      for (let cls of selectedClasses) {
+        const applications = courses.find(
+          (course) => course._id === cls._id
+        ).applications
+        addAPP(cls._id, applications, application)
+      }
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -93,7 +136,11 @@ const Application_content = () => {
         <h2 className="w-3/4 p-2 text-2xl font-bold bg-umkc_light_blue rounded-b-md text-umkc_yellow">
           CSEE GTA/Grader Application
         </h2>
-        <form onSubmit={onSubmit} ref={formRef} className="text-xl font-bold">
+        <form
+          onSubmit={handleApplication}
+          ref={formRef}
+          className="text-xl font-bold"
+        >
           <fieldset className="flex flex-col items-center justify-center grid-cols-2 gap-3 md:grid justify-items-center md:gap-6 md:text-left md:mt-5 lg:grid-cols-3">
             <div className="flex flex-col justify-end w-3/4 h-full gap-3">
               <label>
@@ -102,10 +149,10 @@ const Application_content = () => {
                 </h3>
               </label>
               <input
-                type="text"
-                onChange={(e) => setFirstName(e.target.value)}
-                value={firstName}
-                className="w-full p-2 border-2 rounded-md border-umkc_light_blue"
+                bg-slate-700
+                value={userFirstName}
+                readOnly
+                className="w-full p-2 border-2 rounded-md border-umkc_light_blue bg-slate-700 text-umkc_dark_yellow"
                 // className={emptyFields.includes('title') ? 'error' : ''}
                 required
               />
@@ -119,9 +166,9 @@ const Application_content = () => {
               </label>
               <input
                 type="text"
-                onChange={(e) => setLastName(e.target.value)}
-                value={lastName}
-                className="w-full p-2 border-2 rounded-md border-umkc_light_blue"
+                readOnly
+                value={userLastName}
+                className="w-full p-2 border-2 rounded-md border-umkc_light_blue bg-slate-700 text-umkc_dark_yellow"
                 // className={emptyFields.includes('title') ? 'error' : ''}
                 required
               />
@@ -135,9 +182,9 @@ const Application_content = () => {
               </label>
               <input
                 type="text"
-                onChange={(e) => setStudentID(e.target.value)}
-                value={studentID}
-                className="w-full p-2 border-2 rounded-md border-umkc_light_blue"
+                readOnly
+                value={userId}
+                className="w-full p-2 border-2 rounded-md border-umkc_light_blue bg-slate-700 text-umkc_dark_yellow"
                 // className={emptyFields.includes('title') ? 'error' : ''}
                 required
               />
@@ -151,25 +198,9 @@ const Application_content = () => {
               </label>
               <input
                 type="email"
-                onChange={(e) => setUMKCEmail(e.target.value)}
-                value={umkcEmail}
-                className="w-full p-2 border-2 rounded-md border-umkc_light_blue"
-                // className={emptyFields.includes('title') ? 'error' : ''}
-                required
-              />
-            </div>
-
-            <div className="flex flex-col justify-end w-3/4 h-full gap-3">
-              <label>
-                <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500'>
-                  Degree:
-                </h3>
-              </label>
-              <input
-                type="text"
-                onChange={(e) => setDegree(e.target.value)}
-                value={degree}
-                className="w-full p-2 border-2 rounded-md border-umkc_light_blue"
+                value={userEmail}
+                readOnly
+                className="w-full p-2 border-2 rounded-md border-umkc_light_blue bg-slate-700 text-umkc_dark_yellow"
                 // className={emptyFields.includes('title') ? 'error' : ''}
                 required
               />
@@ -181,14 +212,25 @@ const Application_content = () => {
                   UMKC Cumulative GPA:
                 </h3>
               </label>
-              <input
-                type="float"
+              <select
+                name="gpa"
+                id="gpa"
+                className={
+                  (emptyFields.includes('GPA')
+                    ? 'border-error'
+                    : 'border-umkc_light_blue') +
+                  ' w-full p-2 bg-white border-2 rounded-md   '
+                }
                 onChange={(e) => setGpa(e.target.value)}
-                value={gpa}
-                className="w-full p-2 border-2 rounded-md border-umkc_light_blue"
-                // className={emptyFields.includes('title') ? 'error' : ''}
                 required
-              />
+              >
+                <option>--Select an option--</option>
+                <option value={2.0}>2.0 or greater </option>
+                <option value={2.5}>2.5 or greater</option>
+                <option value={3.0}>3.0 or greater</option>
+                <option value={3.5}>3.5 or greater</option>
+                <option value={4.0}>4.0 or greater</option>
+              </select>
             </div>
 
             <div className="flex flex-col justify-end w-3/4 h-full gap-3">
@@ -199,11 +241,16 @@ const Application_content = () => {
               </label>
               <select
                 id="major"
-                className="w-full p-2 bg-white border-2 rounded-md border-umkc_light_blue"
+                className={
+                  'w-full p-2 bg-white border-2 rounded-md  ' +
+                  (emptyFields.includes('Major')
+                    ? 'border-error'
+                    : 'border-umkc_light_blue')
+                }
                 onChange={(e) => setMajor(e.target.value)}
                 required
               >
-                <option value="">--Select an option--</option>
+                <option>--Select an option--</option>
                 <option value="CS">CS</option>
                 <option value="ECE">ECE</option>
                 <option value="IT">IT</option>
@@ -213,16 +260,20 @@ const Application_content = () => {
             <div className="flex flex-col justify-end w-3/4 h-full gap-3">
               <label htmlFor="level">
                 <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500'>
-                  Current Level:
+                  Current Degree if applicable:
                 </h3>
               </label>
               <select
                 id="level"
-                className="w-full p-2 bg-white border-2 rounded-md border-umkc_light_blue"
+                className={
+                  'w-full p-2 bg-white border-2 rounded-md ' +
+                  (emptyFields.includes('Degree')
+                    ? 'border-error'
+                    : 'border-umkc_light_blue')
+                }
                 onChange={(e) => setLevel(e.target.value)}
-                required
               >
-                <option value="">--Select an option--</option>
+                <option>--Select an option--</option>
                 <option value="BS">BS</option>
                 <option value="MS">MS</option>
                 <option value="PHD">PHD</option>
@@ -235,11 +286,16 @@ const Application_content = () => {
               </label>
               <select
                 id="semester"
-                className="w-full p-2 bg-white border-2 rounded-md border-umkc_light_blue"
+                className={
+                  'w-full p-2 bg-white border-2 rounded-md  ' +
+                  (emptyFields.includes('Semester')
+                    ? 'border-error'
+                    : 'border-umkc_light_blue')
+                }
                 onChange={(e) => setSemester(e.target.value)}
                 required
               >
-                <option value="">--Select an option--</option>
+                <option>--Select an option--</option>
                 <option value="Fall">Fall</option>
                 <option value="Spring">Spring</option>
                 <option value="Summer">Summer</option>
@@ -255,11 +311,16 @@ const Application_content = () => {
               </label>
               <select
                 id="GTA"
-                className="w-full p-2 bg-white border-2 rounded-md border-umkc_light_blue"
+                className={
+                  'w-full p-2 bg-white border-2 rounded-md ' +
+                  (emptyFields.includes('GTA')
+                    ? 'border-error'
+                    : 'border-umkc_light_blue')
+                }
                 onChange={(e) => setIsGTA(e.target.value)}
                 required
               >
-                <option value="">--Select an option--</option>
+                <option value="In Progress">--Select an option--</option>
                 <option value="false">No</option>
                 <option value="true">Yes</option>
               </select>
@@ -275,7 +336,12 @@ const Application_content = () => {
                 type="text"
                 id="resume"
                 name="resume"
-                className="w-full p-2 border-2 rounded-md border-umkc_light_blue"
+                className={
+                  'w-full p-2 border-2 rounded-md ' +
+                  (emptyFields.includes('Resume')
+                    ? 'border-error'
+                    : 'border-umkc_light_blue')
+                }
                 onChange={(e) => setResumeFile(e.target.value)}
               />
             </div>
@@ -289,7 +355,14 @@ const Application_content = () => {
                   Please select up to 5 classes you'd like to apply for:
                 </h3>
               </label>
-              <div className="grid grid-cols-2 gap-3 p-2 overflow-auto border-2 lg:grid-cols-3 h-60 border-umkc_light_blue ">
+              <div
+                className={
+                  'grid grid-cols-2 gap-3 p-2 overflow-auto border-2 lg:grid-cols-3 h-60  ' +
+                  (emptyFields.includes('Classes')
+                    ? 'border-error'
+                    : 'border-umkc_light_blue')
+                }
+              >
                 {courses &&
                   courses.map(({ _id, code, semester, applications }) => {
                     return (
@@ -315,11 +388,12 @@ const Application_content = () => {
                   })}
               </div>
             </div>
-
-            <button
-              className="p-2 text-2xl font-bold rounded-lg shadow-md bg-umkc_yellow text-umkc_light_blue md:col-span-2 lg:col-span-3"
-              onClick={handleApplication}
-            >
+            {error && (
+              <div className="p-2 bg-red-100 border text-error border-error">
+                {error}
+              </div>
+            )}
+            <button className="p-2 text-2xl font-bold rounded-lg shadow-md bg-umkc_yellow text-umkc_light_blue md:col-span-2 lg:col-span-3">
               {' '}
               Submit
             </button>
