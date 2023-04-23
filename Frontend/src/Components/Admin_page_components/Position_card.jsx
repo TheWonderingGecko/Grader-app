@@ -30,11 +30,6 @@ const Position_card = (props) => {
     await courseEdit(props.id, editNotes)
   }
 
-  const handleApplication = async (e) => {
-    e.preventDefault()
-    await addAPP(courseId, props.applications, application)
-  }
-
   return (
     <div
       className="relative flex flex-col items-center justify-center w-3/4 p-4 bg-white border-4 rounded-lg border-umkc_light_blue group lg:hover:bg-umkc_dark_blue gap-y-2 max-h-[15rem]"
@@ -132,7 +127,7 @@ const Position_card = (props) => {
                   ) &&
                     props.applications.map((app) => {
                       return (
-                        <tr className=" odd:bg-umkc_yellow">
+                        <tr className=" odd:bg-umkc_yellow" key={app.id}>
                           <td className="pl-2">
                             {app.firstName} <br /> {app.lastName}
                           </td>

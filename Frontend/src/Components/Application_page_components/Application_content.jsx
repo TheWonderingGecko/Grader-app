@@ -175,7 +175,6 @@ const Application_content = () => {
                 </h3>
               </label>
               <input
-                bg-slate-700
                 value={userFirstName}
                 readOnly
                 className="w-full p-2 border-2 rounded-md border-umkc_light_blue bg-slate-700 text-umkc_dark_yellow"

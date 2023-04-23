@@ -29,9 +29,10 @@ export const useLogin = () => {
     if (response.ok) {
       const json = await response.json()
 
-      localStorage.setItem('user', JSON.stringify(json))
+      localStorage.setItem('user', JSON.stringify(json[0]))
+      localStorage.setItem('token', JSON.stringify(json[1]))
 
-      setUser(json)
+      setUser(json[0])
       setSuccess(true)
       //save user to local storage
       //   localStorage.setItem('user', JSON.stringify(json))
