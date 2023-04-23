@@ -11,17 +11,14 @@ const applicationSchema = new Schema({
     required: true,
   },
   studentID: {
-    type: String,
+    type: Number,
     required: true,
   },
   umkcEmail: {
     type: String,
     required: true,
   },
-  degree: {
-    type: String,
-    required: true,
-  },
+
   gpa: {
     type: Number,
     required: true,
@@ -33,7 +30,6 @@ const applicationSchema = new Schema({
   },
   level: {
     type: String,
-    enum: ['BS', 'MS', 'PHD'],
     required: true,
   },
   semester: {

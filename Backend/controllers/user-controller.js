@@ -1,4 +1,5 @@
 const User = require('../model/User')
+const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
 const getAllUsers = async (req, res, next) => {
@@ -45,23 +46,15 @@ const signup = async (req, res, next) => {
   return res.status(201).json({ user })
 }
 
-const login = async (req, res, next) => {
+const userLogin = async (req, res) => {
   const { email, password } = req.body
-  let existingUser
-  try {
-    existingUser = await User.findOne({ email })
-  } catch (err) {
-    return console.log(err)
-  }
-  if (!existingUser) {
-    return res.status(404).json({ message: "Couldn't find user by this email" })
-  }
 
-  const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password)
-  if (!isPasswordCorrect) {
-    return res.status(400).json({ message: 'Incorrect password' })
+  try {
+    const user = await User.login(email, password)
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(400).json({ error: error.message })
   }
-  return res.status(200).json({ message: 'Login successful' })
 }
 
-module.exports = { getAllUsers, signup, login }
+module.exports = { getAllUsers, signup, userLogin }

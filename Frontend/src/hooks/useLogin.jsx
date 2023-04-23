@@ -1,9 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { json } from 'react-router-dom'
 
 export const useLogin = () => {
   const [error, setError] = useState('')
+  const [user, setUser] = useState('')
   const [success, setSuccess] = useState(false)
   //   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    // This will log the updated value of the `user` state.
+  }, [user])
 
   const login = async (email, password) => {
     // setIsLoading(true)
@@ -17,11 +23,15 @@ export const useLogin = () => {
 
     if (!response.ok) {
       const json = await response.json()
-      setError(json.message)
+      setError(json.error)
     }
 
     if (response.ok) {
-      //   const json = await response.json()
+      const json = await response.json()
+
+      localStorage.setItem('user', JSON.stringify(json))
+
+      setUser(json)
       setSuccess(true)
       //save user to local storage
       //   localStorage.setItem('user', JSON.stringify(json))
@@ -30,5 +40,6 @@ export const useLogin = () => {
       //   dispatch({ type: 'LOGIN', payload: json })
     }
   }
-  return { login, success, error }
+
+  return { login, success, error, user_value: user }
 }

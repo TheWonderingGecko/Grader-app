@@ -179,7 +179,7 @@ const Classes = () => {
         )}
 
         {enableFilter && (
-          <div className="fixed top-0 z-30 flex items-center justify-center w-screen h-screen md:h-full bg-black/95 md:w-full md:static md:bg-white md:border-l-0 md:rounded-r-lg md:border-umkc_light_blue md:border-4 ">
+          <div className="fixed top-0 z-30 flex items-center justify-center w-screen h-full md:h-full bg-black/95 md:w-full md:static md:bg-white md:border-l-0 md:rounded-r-lg md:border-umkc_light_blue md:border-4 ">
             <form
               className="relative flex flex-col gap-2 p-4 bg-white border-4 rounded-lg md:rounded-r-lg md:border-l-0 border-umkc_light_blue md:w-full md:border-none"
               onSubmit={clearFilter}
@@ -315,7 +315,7 @@ const Classes = () => {
         />
       </div>
 
-      <div className=" h-full w-full  grid grid-cols-1 gap-3 overflow-auto  justify-items-center basis-2/3 md:grid-cols-2 landscape:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8  lg:landscape:h-[70vh] rounded-md lg:landscape:bg-[10%,60%] p-2 pt-0">
+      <div className=" h-full   w-full  grid grid-cols-1 gap-3 overflow-auto  justify-items-center basis-2/3 md:grid-cols-2 landscape:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8  lg:landscape:h-[70vh] rounded-md lg:landscape:bg-[10%,60%] p-2 pt-0">
         {!isLoading &&
           filteredClasses.map(
             ({ _id, code, name, major, notes, position, semester, level }) => {
