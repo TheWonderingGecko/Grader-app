@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useApplication } from '../../hooks/useApplication'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Application_content = () => {
   const userString = localStorage.getItem('user')
@@ -9,6 +9,7 @@ const Application_content = () => {
   const userId = user.student_id
   const userFirstName = user.firstName
   const userLastName = user.lastName
+  const navigate = useNavigate()
   const [degree, setDegree] = useState('')
   const [gpa, setGpa] = useState('')
   const [major, setMajor] = useState('')
@@ -109,7 +110,7 @@ const Application_content = () => {
       const application = {
         firstName: user.firstName,
         lastName: user.lastName,
-        studentID: user.studentID,
+        studentID: user.student_id,
         umkcEmail: user.umkcEmail,
         gpa: gpa,
         major: major,
@@ -124,6 +125,7 @@ const Application_content = () => {
           (course) => course._id === cls._id
         ).applications
         addAPP(cls._id, applications, application)
+        navigate('/thanks')
       }
     } catch (err) {
       console.log(err)
@@ -389,7 +391,7 @@ const Application_content = () => {
               </div>
             </div>
             {error && (
-              <div className="p-2 bg-red-100 border text-error border-error">
+              <div className="p-2 bg-red-100 border text-error border-error md:col-span-2 lg:col-span-3">
                 {error}
               </div>
             )}

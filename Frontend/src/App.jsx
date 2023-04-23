@@ -6,6 +6,7 @@ import Navbar from './Components/Global_components/Navbar'
 import Application from './pages/Application'
 import Login from './pages/Login'
 import Admin from './pages/Admin'
+import Thanks from './pages/Thanks'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="app_form" element={<Application />} />
             <Route path="admin" element={<Admin />} />
+            <Route path="thanks" element={<Thanks />} />
           </Routes>
         </div>
       </HashRouter>
