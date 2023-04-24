@@ -24,7 +24,7 @@ app.use((req, res, next) => {
   next()
 })
 app.use('/api/user', router)
-app.post('/uploads', fileController.uploadFile)
+app.post('/uploads', fileController.uploadFiles)
 app.use('/uploads', express.static('uploads'))
 app.use('/api/grader', graderRouter)
 app.use('/api/courses', courseRouter)

@@ -15,8 +15,8 @@ const Position_card = (props) => {
 
   const order = ['PHD', 'MS', 'BS']
 
-  const handleViewResume = (resumePath) => {
-    setResumeUrl(`http://localhost:5000/${resumePath}`)
+  const handleViewFile = (filePath) => {
+    setResumeUrl(`http://localhost:5000/${filePath}`)
   }
 
   const handleDelete = async () => {
@@ -112,7 +112,7 @@ const Position_card = (props) => {
                 </button>
               </div>
 
-              <table className="text-left border-2 rounded-md bg-slate-300 md:text-center">
+              <table className="text-center border-2 rounded-md bg-slate-300 md:text-center">
                 <thead className="">
                   <tr>
                     <th>Name</th>
@@ -127,17 +127,29 @@ const Position_card = (props) => {
                   ) &&
                     props.applications.map((app) => {
                       return (
-                        <tr className=" odd:bg-umkc_yellow" key={app.id}>
+                        <tr className=" odd:bg-umkc_yellow" key={app._id}>
                           <td className="pl-2">
                             {app.firstName} <br /> {app.lastName}
                           </td>
                           <td className="uppercase"> {app.level} </td>
 
-                          <td
-                            className="text-blue-500 cursor-pointer"
-                            onClick={() => handleViewResume(app.resumeFile)}
-                          >
-                            View Resume
+                          <td className="flex flex-col gap-2">
+                            <span
+                              className="text-blue-500 cursor-pointer"
+                              onClick={() => handleViewFile(app.resumeFile)}
+                            >
+                              View Resume
+                            </span>
+                            {app.gtaCertificationFile && (
+                              <span
+                                className="text-blue-500 cursor-pointer"
+                                onClick={() =>
+                                  handleViewFile(app.gtaCertificationFile)
+                                }
+                              >
+                                View GTA Cert
+                              </span>
+                            )}
                           </td>
                         </tr>
                       )

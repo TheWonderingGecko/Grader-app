@@ -23,6 +23,7 @@ const Application_content = () => {
   const [semester, setSemester] = useState('')
   const [isGTA, setIsGTA] = useState(null)
   const [selectedFile, setSelectedFile] = useState(null)
+  const [gtaCertificationFile, setGtaCertificationFile] = useState(null)
   const [resumeFile, setResumeFile] = useState('')
   const [selectedClasses, setSelectedClasses] = useState([])
   const [courses, setCourses] = useState('')
@@ -79,6 +80,10 @@ const Application_content = () => {
     setSelectedFile(e.target.files[0])
   }
 
+  const handleGtaCertificationChange = (e) => {
+    setGtaCertificationFile(e.target.files[0])
+  }
+
   const handleApplication = async (e) => {
     e.preventDefault()
     let tempEmptyFields = []
@@ -107,6 +112,15 @@ const Application_content = () => {
       tempEmptyFields.push('Resume')
     }
 
+    if (isGTA === 'true') {
+      if (
+        gtaCertificationFile === null ||
+        gtaCertificationFile.type !== 'application/pdf'
+      ) {
+        tempEmptyFields.push('GTA_Certification')
+      }
+    }
+
     if (selectedClasses.length === 0) {
       tempEmptyFields.push('Classes')
     }
@@ -129,11 +143,13 @@ const Application_content = () => {
         semester: semester,
         isGTA: isGTA,
         resumeFile: selectedFile,
+        gtaCertificationFile: gtaCertificationFile,
       }
 
       if (selectedFile) {
         const formData = new FormData()
-        formData.append('file', selectedFile)
+        formData.append('resume', selectedFile)
+        formData.append('gtaCertification', gtaCertificationFile)
 
         const uploadResponse = await fetch('http://localhost:5000/uploads', {
           method: 'POST',
@@ -143,7 +159,8 @@ const Application_content = () => {
         if (uploadResponse.ok) {
           const uploadedFileData = await uploadResponse.json()
           // Set the path of the uploaded file in the application object
-          application.resumeFile = uploadedFileData.file
+          application.resumeFile = uploadedFileData.resume
+          application.gtaCertificationFile = uploadedFileData.gtaCertification
         } else {
           setError('Error uploading file.')
           return
@@ -334,11 +351,26 @@ const Application_content = () => {
             </div>
 
             <div className="flex flex-col justify-end w-3/4 h-full gap-3">
-              <label className="flex items-center justify-center" htmlFor="GTA">
+              <label
+                className="flex flex-col items-center justify-center"
+                htmlFor="GTA"
+              >
                 <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 '>
                   Do you have a GTA certificate/ previous degree from US
                   institution?
                 </h3>
+                {isGTA === 'false' && (
+                  <div>
+                    <a
+                      href="https://catalog.umkc.edu/general-graduate-academic-regulations-information/international-graduate-student-academic-regulations/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline text-umkc_light_blue fade-in "
+                    >
+                      How to obtain GTA certificate?
+                    </a>
+                  </div>
+                )}
               </label>
               <select
                 id="GTA"
@@ -356,6 +388,34 @@ const Application_content = () => {
                 <option value="true">Yes</option>
               </select>
             </div>
+
+            {isGTA === 'true' && (
+              <div
+                className={
+                  'flex flex-col justify-end w-3/4 h-full gap-3 fade-in'
+                }
+              >
+                <label htmlFor="Certification ">
+                  <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 '>
+                    GTA Certification{' '}
+                    <span className="text-sm text-error">(.pdf) only</span>
+                  </h3>
+                </label>
+                <input
+                  type="file"
+                  id="Certification"
+                  name="Certification"
+                  accept=".pdf"
+                  className={
+                    'w-full bg-white p-2 border-2 rounded-md ' +
+                    (emptyFields.includes('GTA_Certification')
+                      ? 'border-error'
+                      : 'border-umkc_light_blue')
+                  }
+                  onChange={handleGtaCertificationChange}
+                />
+              </div>
+            )}
 
             <div className="flex flex-col justify-end w-3/4 h-full gap-3">
               <label htmlFor="resume">

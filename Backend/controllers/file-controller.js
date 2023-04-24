@@ -14,16 +14,26 @@ const storage = multer.diskStorage({
   },
 })
 
-const upload = multer({ storage: storage })
+const upload = multer({ storage: storage }).fields([
+  { name: 'resume', maxCount: 1 },
+  { name: 'gtaCertification', maxCount: 1 },
+])
 
 // File upload function
-const uploadFile = (req, res) => {
-  upload.single('file')(req, res, (err) => {
+const uploadFiles = (req, res) => {
+  upload(req, res, (err) => {
     if (err) {
-      return res.status(500).json({ message: 'Error uploading file.' })
+      return res.status(500).json({ message: 'Error uploading files.' })
     }
-    res.json({ file: req.file.path })
+
+    // If successful, send the file paths in the response
+    res.json({
+      resume: req.files.resume[0].path,
+      gtaCertification: req.files.gtaCertification
+        ? req.files.gtaCertification[0].path
+        : null,
+    })
   })
 }
 
-module.exports = { uploadFile }
+module.exports = { uploadFiles }

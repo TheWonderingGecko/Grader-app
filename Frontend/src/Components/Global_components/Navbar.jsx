@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
   const navigate = useNavigate()
+  const userString = localStorage.getItem('user')
+  const user = JSON.parse(userString)
   const handleClick = () => {
     navigate('/')
   }
@@ -19,26 +21,34 @@ const Navbar = () => {
         className="flex flex-col items-baseline pl-4 text-white cursor-pointer md:justify-start"
         onClick={handleClick}
       >
-        <img src={logo} className="w-20 md:w-20" />
-        <p className="md:text-xl lg:9xl md:pl-1 ">Science and Engineering</p>
+        <img src={logo} className="w-20 lg:w-40" />
+        {!user && (
+          <p className="md:text-xl lg:9xl md:pl-1 ">Science and Engineering</p>
+        )}
       </div>
-      <Link to="/login">
-        <button
-          type="button"
-          className="w-32 h-10 mr-4 text-sm font-semibold rounded-md btn login-btn md:w-auto md:h-fit md:text-xl md:p-2"
-        >
-          {' '}
-          <strong>APPLY NOW</strong>
-        </button>
-      </Link>
+      {!userString && (
+        <Link to="/login">
+          <button
+            type="button"
+            className="p-2 mr-4 text-sm font-semibold rounded-md bg-umkc_yellow text-umkc_light_blue lg:text-2xl hover:bg-umkc_dark_yellow "
+          >
+            {' '}
+            <strong>APPLY NOW</strong>
+          </button>
+        </Link>
+      )}
 
-      <button
-        type="button"
-        className="w-32 h-10 mr-4 text-sm font-semibold rounded-md btn login-btn md:w-auto md:h-fit md:text-xl md:p-2"
-        onClick={handleLogout}
-      >
-        Logout{' '}
-      </button>
+      {userString && (
+        <div className="flex items-end justify-start gap-2 px-2 py-2 font-semibold text-white lg:text-2xl ">
+          <span>{user.email}</span>
+          <span
+            className="cursor-pointer material-symbols-outlined"
+            onClick={handleLogout}
+          >
+            logout
+          </span>
+        </div>
+      )}
     </header>
   )
 }

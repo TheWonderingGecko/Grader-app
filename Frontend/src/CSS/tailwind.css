@@ -24,3 +24,16 @@ body {
 .fade-in {
   animation: fadeIn 500ms ease-in forwards;
 }
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fadeOut 500ms ease-in forwards;
+}
