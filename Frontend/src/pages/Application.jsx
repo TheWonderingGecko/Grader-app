@@ -4,9 +4,9 @@ import Navbar from '../Components/Global_components/Navbar'
 import useAuth from '../hooks/useAuth'
 
 const Application = () => {
-  useAuth()
+  // useAuth()
   return (
-    <div className="h-screen overflow-auto bg-slate-200">
+    <div className="h-screen overflow-auto bg-slate-200 fade-in">
       <Application_content />
     </div>
   )

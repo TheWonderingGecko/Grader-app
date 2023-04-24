@@ -3,6 +3,10 @@ import useAuth from '../hooks/useAuth'
 
 const Admin = () => {
   useAuth()
-  return <Admin_Link_Test />
+  return (
+    <div className="fade-in">
+      <Admin_Link_Test />
+    </div>
+  )
 }
 export default Admin
