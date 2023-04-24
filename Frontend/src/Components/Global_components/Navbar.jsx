@@ -7,6 +7,12 @@ const Navbar = () => {
   const handleClick = () => {
     navigate('/')
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    navigate('/')
+  }
   return (
     <header className="sticky top-0 z-50 flex items-center justify-between border-b-8 bg-umkc_light_blue border-umkc_yellow ">
       <div
@@ -25,6 +31,14 @@ const Navbar = () => {
           <strong>APPLY NOW</strong>
         </button>
       </Link>
+
+      <button
+        type="button"
+        className="w-32 h-10 mr-4 text-sm font-semibold rounded-md btn login-btn md:w-auto md:h-fit md:text-xl md:p-2"
+        onClick={handleLogout}
+      >
+        Logout{' '}
+      </button>
     </header>
   )
 }

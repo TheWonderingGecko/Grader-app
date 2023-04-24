@@ -1,8 +1,14 @@
 import { useState, useEffect, useRef } from 'react'
 import { useApplication } from '../../hooks/useApplication'
 import { useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 
 const Application_content = () => {
+  const isAuthenticated = useAuth()
+
+  if (!isAuthenticated) {
+    return null
+  }
   const userString = localStorage.getItem('user')
   const user = JSON.parse(userString)
   const userEmail = user.email
