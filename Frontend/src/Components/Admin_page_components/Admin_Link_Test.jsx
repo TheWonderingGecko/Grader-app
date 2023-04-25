@@ -14,6 +14,7 @@ const Admin_Link_Test = () => {
   const [selectedSemester, setSelectedSemester] = useState('')
   const [selectedPosition, setSelectedPosition] = useState('')
   const [selectedLevel, setSelectedLevel] = useState('')
+  const [showPopup, setShowPopup] = useState(false)
   const [level, setLevel] = useState('')
   const [allClasses, setAllClasses] = useState(null)
   const [filteredClasses, setFilteredClasses] = useState(null)
@@ -21,17 +22,18 @@ const Admin_Link_Test = () => {
   const [createCourse, setCreateCourse] = useState(false)
   const { coursePost, success, error } = usePostPosition()
 
-  useEffect(() => {
-    const getClasses = async () => {
-      const classesFromServer = await fetch('http://localhost:5000/api/courses')
-      const data = await classesFromServer.json()
+  const getClasses = async () => {
+    const classesFromServer = await fetch('http://localhost:5000/api/courses')
+    const data = await classesFromServer.json()
 
-      if (classesFromServer.ok) {
-        setNewClass(data)
-        setAllClasses(data)
-        setFilteredClasses(data)
-      }
+    if (classesFromServer.ok) {
+      setNewClass(data)
+      setAllClasses(data)
+      setFilteredClasses(data)
     }
+  }
+
+  useEffect(() => {
     getClasses()
   }, [])
 
@@ -143,6 +145,15 @@ const Admin_Link_Test = () => {
     }
   }
 
+  const handleDelete = () => {
+    setShowPopup(true)
+    getClasses().then(() => {
+      setTimeout(() => {
+        setShowPopup(false)
+      }, 5000) // Hide the popup after 5 seconds
+    })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     await coursePost(
@@ -159,7 +170,7 @@ const Admin_Link_Test = () => {
 
   return (
     <div className="relative flex h-screen overflow-hidden font-bold text-center text-black ">
-      <div className="flex flex-col items-center h-full basis-1/4 bg-slate-400 md:justify-start md:pl-4">
+      <div className="relative flex flex-col items-center h-full basis-1/4 bg-slate-400 md:justify-start md:pl-4 ">
         <img src={BigRoo} alt="Umkc" className=" lg:landscape:w-40" />
 
         <form className="flex flex-col gap-4 pl-1 text-center md:text-left md:p-2">
@@ -282,10 +293,16 @@ const Admin_Link_Test = () => {
         >
           Open Position
         </button>
+        {showPopup && (
+          <div className="absolute p-2 bg-red-200 border-2 rounded-md fade-in bottom-20 lg:bottom-28 border-error text-error">
+            {' '}
+            Position successfully Closed
+          </div>
+        )}
 
         {createCourse && (
           <div className="fixed top-0 left-0 z-30 flex items-center justify-center w-screen h-screen bg-black/95">
-            <div className="relative z-50 flex flex-col w-5/6 p-4 overflow-hidden border-4 rounded-lg bg-slate-100 border-umkc_light_blue gap-y-4">
+            <div className="z-50 flex flex-col w-5/6 p-4 overflow-hidden border-4 rounded-lg bg-slate-100 border-umkc_light_blue gap-y-4">
               <div className="flex justify-between px-2 ">
                 <button
                   onClick={() => setCreateCourse(false)}
@@ -398,6 +415,7 @@ const Admin_Link_Test = () => {
                   applications={applications}
                   id={_id}
                   key={_id}
+                  onDelete={handleDelete}
                 />
               )
             )}
