@@ -15,6 +15,7 @@ const Admin_Link_Test = () => {
   const [selectedPosition, setSelectedPosition] = useState('')
   const [selectedLevel, setSelectedLevel] = useState('')
   const [showPopup, setShowPopup] = useState(false)
+  const [createdCourse, setCreatedCourse] = useState(false)
   const [level, setLevel] = useState('')
   const [allClasses, setAllClasses] = useState(null)
   const [filteredClasses, setFilteredClasses] = useState(null)
@@ -165,6 +166,14 @@ const Admin_Link_Test = () => {
       e.target.courseSemester.value
     )
 
+    setCreatedCourse(true)
+
+    getClasses().then(() => {
+      setTimeout(() => {
+        setCreatedCourse(false)
+      }, 5000) // Hide the popup after 5 seconds
+    })
+
     setCreateCourse(false)
   }
 
@@ -299,6 +308,12 @@ const Admin_Link_Test = () => {
             Position successfully Closed
           </div>
         )}
+        {createdCourse && (
+          <div className="absolute p-2 bg-blue-200 border-2 rounded-md fade-in bottom-28 border-umkc_light_blue text-umkc_light_blue">
+            {' '}
+            Position successfully opened
+          </div>
+        )}
 
         {createCourse && (
           <div className="fixed top-0 left-0 z-30 flex items-center justify-center w-screen h-screen bg-black/95">
@@ -393,7 +408,7 @@ const Admin_Link_Test = () => {
         <div className="flex items-center justify-center p-4 text-3xl border-b-2 shadow-lg border-umkc_light_blue bg-umkc_light_blue text-umkc_yellow">
           Open Courses
         </div>
-        <div className="grid grid-cols-1 gap-3 pt-4 overflow-auto h-3/4 md:h-5/6 justify-items-center md:grid-cols-2 lg:grid-cols-3 lg:h-3/4 ">
+        <div className="grid grid-cols-1 gap-3 pt-4 overflow-auto h-3/4 md:h-5/6 justify-items-center md:grid-cols-2 lg:grid-cols-3 lg:h-3/4 lg:landscape:h-2/3 ">
           {filteredClasses &&
             filteredClasses.map(
               ({

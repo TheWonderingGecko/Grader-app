@@ -311,11 +311,11 @@ const Classes = () => {
         <img
           src={BigRoo}
           alt="Big Roo"
-          className="h-32 md:w-full md:h-48 lg:hidden"
+          className="h-32 md:landscape:h-32 md:w-full md:h-48 lg:hidden"
         />
       </div>
 
-      <div className=" h-full   w-full  grid grid-cols-1 gap-3 overflow-auto  justify-items-center basis-2/3 md:grid-cols-2 landscape:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8  lg:landscape:h-[70vh] rounded-md lg:landscape:bg-[10%,60%] p-2 pt-0">
+      <div className=" h-full   w-full  grid grid-cols-1 gap-3 overflow-auto  justify-items-center basis-2/3 md:grid-cols-2 md:landscape:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8   rounded-md lg:landscape:bg-[10%,60%] p-2 pt-0">
         {!isLoading &&
           filteredClasses.map(
             ({ _id, code, name, major, notes, position, semester, level }) => {

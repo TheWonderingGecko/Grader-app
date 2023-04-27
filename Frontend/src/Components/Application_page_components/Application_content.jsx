@@ -32,18 +32,28 @@ const Application_content = () => {
   const formRef = useRef(null)
   const { addAPP, successApp, errorApp } = useApplication()
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      const response = await fetch('http://localhost:5000/api/courses')
-      const json = await response.json()
+  const fetchCourses = async () => {
+    console.log('change')
+    const response = await fetch('http://localhost:5000/api/courses')
+    const json = await response.json()
 
-      if (response.ok) {
+    if (response.ok) {
+      if (isGTA === 'true') {
         setCourses(json)
+        console.log('X')
+      } else {
+        const filteredClasses = json.filter(
+          (course) => course.position === 'grader'
+        )
+        setCourses(filteredClasses)
+        console.log('Y')
       }
     }
+  }
 
+  useEffect(() => {
     fetchCourses()
-  }, [])
+  }, [isGTA])
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -55,6 +65,10 @@ const Application_content = () => {
     setDegree('')
     setGpa('')
     formRef.current.reset()
+  }
+
+  const filterClasses = () => {
+    fetchCourses()
   }
 
   const selectClass = (_id) => {
@@ -380,7 +394,9 @@ const Application_content = () => {
                     ? 'border-error'
                     : 'border-umkc_light_blue')
                 }
-                onChange={(e) => setIsGTA(e.target.value)}
+                onChange={(e) => {
+                  setIsGTA(e.target.value)
+                }}
                 required
               >
                 <option value="In Progress">--Select an option--</option>
@@ -450,7 +466,7 @@ const Application_content = () => {
               </label>
               <div
                 className={
-                  'grid grid-cols-2 gap-3 p-2 overflow-auto border-2 lg:grid-cols-3 h-60  ' +
+                  'grid grid-cols-2 gap-3 p-2 overflow-auto border-2 lg:grid-cols-3 h-60 ' +
                   (emptyFields.includes('Classes')
                     ? 'border-error'
                     : 'border-umkc_light_blue')
@@ -461,7 +477,7 @@ const Application_content = () => {
                     return (
                       <div
                         key={_id}
-                        className={` p-2  border-2 rounded-md border-umkc_light_blue text-center ${
+                        className={` p-2  border-2 rounded-md border-umkc_light_blue fade-in text-center ${
                           selectedClasses.some((cls) => cls._id === _id)
                             ? ' bg-umkc_dark_blue text-umkc_yellow border-umkc_yellow'
                             : ' bg-white'
