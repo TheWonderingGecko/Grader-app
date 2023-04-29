@@ -32,6 +32,11 @@ const userSchema = new Schema({
     enum: ['Admin', 'Student'],
     required: true,
   },
+  courses: [
+    {
+      type: String,
+    },
+  ],
 })
 
 userSchema.statics.login = async function (email, password) {

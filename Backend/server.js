@@ -8,6 +8,7 @@ const graderRouter = require('./routes/grader-routes')
 const courseRouter = require('./routes/course-routes')
 const fileController = require('./controllers/file-controller')
 const router = require('./routes/user-routes')
+const PORT = process.env.PORT || 5000
 
 const app = express()
 app.use(express.json())
@@ -29,13 +30,9 @@ app.use('/uploads', express.static('uploads'))
 app.use('/api/grader', graderRouter)
 app.use('/api/courses', courseRouter)
 mongoose
-  .connect(
-    'mongodb+srv://admin:4UJ9ha9pRNjfIEBc@cluster0.ggy9cda.mongodb.net/GraderApp?retryWrites=true&w=majority'
-  )
-  .then(() => app.listen(5000))
-  .then(() =>
-    console.log('Connected to database and listening to localhost 5000')
-  )
+  .connect(process.env.MONGO_URL)
+  .then(() => app.listen(PORT))
+  .then(() => console.log('Connected to database and listening to  ' + PORT))
   .catch((err) => console.log(err))
 
 // 4UJ9ha9pRNjfIEBc

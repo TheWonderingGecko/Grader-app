@@ -10,7 +10,8 @@ export const useCourseEdit = () => {
     setError(null)
 
     const response = await fetch(
-      'http://localhost:5000/api/courses/update/' + id,
+      'https://weekend-warriors-umkc-grader.onrender.com/api/courses/update/' +
+        id,
       {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

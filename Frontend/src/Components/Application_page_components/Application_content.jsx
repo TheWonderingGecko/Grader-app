@@ -15,6 +15,7 @@ const Application_content = () => {
   const userId = user.student_id
   const userFirstName = user.firstName
   const userLastName = user.lastName
+  const usableCourses = user.courses
   const navigate = useNavigate()
   const [degree, setDegree] = useState('')
   const [gpa, setGpa] = useState('')
@@ -34,17 +35,25 @@ const Application_content = () => {
 
   const fetchCourses = async () => {
     console.log('change')
-    const response = await fetch('http://localhost:5000/api/courses')
+    console.log(usableCourses)
+    const response = await fetch(
+      'https://weekend-warriors-umkc-grader.onrender.com/api/courses'
+    )
     const json = await response.json()
 
     if (response.ok) {
       if (isGTA === 'true') {
-        setCourses(json)
+        const filteredClasses = json.filter((course) =>
+          usableCourses.includes(course.code)
+        )
+        setCourses(filteredClasses)
         console.log('X')
       } else {
         const filteredClasses = json.filter(
-          (course) => course.position === 'grader'
+          (course) =>
+            course.position === 'grader' && usableCourses.includes(course.code)
         )
+
         setCourses(filteredClasses)
         console.log('Y')
       }
@@ -165,10 +174,13 @@ const Application_content = () => {
         formData.append('resume', selectedFile)
         formData.append('gtaCertification', gtaCertificationFile)
 
-        const uploadResponse = await fetch('http://localhost:5000/uploads', {
-          method: 'POST',
-          body: formData,
-        })
+        const uploadResponse = await fetch(
+          'https://weekend-warriors-umkc-grader.onrender.com/uploads',
+          {
+            method: 'POST',
+            body: formData,
+          }
+        )
 
         if (uploadResponse.ok) {
           const uploadedFileData = await uploadResponse.json()
@@ -477,7 +489,7 @@ const Application_content = () => {
                     return (
                       <div
                         key={_id}
-                        className={` p-2  border-2 rounded-md border-umkc_light_blue fade-in text-center ${
+                        className={` p-2  border-2 rounded-md border-umkc_light_blue fade-in text-center h-32 flex flex-col items-center justify-center md:h-auto max-h-32 ${
                           selectedClasses.some((cls) => cls._id === _id)
                             ? ' bg-umkc_dark_blue text-umkc_yellow border-umkc_yellow'
                             : ' bg-white'

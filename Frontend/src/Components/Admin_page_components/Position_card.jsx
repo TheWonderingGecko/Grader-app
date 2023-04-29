@@ -16,7 +16,9 @@ const Position_card = (props) => {
   const order = ['PHD', 'MS', 'BS']
 
   const handleViewFile = (filePath) => {
-    setResumeUrl(`http://localhost:5000/${filePath}`)
+    setResumeUrl(
+      `https://weekend-warriors-umkc-grader.onrender.com/${filePath}`
+    )
   }
 
   const handleDelete = async () => {
@@ -216,7 +218,7 @@ const Position_card = (props) => {
             </div>
           )}
           {resumeUrl && (
-            <div className="z-[60] p-4 bg-white rounded-lg w-3/4 h-3/4">
+            <div className="z-[60] p-2 bg-white rounded-lg w-3/4 h-2/3">
               <button
                 className="mb-4 text-black"
                 onClick={() => setResumeUrl('')}

@@ -24,7 +24,9 @@ const Admin_Link_Test = () => {
   const { coursePost, success, error } = usePostPosition()
 
   const getClasses = async () => {
-    const classesFromServer = await fetch('http://localhost:5000/api/courses')
+    const classesFromServer = await fetch(
+      'https://weekend-warriors-umkc-grader.onrender.com/api/courses'
+    )
     const data = await classesFromServer.json()
 
     if (classesFromServer.ok) {

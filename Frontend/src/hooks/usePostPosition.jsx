@@ -9,11 +9,14 @@ export const usePostPosition = () => {
     // setIsLoading(true)
     setError(null)
 
-    const response = await fetch('http://localhost:5000/api/courses/add', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code, name, major, notes, position, semester }),
-    })
+    const response = await fetch(
+      'https://weekend-warriors-umkc-grader.onrender.com/api/courses/add',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, name, major, notes, position, semester }),
+      }
+    )
 
     if (!response.ok) {
       const json = await response.json()

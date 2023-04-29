@@ -17,7 +17,9 @@ const Classes = () => {
 
   useEffect(() => {
     const fetchCourses = async () => {
-      const response = await fetch('http://localhost:5000/api/courses')
+      const response = await fetch(
+        'https://weekend-warriors-umkc-grader.onrender.com/api/courses'
+      )
       const json = await response.json()
 
       if (response.ok) {
