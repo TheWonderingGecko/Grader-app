@@ -340,10 +340,18 @@ const Classes = () => {
                     </div>
 
                     {showMore === _id && (
-                      <div className="flex flex-col items-center justify-center gap-2 p-4 font-semibold text-left text-l">
-                        <p className="">Position: {position}</p>
-                        <p className="">Course Major: {major}</p>
-                        <p className="">Notes: {notes}</p>
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 text-center text-l">
+                        <p className="">
+                          <span className="font-semibold">Position:</span>{' '}
+                          {position}
+                        </p>
+                        <p className="">
+                          <span className="font-semibold">Course Major:</span>{' '}
+                          {major}
+                        </p>
+                        <p className="">
+                          <span className="font-semibold">Notes:</span> {notes}
+                        </p>
                         <a
                           href="https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/"
                           target="_blank"

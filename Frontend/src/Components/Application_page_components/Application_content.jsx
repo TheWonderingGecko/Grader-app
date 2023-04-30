@@ -64,22 +64,6 @@ const Application_content = () => {
     fetchCourses()
   }, [isGTA])
 
-  const onSubmit = async (e) => {
-    e.preventDefault()
-    setSelectedClasses([])
-    setFirstName('')
-    setLastName('')
-    setStudentID('')
-    setUMKCEmail('')
-    setDegree('')
-    setGpa('')
-    formRef.current.reset()
-  }
-
-  const filterClasses = () => {
-    fetchCourses()
-  }
-
   const selectClass = (_id) => {
     const selectedClass = courses.find((cls) => cls._id === _id)
 
@@ -117,10 +101,6 @@ const Application_content = () => {
 
     if (!major) {
       tempEmptyFields.push('Major')
-    }
-
-    if (!semester) {
-      tempEmptyFields.push('Semester')
     }
 
     if (!level) {
@@ -163,7 +143,7 @@ const Application_content = () => {
         gpa: gpa,
         major: major,
         level: level,
-        semester: semester,
+
         isGTA: isGTA,
         resumeFile: selectedFile,
         gtaCertificationFile: gtaCertificationFile,
@@ -334,7 +314,7 @@ const Application_content = () => {
             <div className="flex flex-col justify-end w-3/4 h-full gap-3">
               <label htmlFor="level">
                 <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500'>
-                  Current Degree if applicable:
+                  Current Degree:
                 </h3>
               </label>
               <select
@@ -348,31 +328,10 @@ const Application_content = () => {
                 onChange={(e) => setLevel(e.target.value)}
               >
                 <option>--Select an option--</option>
+                <option value="BS">N/A</option>
                 <option value="BS">BS</option>
                 <option value="MS">MS</option>
                 <option value="PHD">PHD</option>
-              </select>
-            </div>
-
-            <div className="flex flex-col justify-end w-3/4 h-full gap-3">
-              <label htmlFor="semester">
-                <h3>What term are you applying for? </h3>
-              </label>
-              <select
-                id="semester"
-                className={
-                  'w-full p-2 bg-white border-2 rounded-md  ' +
-                  (emptyFields.includes('Semester')
-                    ? 'border-error'
-                    : 'border-umkc_light_blue')
-                }
-                onChange={(e) => setSemester(e.target.value)}
-                required
-              >
-                <option>--Select an option--</option>
-                <option value="Fall">Fall</option>
-                <option value="Spring">Spring</option>
-                <option value="Summer">Summer</option>
               </select>
             </div>
 
@@ -381,7 +340,7 @@ const Application_content = () => {
                 className="flex flex-col items-center justify-center"
                 htmlFor="GTA"
               >
-                <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 '>
+                <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 text-center'>
                   Do you have a GTA certificate/ previous degree from US
                   institution?
                 </h3>
@@ -472,7 +431,7 @@ const Application_content = () => {
                 className="flex items-center justify-center"
                 htmlFor="Classes"
               >
-                <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 w-3/4'>
+                <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 '>
                   Please select up to 5 classes you'd like to apply for:
                 </h3>
               </label>

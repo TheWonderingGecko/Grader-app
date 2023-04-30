@@ -199,16 +199,17 @@ const Position_card = (props) => {
                             >
                               View Resume
                             </span>
-                            {app.gtaCertificationFile && (
-                              <span
-                                className="text-blue-500 cursor-pointer"
-                                onClick={() =>
-                                  handleViewFile(app.gtaCertificationFile)
-                                }
-                              >
-                                View GTA Cert
-                              </span>
-                            )}
+                            {app.gtaCertificationFile &&
+                              props.position === 'instructor' && (
+                                <span
+                                  className="text-blue-500 cursor-pointer"
+                                  onClick={() =>
+                                    handleViewFile(app.gtaCertificationFile)
+                                  }
+                                >
+                                  View GTA Cert
+                                </span>
+                              )}
                           </td>
                         </tr>
                       )
