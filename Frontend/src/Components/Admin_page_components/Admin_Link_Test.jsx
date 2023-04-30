@@ -18,7 +18,9 @@ const Admin_Link_Test = () => {
   const [createdCourse, setCreatedCourse] = useState(false)
   const [level, setLevel] = useState('')
   const [allClasses, setAllClasses] = useState(null)
+  const [emptyFields, setEmptyFields] = useState([])
   const [filteredClasses, setFilteredClasses] = useState(null)
+  const [errorPost, setErrorPost] = useState(null)
 
   const [createCourse, setCreateCourse] = useState(false)
   const { coursePost, success, error } = usePostPosition()
@@ -159,6 +161,41 @@ const Admin_Link_Test = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    let tempEmptyFields = []
+    console.log(e.target.courseMajor.value)
+
+    if (!e.target.courseCode.value) {
+      tempEmptyFields.push('courseCode')
+    }
+
+    if (!e.target.courseName.value) {
+      tempEmptyFields.push('courseName')
+    }
+
+    if (e.target.courseMajor.value === '--Select an option--') {
+      tempEmptyFields.push('courseMajor')
+    }
+
+    if (!e.target.courseNotes.value) {
+      tempEmptyFields.push('courseNotes')
+    }
+
+    if (e.target.coursePosition.value === '--Select an option--') {
+      tempEmptyFields.push('coursePosition')
+    }
+
+    if (e.target.courseSemester.value === '--Select an option--') {
+      tempEmptyFields.push('courseSemester')
+    }
+
+    if (tempEmptyFields.length > 0) {
+      setEmptyFields(tempEmptyFields)
+
+      return setErrorPost('Please fill out all required fields')
+    }
+
+    setEmptyFields([])
+
     await coursePost(
       e.target.courseCode.value,
       e.target.courseName.value,
@@ -339,8 +376,12 @@ const Admin_Link_Test = () => {
                     type="text"
                     id="courseCode"
                     name="courseCode"
-                    className="w-full p-2 border-2 rounded-md outline-none border-umkc_light_blue"
-                    required
+                    className={
+                      (emptyFields.includes('courseCode')
+                        ? 'border-error'
+                        : 'border-umkc_light_blue') +
+                      ' w-full p-2 border-2 rounded-md outline-none '
+                    }
                   />
                 </div>
                 <div className="text-lg font-bold text-left">
@@ -349,8 +390,12 @@ const Admin_Link_Test = () => {
                     type="text"
                     id="courseName"
                     name="courseName"
-                    className="w-full p-2 border-2 rounded-md outline-none border-umkc_light_blue"
-                    required
+                    className={
+                      (emptyFields.includes('courseName')
+                        ? 'border-error'
+                        : 'border-umkc_light_blue') +
+                      ' w-full p-2 border-2 rounded-md outline-none '
+                    }
                   />
                 </div>
                 <div className="text-lg font-bold text-left">
@@ -359,13 +404,11 @@ const Admin_Link_Test = () => {
                     id="courseMajor"
                     name="courseMajor"
                     className={
-                      // (emptyFields.includes('GPA')
-                      //   ? 'border-error'
-                      //   : 'border-umkc_light_blue') +
-                      ' w-full p-2 bg-white border-2 rounded-md border-umkc_light_blue   '
+                      (emptyFields.includes('courseMajor')
+                        ? 'border-error'
+                        : 'border-umkc_light_blue') +
+                      ' w-full p-2 border-2 rounded-md outline-none '
                     }
-                    onChange={(e) => setGpa(e.target.value)}
-                    required
                   >
                     <option>--Select an option--</option>
                     <option value={'cs'}>CS </option>
@@ -380,13 +423,11 @@ const Admin_Link_Test = () => {
                     id="coursePosition"
                     name="coursePosition"
                     className={
-                      // (emptyFields.includes('GPA')
-                      //   ? 'border-error'
-                      //   : 'border-umkc_light_blue') +
-                      ' w-full p-2 bg-white border-2 rounded-md border-umkc_light_blue   '
+                      (emptyFields.includes('coursePosition')
+                        ? 'border-error'
+                        : 'border-umkc_light_blue') +
+                      ' w-full p-2 border-2 rounded-md outline-none '
                     }
-                    onChange={(e) => setGpa(e.target.value)}
-                    required
                   >
                     <option>--Select an option--</option>
                     <option value={'grader'}>Grader </option>
@@ -400,13 +441,11 @@ const Admin_Link_Test = () => {
                     id="courseSemester"
                     name="courseSemester"
                     className={
-                      // (emptyFields.includes('GPA')
-                      //   ? 'border-error'
-                      //   : 'border-umkc_light_blue') +
-                      ' w-full p-2 bg-white border-2 rounded-md border-umkc_light_blue   '
+                      (emptyFields.includes('courseSemester')
+                        ? 'border-error'
+                        : 'border-umkc_light_blue') +
+                      ' w-full p-2 border-2 rounded-md outline-none '
                     }
-                    onChange={(e) => setGpa(e.target.value)}
-                    required
                   >
                     <option>--Select an option--</option>
                     <option value={'fall'}>Fall</option>
@@ -421,9 +460,19 @@ const Admin_Link_Test = () => {
                     type="text"
                     id="courseNotes"
                     name="courseNotes"
-                    className="w-full h-40 p-2 border-2 rounded-md outline-none border-umkc_light_blue"
+                    className={
+                      (emptyFields.includes('courseNotes')
+                        ? 'border-error'
+                        : 'border-umkc_light_blue') +
+                      ' w-full p-2 border-2 rounded-md outline-none '
+                    }
                   />
                 </div>
+                {errorPost && (
+                  <div className="p-2 bg-red-100 border fade-in text-error border-error md:col-span-2 lg:col-span-3">
+                    {errorPost}
+                  </div>
+                )}
                 <button
                   type="submit"
                   className="px-4 py-2 font-bold rounded-md bg-umkc_yellow text-umkc_dark_blue"
