@@ -305,13 +305,13 @@ const Admin_Link_Test = () => {
           Open Position
         </button>
         {showPopup && (
-          <div className="absolute p-2 bg-red-200 border-2 rounded-md fade-in bottom-20 lg:bottom-28 border-error text-error">
+          <div className="fixed z-50 p-1 mt-5 bg-red-200 border-2 rounded-md md:static bottom-5 md:p-2 md:ml-0 fade-in left-2 border-error text-error">
             {' '}
-            Position successfully Closed
+            Position successfully closed
           </div>
         )}
         {createdCourse && (
-          <div className="absolute p-2 bg-blue-200 border-2 rounded-md fade-in bottom-28 border-umkc_light_blue text-umkc_light_blue">
+          <div className="fixed z-50 p-1 mt-5 bg-blue-200 border-2 rounded-md md:static bottom-5 md:p-2 md:ml-0 fade-in left-2 border-umkc_light_blue text-umkc_light_blue">
             {' '}
             Position successfully opened
           </div>
@@ -355,35 +355,64 @@ const Admin_Link_Test = () => {
                 </div>
                 <div className="text-lg font-bold text-left">
                   <label htmlFor="courseMajor">Course Major:</label>
-                  <input
-                    type="text"
+                  <select
                     id="courseMajor"
                     name="courseMajor"
-                    className="w-full p-2 border-2 rounded-md outline-none border-umkc_light_blue"
+                    className={
+                      // (emptyFields.includes('GPA')
+                      //   ? 'border-error'
+                      //   : 'border-umkc_light_blue') +
+                      ' w-full p-2 bg-white border-2 rounded-md border-umkc_light_blue   '
+                    }
+                    onChange={(e) => setGpa(e.target.value)}
                     required
-                  />
+                  >
+                    <option>--Select an option--</option>
+                    <option value={'cs'}>CS </option>
+                    <option value={'it'}>IT</option>
+                    <option value={'ece'}>ECE</option>
+                  </select>
                 </div>
 
                 <div className="text-lg font-bold text-left">
                   <label htmlFor="coursePosition">Course Position:</label>
-                  <input
-                    type="textarea"
+                  <select
                     id="coursePosition"
                     name="coursePosition"
-                    className="w-full p-2 border-2 rounded-md outline-none border-umkc_light_blue"
+                    className={
+                      // (emptyFields.includes('GPA')
+                      //   ? 'border-error'
+                      //   : 'border-umkc_light_blue') +
+                      ' w-full p-2 bg-white border-2 rounded-md border-umkc_light_blue   '
+                    }
+                    onChange={(e) => setGpa(e.target.value)}
                     required
-                  />
+                  >
+                    <option>--Select an option--</option>
+                    <option value={'grader'}>Grader </option>
+                    <option value={'instructor'}>Instructor</option>
+                  </select>
                 </div>
 
                 <div className="text-lg font-bold text-left">
                   <label htmlFor="courseSemester">Course Semester:</label>
-                  <input
-                    type="text"
+                  <select
                     id="courseSemester"
                     name="courseSemester"
-                    className="w-full p-2 border-2 rounded-md outline-none border-umkc_light_blue"
+                    className={
+                      // (emptyFields.includes('GPA')
+                      //   ? 'border-error'
+                      //   : 'border-umkc_light_blue') +
+                      ' w-full p-2 bg-white border-2 rounded-md border-umkc_light_blue   '
+                    }
+                    onChange={(e) => setGpa(e.target.value)}
                     required
-                  />
+                  >
+                    <option>--Select an option--</option>
+                    <option value={'fall'}>Fall</option>
+                    <option value={'spring'}>Spring</option>
+                    <option value={'summer'}>Summer</option>
+                  </select>
                 </div>
 
                 <div className="text-lg font-bold text-left">
