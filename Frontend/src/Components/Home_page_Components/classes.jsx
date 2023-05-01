@@ -117,34 +117,6 @@ const Classes = () => {
     }
   }
 
-  const sortByLevel = (level) => {
-    setShowMore('')
-    if (selectedLevel === level) {
-      setFilteredClasses(
-        allClasses.filter((cls) => {
-          return (
-            (!selectedMajor || cls.major === selectedMajor) &&
-            (!selectedSemester || cls.semester === selectedSemester) &&
-            (!selectedPosition || cls.position === selectedPosition)
-          )
-        })
-      )
-      setSelectedLevel(null)
-    } else {
-      const newClasses = allClasses.filter((cls) => cls.level === level)
-      setFilteredClasses(
-        newClasses.filter((cls) => {
-          return (
-            (!selectedMajor || cls.major === selectedMajor) &&
-            (!selectedSemester || cls.semester === selectedSemester) &&
-            (!selectedPosition || cls.position === selectedPosition)
-          )
-        })
-      )
-      setSelectedLevel(level)
-    }
-  }
-
   const clearFilter = (e) => {
     e.preventDefault()
     setSelectedMajor('')
