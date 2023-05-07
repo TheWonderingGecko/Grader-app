@@ -17,7 +17,9 @@ const Classes = () => {
 
   useEffect(() => {
     const fetchCourses = async () => {
-      const response = await fetch('http://localhost:5000/api/courses')
+      const response = await fetch(
+        'https://weekend-warriors-umkc-grader.onrender.com/api/courses'
+      )
       const json = await response.json()
 
       if (response.ok) {
@@ -112,34 +114,6 @@ const Classes = () => {
         })
       )
       setSelectedPosition(position)
-    }
-  }
-
-  const sortByLevel = (level) => {
-    setShowMore('')
-    if (selectedLevel === level) {
-      setFilteredClasses(
-        allClasses.filter((cls) => {
-          return (
-            (!selectedMajor || cls.major === selectedMajor) &&
-            (!selectedSemester || cls.semester === selectedSemester) &&
-            (!selectedPosition || cls.position === selectedPosition)
-          )
-        })
-      )
-      setSelectedLevel(null)
-    } else {
-      const newClasses = allClasses.filter((cls) => cls.level === level)
-      setFilteredClasses(
-        newClasses.filter((cls) => {
-          return (
-            (!selectedMajor || cls.major === selectedMajor) &&
-            (!selectedSemester || cls.semester === selectedSemester) &&
-            (!selectedPosition || cls.position === selectedPosition)
-          )
-        })
-      )
-      setSelectedLevel(level)
     }
   }
 
@@ -311,11 +285,11 @@ const Classes = () => {
         <img
           src={BigRoo}
           alt="Big Roo"
-          className="h-32 md:w-full md:h-48 lg:hidden"
+          className="h-32 md:landscape:h-32 md:w-full md:h-48 lg:hidden"
         />
       </div>
 
-      <div className=" h-full   w-full  grid grid-cols-1 gap-3 overflow-auto  justify-items-center basis-2/3 md:grid-cols-2 landscape:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8  lg:landscape:h-[70vh] rounded-md lg:landscape:bg-[10%,60%] p-2 pt-0">
+      <div className=" h-full   w-full  grid grid-cols-1 gap-3 overflow-auto  justify-items-center basis-2/3 md:grid-cols-2 md:landscape:grid-cols-2 lg:grid-cols-3 lg:bg-[url('../assets/Big_roo.png')] lg:gap-8   rounded-md lg:landscape:bg-[10%,60%] p-2 pt-0">
         {!isLoading &&
           filteredClasses.map(
             ({ _id, code, name, major, notes, position, semester, level }) => {
@@ -338,10 +312,18 @@ const Classes = () => {
                     </div>
 
                     {showMore === _id && (
-                      <div className="flex flex-col items-center justify-center gap-2 p-4 font-semibold text-left text-l">
-                        <p className="">Position: {position}</p>
-                        <p className="">Course Major: {major}</p>
-                        <p className="">Notes: {notes}</p>
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 text-center text-l">
+                        <p className="">
+                          <span className="font-semibold">Position:</span>{' '}
+                          {position}
+                        </p>
+                        <p className="">
+                          <span className="font-semibold">Course Major:</span>{' '}
+                          {major}
+                        </p>
+                        <p className="">
+                          <span className="font-semibold">Notes:</span> {notes}
+                        </p>
                         <a
                           href="https://catalog.umkc.edu/course-offerings/undergraduate/comp-sci/"
                           target="_blank"

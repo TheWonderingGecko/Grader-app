@@ -1,6 +1,13 @@
 const User = require('../model/User')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
+const createToken = (_id) => {
+  return jwt.sign({ _id }, process.env.secret, {
+    expiresIn: '1h',
+  })
+}
 
 const getAllUsers = async (req, res, next) => {
   let users
@@ -51,7 +58,8 @@ const userLogin = async (req, res) => {
 
   try {
     const user = await User.login(email, password)
-    res.status(200).json(user)
+    const token = createToken(user._id)
+    res.status(200).json([user, token])
   } catch (error) {
     res.status(400).json({ error: error.message })
   }

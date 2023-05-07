@@ -1,14 +1,21 @@
 import { useState, useEffect, useRef } from 'react'
 import { useApplication } from '../../hooks/useApplication'
 import { useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 
 const Application_content = () => {
+  const isAuthenticated = useAuth()
+
+  if (!isAuthenticated) {
+    return null
+  }
   const userString = localStorage.getItem('user')
   const user = JSON.parse(userString)
   const userEmail = user.email
   const userId = user.student_id
   const userFirstName = user.firstName
   const userLastName = user.lastName
+  const usableCourses = user.courses
   const navigate = useNavigate()
   const [degree, setDegree] = useState('')
   const [gpa, setGpa] = useState('')
@@ -16,6 +23,8 @@ const Application_content = () => {
   const [level, setLevel] = useState('')
   const [semester, setSemester] = useState('')
   const [isGTA, setIsGTA] = useState(null)
+  const [selectedFile, setSelectedFile] = useState(null)
+  const [gtaCertificationFile, setGtaCertificationFile] = useState(null)
   const [resumeFile, setResumeFile] = useState('')
   const [selectedClasses, setSelectedClasses] = useState([])
   const [courses, setCourses] = useState('')
@@ -24,30 +33,36 @@ const Application_content = () => {
   const formRef = useRef(null)
   const { addAPP, successApp, errorApp } = useApplication()
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      const response = await fetch('http://localhost:5000/api/courses')
-      const json = await response.json()
+  const fetchCourses = async () => {
+    console.log('change')
+    console.log(usableCourses)
+    const response = await fetch(
+      'https://weekend-warriors-umkc-grader.onrender.com/api/courses'
+    )
+    const json = await response.json()
 
-      if (response.ok) {
-        setCourses(json)
+    if (response.ok) {
+      if (isGTA === 'true') {
+        const filteredClasses = json.filter((course) =>
+          usableCourses.includes(course.code)
+        )
+        setCourses(filteredClasses)
+        console.log('X')
+      } else {
+        const filteredClasses = json.filter(
+          (course) =>
+            course.position === 'grader' && usableCourses.includes(course.code)
+        )
+
+        setCourses(filteredClasses)
+        console.log('Y')
       }
     }
-
-    fetchCourses()
-  }, [])
-
-  const onSubmit = async (e) => {
-    e.preventDefault()
-    setSelectedClasses([])
-    setFirstName('')
-    setLastName('')
-    setStudentID('')
-    setUMKCEmail('')
-    setDegree('')
-    setGpa('')
-    formRef.current.reset()
   }
+
+  useEffect(() => {
+    fetchCourses()
+  }, [isGTA])
 
   const selectClass = (_id) => {
     const selectedClass = courses.find((cls) => cls._id === _id)
@@ -68,7 +83,15 @@ const Application_content = () => {
     }
   }
 
-  const handleApplication = (e) => {
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0])
+  }
+
+  const handleGtaCertificationChange = (e) => {
+    setGtaCertificationFile(e.target.files[0])
+  }
+
+  const handleApplication = async (e) => {
     e.preventDefault()
     let tempEmptyFields = []
 
@@ -80,10 +103,6 @@ const Application_content = () => {
       tempEmptyFields.push('Major')
     }
 
-    if (!semester) {
-      tempEmptyFields.push('Semester')
-    }
-
     if (!level) {
       tempEmptyFields.push('Degree')
     }
@@ -92,8 +111,17 @@ const Application_content = () => {
       tempEmptyFields.push('GTA')
     }
 
-    if (!resumeFile) {
+    if (selectedFile === null || selectedFile.type !== 'application/pdf') {
       tempEmptyFields.push('Resume')
+    }
+
+    if (isGTA === 'true') {
+      if (
+        gtaCertificationFile === null ||
+        gtaCertificationFile.type !== 'application/pdf'
+      ) {
+        tempEmptyFields.push('GTA_Certification')
+      }
     }
 
     if (selectedClasses.length === 0) {
@@ -102,7 +130,7 @@ const Application_content = () => {
 
     if (tempEmptyFields.length > 0) {
       setEmptyFields(tempEmptyFields)
-      console.log(tempEmptyFields)
+
       return setError('Please fill out all required fields')
     }
 
@@ -111,20 +139,45 @@ const Application_content = () => {
         firstName: user.firstName,
         lastName: user.lastName,
         studentID: user.student_id,
-        umkcEmail: user.umkcEmail,
+        umkcEmail: user.email,
         gpa: gpa,
         major: major,
         level: level,
-        semester: semester,
+
         isGTA: isGTA,
-        resumeFile: resumeFile,
+        resumeFile: selectedFile,
+        gtaCertificationFile: gtaCertificationFile,
+      }
+
+      if (selectedFile) {
+        const formData = new FormData()
+        formData.append('resume', selectedFile)
+        formData.append('gtaCertification', gtaCertificationFile)
+
+        const uploadResponse = await fetch(
+          'https://weekend-warriors-umkc-grader.onrender.com/uploads',
+          {
+            method: 'POST',
+            body: formData,
+          }
+        )
+
+        if (uploadResponse.ok) {
+          const uploadedFileData = await uploadResponse.json()
+          // Set the path of the uploaded file in the application object
+          application.resumeFile = uploadedFileData.resume
+          application.gtaCertificationFile = uploadedFileData.gtaCertification
+        } else {
+          setError('Error uploading file.')
+          return
+        }
       }
 
       for (let cls of selectedClasses) {
         const applications = courses.find(
           (course) => course._id === cls._id
         ).applications
-        addAPP(cls._id, applications, application)
+        await addAPP(cls._id, applications, application)
         navigate('/thanks')
       }
     } catch (err) {
@@ -151,7 +204,6 @@ const Application_content = () => {
                 </h3>
               </label>
               <input
-                bg-slate-700
                 value={userFirstName}
                 readOnly
                 className="w-full p-2 border-2 rounded-md border-umkc_light_blue bg-slate-700 text-umkc_dark_yellow"
@@ -262,7 +314,7 @@ const Application_content = () => {
             <div className="flex flex-col justify-end w-3/4 h-full gap-3">
               <label htmlFor="level">
                 <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500'>
-                  Current Degree if applicable:
+                  Current Degree:
                 </h3>
               </label>
               <select
@@ -276,6 +328,7 @@ const Application_content = () => {
                 onChange={(e) => setLevel(e.target.value)}
               >
                 <option>--Select an option--</option>
+                <option value="BS">N/A</option>
                 <option value="BS">BS</option>
                 <option value="MS">MS</option>
                 <option value="PHD">PHD</option>
@@ -283,33 +336,26 @@ const Application_content = () => {
             </div>
 
             <div className="flex flex-col justify-end w-3/4 h-full gap-3">
-              <label htmlFor="semester">
-                <h3>What term are you applying for? </h3>
-              </label>
-              <select
-                id="semester"
-                className={
-                  'w-full p-2 bg-white border-2 rounded-md  ' +
-                  (emptyFields.includes('Semester')
-                    ? 'border-error'
-                    : 'border-umkc_light_blue')
-                }
-                onChange={(e) => setSemester(e.target.value)}
-                required
+              <label
+                className="flex flex-col items-center justify-center"
+                htmlFor="GTA"
               >
-                <option>--Select an option--</option>
-                <option value="Fall">Fall</option>
-                <option value="Spring">Spring</option>
-                <option value="Summer">Summer</option>
-              </select>
-            </div>
-
-            <div className="flex flex-col justify-end w-3/4 h-full gap-3">
-              <label className="flex items-center justify-center" htmlFor="GTA">
-                <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 '>
+                <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 text-center'>
                   Do you have a GTA certificate/ previous degree from US
                   institution?
                 </h3>
+                {isGTA === 'false' && (
+                  <div>
+                    <a
+                      href="https://catalog.umkc.edu/general-graduate-academic-regulations-information/international-graduate-student-academic-regulations/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline text-umkc_light_blue fade-in "
+                    >
+                      How to obtain GTA certificate?
+                    </a>
+                  </div>
+                )}
               </label>
               <select
                 id="GTA"
@@ -319,7 +365,9 @@ const Application_content = () => {
                     ? 'border-error'
                     : 'border-umkc_light_blue')
                 }
-                onChange={(e) => setIsGTA(e.target.value)}
+                onChange={(e) => {
+                  setIsGTA(e.target.value)
+                }}
                 required
               >
                 <option value="In Progress">--Select an option--</option>
@@ -328,23 +376,53 @@ const Application_content = () => {
               </select>
             </div>
 
+            {isGTA === 'true' && (
+              <div
+                className={
+                  'flex flex-col justify-end w-3/4 h-full gap-3 fade-in'
+                }
+              >
+                <label htmlFor="Certification ">
+                  <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 '>
+                    GTA Certification{' '}
+                    <span className="text-sm text-error">(.pdf) only</span>
+                  </h3>
+                </label>
+                <input
+                  type="file"
+                  id="Certification"
+                  name="Certification"
+                  accept=".pdf"
+                  className={
+                    'w-full bg-white p-2 border-2 rounded-md ' +
+                    (emptyFields.includes('GTA_Certification')
+                      ? 'border-error'
+                      : 'border-umkc_light_blue')
+                  }
+                  onChange={handleGtaCertificationChange}
+                />
+              </div>
+            )}
+
             <div className="flex flex-col justify-end w-3/4 h-full gap-3">
               <label htmlFor="resume">
                 <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 '>
-                  Resume Document
+                  Resume Document{' '}
+                  <span className="text-sm text-error">(.pdf) only</span>
                 </h3>
               </label>
               <input
-                type="text"
+                type="file"
                 id="resume"
                 name="resume"
+                accept=".pdf"
                 className={
-                  'w-full p-2 border-2 rounded-md ' +
+                  'w-full bg-white p-2 border-2 rounded-md ' +
                   (emptyFields.includes('Resume')
                     ? 'border-error'
                     : 'border-umkc_light_blue')
                 }
-                onChange={(e) => setResumeFile(e.target.value)}
+                onChange={handleFileChange}
               />
             </div>
 
@@ -353,13 +431,13 @@ const Application_content = () => {
                 className="flex items-center justify-center"
                 htmlFor="Classes"
               >
-                <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 w-3/4'>
+                <h3 className='before:content-["*"] before:mr-0.5 before:text-red-500 '>
                   Please select up to 5 classes you'd like to apply for:
                 </h3>
               </label>
               <div
                 className={
-                  'grid grid-cols-2 gap-3 p-2 overflow-auto border-2 lg:grid-cols-3 h-60  ' +
+                  'grid grid-cols-2 gap-3 p-2 overflow-auto border-2 lg:grid-cols-3 h-60 ' +
                   (emptyFields.includes('Classes')
                     ? 'border-error'
                     : 'border-umkc_light_blue')
@@ -370,7 +448,7 @@ const Application_content = () => {
                     return (
                       <div
                         key={_id}
-                        className={` p-2  border-2 rounded-md border-umkc_light_blue text-center ${
+                        className={` p-2  border-2 rounded-md border-umkc_light_blue fade-in text-center h-32 flex flex-col items-center justify-center md:h-auto max-h-32 ${
                           selectedClasses.some((cls) => cls._id === _id)
                             ? ' bg-umkc_dark_blue text-umkc_yellow border-umkc_yellow'
                             : ' bg-white'

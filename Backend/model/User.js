@@ -7,11 +7,9 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
   firstName: {
     type: String,
-    required: true,
   },
   lastName: {
     type: String,
-    required: true,
   },
 
   student_id: {
@@ -34,6 +32,11 @@ const userSchema = new Schema({
     enum: ['Admin', 'Student'],
     required: true,
   },
+  courses: [
+    {
+      type: String,
+    },
+  ],
 })
 
 userSchema.statics.login = async function (email, password) {
