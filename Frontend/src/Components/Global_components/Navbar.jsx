@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
   const navigate = useNavigate()
-  const userString = localStorage.getItem('user')
-  const user = JSON.parse(userString)
+  const user = localStorage.getItem('user')
+
   const handleClick = () => {
     navigate('/')
   }
@@ -26,7 +26,7 @@ const Navbar = () => {
           <p className="md:text-xl lg:9xl md:pl-1 ">Science and Engineering</p>
         )}
       </div>
-      {!userString && (
+      {!user && (
         <Link to="/login">
           <button
             type="button"
@@ -38,9 +38,9 @@ const Navbar = () => {
         </Link>
       )}
 
-      {userString && (
+      {user && (
         <div className="flex items-end justify-start gap-2 px-2 py-2 font-semibold text-white lg:text-2xl ">
-          <span>{user.email}</span>
+          <span>{user}</span>
           <span
             className="cursor-pointer material-symbols-outlined"
             onClick={handleLogout}

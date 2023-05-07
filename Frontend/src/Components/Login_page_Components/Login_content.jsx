@@ -15,18 +15,15 @@ const Login_content = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await login(user, pwd)
-  }
 
-  useEffect(() => {
-    if (success) {
-      if (user_value.position === 'Student') {
-        navigate('/app_form')
-      } else if (user_value.position === 'Admin') {
-        navigate('/admin')
-      }
+    if (user.toUpperCase() === 'STUDENT') {
+      localStorage.setItem('user', 'student@gmail.com')
+      navigate('/app_form')
+    } else if (user.toUpperCase() === 'ADMIN') {
+      localStorage.setItem('user', 'admin@gmail.com')
+      navigate('/admin')
     }
-  }, [success, navigate])
+  }
 
   return (
     <div className="flex flex-col items-center justify-center h-full ">

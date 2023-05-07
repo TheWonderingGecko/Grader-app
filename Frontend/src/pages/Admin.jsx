@@ -3,12 +3,12 @@ import useAuth from '../hooks/useAuth'
 import useAdmin from '../hooks/useAdmin'
 
 const Admin = () => {
-  const isAuthenticated = useAuth()
+  // const isAuthenticated = useAuth()
 
-  if (!isAuthenticated) {
-    return null
-  }
-  useAdmin()
+  // if (!isAuthenticated) {
+  //   return null
+  // }
+  // useAdmin()
 
   return (
     <div className="fade-in">

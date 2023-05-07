@@ -196,14 +196,14 @@ const Admin_Link_Test = () => {
 
     setEmptyFields([])
 
-    await coursePost(
-      e.target.courseCode.value,
-      e.target.courseName.value,
-      e.target.courseMajor.value,
-      e.target.courseNotes.value,
-      e.target.coursePosition.value,
-      e.target.courseSemester.value
-    )
+    // await coursePost(
+    //   e.target.courseCode.value,
+    //   e.target.courseName.value,
+    //   e.target.courseMajor.value,
+    //   e.target.courseNotes.value,
+    //   e.target.coursePosition.value,
+    //   e.target.courseSemester.value
+    // )
 
     setCreatedCourse(true)
 

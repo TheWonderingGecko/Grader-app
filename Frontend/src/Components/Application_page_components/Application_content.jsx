@@ -4,18 +4,18 @@ import { useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 
 const Application_content = () => {
-  const isAuthenticated = useAuth()
+  // const isAuthenticated = useAuth()
 
-  if (!isAuthenticated) {
-    return null
-  }
-  const userString = localStorage.getItem('user')
-  const user = JSON.parse(userString)
-  const userEmail = user.email
-  const userId = user.student_id
-  const userFirstName = user.firstName
-  const userLastName = user.lastName
-  const usableCourses = user.courses
+  // if (!isAuthenticated) {
+  //   return null
+  // }
+  // const userString = localStorage.getItem('user')
+  // const user = JSON.parse(userString)
+  const userEmail = 'testemail@gmail.com'
+  const userId = '123456789'
+  const userFirstName = 'Test'
+  const userLastName = 'User'
+
   const navigate = useNavigate()
   const [degree, setDegree] = useState('')
   const [gpa, setGpa] = useState('')
@@ -34,8 +34,6 @@ const Application_content = () => {
   const { addAPP, successApp, errorApp } = useApplication()
 
   const fetchCourses = async () => {
-    console.log('change')
-    console.log(usableCourses)
     const response = await fetch(
       'https://weekend-warriors-umkc-grader.onrender.com/api/courses'
     )
@@ -43,15 +41,11 @@ const Application_content = () => {
 
     if (response.ok) {
       if (isGTA === 'true') {
-        const filteredClasses = json.filter((course) =>
-          usableCourses.includes(course.code)
-        )
-        setCourses(filteredClasses)
+        setCourses(json)
         console.log('X')
       } else {
         const filteredClasses = json.filter(
-          (course) =>
-            course.position === 'grader' && usableCourses.includes(course.code)
+          (course) => course.position === 'grader'
         )
 
         setCourses(filteredClasses)
@@ -134,55 +128,7 @@ const Application_content = () => {
       return setError('Please fill out all required fields')
     }
 
-    try {
-      const application = {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        studentID: user.student_id,
-        umkcEmail: user.email,
-        gpa: gpa,
-        major: major,
-        level: level,
-
-        isGTA: isGTA,
-        resumeFile: selectedFile,
-        gtaCertificationFile: gtaCertificationFile,
-      }
-
-      if (selectedFile) {
-        const formData = new FormData()
-        formData.append('resume', selectedFile)
-        formData.append('gtaCertification', gtaCertificationFile)
-
-        const uploadResponse = await fetch(
-          'https://weekend-warriors-umkc-grader.onrender.com/uploads',
-          {
-            method: 'POST',
-            body: formData,
-          }
-        )
-
-        if (uploadResponse.ok) {
-          const uploadedFileData = await uploadResponse.json()
-          // Set the path of the uploaded file in the application object
-          application.resumeFile = uploadedFileData.resume
-          application.gtaCertificationFile = uploadedFileData.gtaCertification
-        } else {
-          setError('Error uploading file.')
-          return
-        }
-      }
-
-      for (let cls of selectedClasses) {
-        const applications = courses.find(
-          (course) => course._id === cls._id
-        ).applications
-        await addAPP(cls._id, applications, application)
-        navigate('/thanks')
-      }
-    } catch (err) {
-      console.log(err)
-    }
+    navigate('/thanks')
   }
 
   return (

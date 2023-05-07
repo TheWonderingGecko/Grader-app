@@ -22,16 +22,14 @@ const Position_card = (props) => {
   }
 
   const handleDelete = async () => {
-    setEdit('')
-    await courseDelete(props.id)
-    if (props.onDelete) {
-      props.onDelete()
-    }
+    setDeleteCourse('')
+
+    props.onDelete()
   }
 
   const handleEdit = async () => {
-    console.log(editNotes)
-    await courseEdit(props.id, editNotes)
+    // console.log(editNotes)
+    // await courseEdit(props.id, editNotes)
   }
 
   return (
