@@ -73,7 +73,6 @@ const Login_content = () => {
                 'p-2 text-lg font-semibold text-black bg-white border-2 rounded-md shadow-md border-umkc_dark_blue focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent ' +
                 (error && error.includes('password') ? 'border-red-500' : '')
               }
-              required
             />
             <button className="p-2 font-bold rounded-lg shadow-md bg-umkc_yellow text-umkc_light_blue">
               Log In
