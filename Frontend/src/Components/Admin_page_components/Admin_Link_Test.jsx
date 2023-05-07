@@ -152,11 +152,10 @@ const Admin_Link_Test = () => {
 
   const handleDelete = () => {
     setShowPopup(true)
-    getClasses().then(() => {
-      setTimeout(() => {
-        setShowPopup(false)
-      }, 5000) // Hide the popup after 5 seconds
-    })
+
+    setTimeout(() => {
+      setShowPopup(false)
+    }, 5000) // Hide the popup after 5 seconds
   }
 
   const handleSubmit = async (e) => {
@@ -207,11 +206,9 @@ const Admin_Link_Test = () => {
 
     setCreatedCourse(true)
 
-    getClasses().then(() => {
-      setTimeout(() => {
-        setCreatedCourse(false)
-      }, 5000) // Hide the popup after 5 seconds
-    })
+    setTimeout(() => {
+      setCreatedCourse(false)
+    }, 5000) // Hide the popup after 5 seconds
 
     setCreateCourse(false)
   }
