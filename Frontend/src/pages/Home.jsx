@@ -4,7 +4,7 @@ import Content from '../Components/Home_page_Components/Content'
 
 const Home = () => {
   return (
-    <div className="h-full">
+    <div className="h-full fade-in">
       <Content />
     </div>
   )

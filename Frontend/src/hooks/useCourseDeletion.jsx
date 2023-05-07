@@ -11,9 +11,12 @@ export const useCourseDeletion = () => {
     // setIsLoading(true)
     setError(null)
 
-    const response = await fetch('http://localhost:5000/api/courses/' + id, {
-      method: 'DELETE',
-    })
+    const response = await fetch(
+      'https://weekend-warriors-umkc-grader.onrender.com/api/courses/' + id,
+      {
+        method: 'DELETE',
+      }
+    )
 
     const data = await response.json()
 

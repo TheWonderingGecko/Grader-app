@@ -45,6 +45,10 @@ const applicationSchema = new Schema({
     type: String,
     required: true,
   },
+  gtaCertificationFile: {
+    type: String,
+    required: false,
+  },
 })
 
 const courseSchema = new Schema({

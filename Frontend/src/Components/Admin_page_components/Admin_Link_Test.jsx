@@ -14,24 +14,31 @@ const Admin_Link_Test = () => {
   const [selectedSemester, setSelectedSemester] = useState('')
   const [selectedPosition, setSelectedPosition] = useState('')
   const [selectedLevel, setSelectedLevel] = useState('')
+  const [showPopup, setShowPopup] = useState(false)
+  const [createdCourse, setCreatedCourse] = useState(false)
   const [level, setLevel] = useState('')
   const [allClasses, setAllClasses] = useState(null)
+  const [emptyFields, setEmptyFields] = useState([])
   const [filteredClasses, setFilteredClasses] = useState(null)
+  const [errorPost, setErrorPost] = useState(null)
 
   const [createCourse, setCreateCourse] = useState(false)
   const { coursePost, success, error } = usePostPosition()
 
-  useEffect(() => {
-    const getClasses = async () => {
-      const classesFromServer = await fetch('http://localhost:5000/api/courses')
-      const data = await classesFromServer.json()
+  const getClasses = async () => {
+    const classesFromServer = await fetch(
+      'https://weekend-warriors-umkc-grader.onrender.com/api/courses'
+    )
+    const data = await classesFromServer.json()
 
-      if (classesFromServer.ok) {
-        setNewClass(data)
-        setAllClasses(data)
-        setFilteredClasses(data)
-      }
+    if (classesFromServer.ok) {
+      setNewClass(data)
+      setAllClasses(data)
+      setFilteredClasses(data)
     }
+  }
+
+  useEffect(() => {
     getClasses()
   }, [])
 
@@ -143,8 +150,52 @@ const Admin_Link_Test = () => {
     }
   }
 
+  const handleDelete = () => {
+    setShowPopup(true)
+    getClasses().then(() => {
+      setTimeout(() => {
+        setShowPopup(false)
+      }, 5000) // Hide the popup after 5 seconds
+    })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    let tempEmptyFields = []
+    console.log(e.target.courseMajor.value)
+
+    if (!e.target.courseCode.value) {
+      tempEmptyFields.push('courseCode')
+    }
+
+    if (!e.target.courseName.value) {
+      tempEmptyFields.push('courseName')
+    }
+
+    if (e.target.courseMajor.value === '--Select an option--') {
+      tempEmptyFields.push('courseMajor')
+    }
+
+    if (!e.target.courseNotes.value) {
+      tempEmptyFields.push('courseNotes')
+    }
+
+    if (e.target.coursePosition.value === '--Select an option--') {
+      tempEmptyFields.push('coursePosition')
+    }
+
+    if (e.target.courseSemester.value === '--Select an option--') {
+      tempEmptyFields.push('courseSemester')
+    }
+
+    if (tempEmptyFields.length > 0) {
+      setEmptyFields(tempEmptyFields)
+
+      return setErrorPost('Please fill out all required fields')
+    }
+
+    setEmptyFields([])
+
     await coursePost(
       e.target.courseCode.value,
       e.target.courseName.value,
@@ -154,12 +205,20 @@ const Admin_Link_Test = () => {
       e.target.courseSemester.value
     )
 
+    setCreatedCourse(true)
+
+    getClasses().then(() => {
+      setTimeout(() => {
+        setCreatedCourse(false)
+      }, 5000) // Hide the popup after 5 seconds
+    })
+
     setCreateCourse(false)
   }
 
   return (
     <div className="relative flex h-screen overflow-hidden font-bold text-center text-black ">
-      <div className="flex flex-col items-center h-full basis-1/4 bg-slate-400 md:justify-start md:pl-4">
+      <div className="relative flex flex-col items-center h-full basis-1/4 bg-slate-400 md:justify-start md:pl-4 ">
         <img src={BigRoo} alt="Umkc" className=" lg:landscape:w-40" />
 
         <form className="flex flex-col gap-4 pl-1 text-center md:text-left md:p-2">
@@ -282,10 +341,22 @@ const Admin_Link_Test = () => {
         >
           Open Position
         </button>
+        {showPopup && (
+          <div className="fixed z-50 p-1 mt-5 bg-red-200 border-2 rounded-md md:static bottom-5 md:p-2 md:ml-0 fade-in left-2 border-error text-error">
+            {' '}
+            Position successfully closed
+          </div>
+        )}
+        {createdCourse && (
+          <div className="fixed z-50 p-1 mt-5 bg-blue-200 border-2 rounded-md md:static bottom-5 md:p-2 md:ml-0 fade-in left-2 border-umkc_light_blue text-umkc_light_blue">
+            {' '}
+            Position successfully opened
+          </div>
+        )}
 
         {createCourse && (
           <div className="fixed top-0 left-0 z-30 flex items-center justify-center w-screen h-screen bg-black/95">
-            <div className="relative z-50 flex flex-col w-5/6 p-4 overflow-hidden border-4 rounded-lg bg-slate-100 border-umkc_light_blue gap-y-4">
+            <div className="z-50 flex flex-col w-5/6 p-4 overflow-hidden border-4 rounded-lg bg-slate-100 border-umkc_light_blue gap-y-4">
               <div className="flex justify-between px-2 ">
                 <button
                   onClick={() => setCreateCourse(false)}
@@ -305,8 +376,12 @@ const Admin_Link_Test = () => {
                     type="text"
                     id="courseCode"
                     name="courseCode"
-                    className="w-full p-2 border-2 rounded-md outline-none border-umkc_light_blue"
-                    required
+                    className={
+                      (emptyFields.includes('courseCode')
+                        ? 'border-error'
+                        : 'border-umkc_light_blue') +
+                      ' w-full p-2 border-2 rounded-md outline-none '
+                    }
                   />
                 </div>
                 <div className="text-lg font-bold text-left">
@@ -315,41 +390,68 @@ const Admin_Link_Test = () => {
                     type="text"
                     id="courseName"
                     name="courseName"
-                    className="w-full p-2 border-2 rounded-md outline-none border-umkc_light_blue"
-                    required
+                    className={
+                      (emptyFields.includes('courseName')
+                        ? 'border-error'
+                        : 'border-umkc_light_blue') +
+                      ' w-full p-2 border-2 rounded-md outline-none '
+                    }
                   />
                 </div>
                 <div className="text-lg font-bold text-left">
                   <label htmlFor="courseMajor">Course Major:</label>
-                  <input
-                    type="text"
+                  <select
                     id="courseMajor"
                     name="courseMajor"
-                    className="w-full p-2 border-2 rounded-md outline-none border-umkc_light_blue"
-                    required
-                  />
+                    className={
+                      (emptyFields.includes('courseMajor')
+                        ? 'border-error'
+                        : 'border-umkc_light_blue') +
+                      ' w-full p-2 border-2 rounded-md outline-none '
+                    }
+                  >
+                    <option>--Select an option--</option>
+                    <option value={'cs'}>CS </option>
+                    <option value={'it'}>IT</option>
+                    <option value={'ece'}>ECE</option>
+                  </select>
                 </div>
 
                 <div className="text-lg font-bold text-left">
                   <label htmlFor="coursePosition">Course Position:</label>
-                  <input
-                    type="textarea"
+                  <select
                     id="coursePosition"
                     name="coursePosition"
-                    className="w-full p-2 border-2 rounded-md outline-none border-umkc_light_blue"
-                    required
-                  />
+                    className={
+                      (emptyFields.includes('coursePosition')
+                        ? 'border-error'
+                        : 'border-umkc_light_blue') +
+                      ' w-full p-2 border-2 rounded-md outline-none '
+                    }
+                  >
+                    <option>--Select an option--</option>
+                    <option value={'grader'}>Grader </option>
+                    <option value={'instructor'}>Instructor</option>
+                  </select>
                 </div>
 
                 <div className="text-lg font-bold text-left">
                   <label htmlFor="courseSemester">Course Semester:</label>
-                  <input
-                    type="text"
+                  <select
                     id="courseSemester"
                     name="courseSemester"
-                    className="w-full p-2 border-2 rounded-md outline-none border-umkc_light_blue"
-                    required
-                  />
+                    className={
+                      (emptyFields.includes('courseSemester')
+                        ? 'border-error'
+                        : 'border-umkc_light_blue') +
+                      ' w-full p-2 border-2 rounded-md outline-none '
+                    }
+                  >
+                    <option>--Select an option--</option>
+                    <option value={'fall'}>Fall</option>
+                    <option value={'spring'}>Spring</option>
+                    <option value={'summer'}>Summer</option>
+                  </select>
                 </div>
 
                 <div className="text-lg font-bold text-left">
@@ -358,9 +460,19 @@ const Admin_Link_Test = () => {
                     type="text"
                     id="courseNotes"
                     name="courseNotes"
-                    className="w-full h-40 p-2 border-2 rounded-md outline-none border-umkc_light_blue"
+                    className={
+                      (emptyFields.includes('courseNotes')
+                        ? 'border-error'
+                        : 'border-umkc_light_blue') +
+                      ' w-full p-2 border-2 rounded-md outline-none '
+                    }
                   />
                 </div>
+                {errorPost && (
+                  <div className="p-2 bg-red-100 border fade-in text-error border-error md:col-span-2 lg:col-span-3">
+                    {errorPost}
+                  </div>
+                )}
                 <button
                   type="submit"
                   className="px-4 py-2 font-bold rounded-md bg-umkc_yellow text-umkc_dark_blue"
@@ -376,7 +488,7 @@ const Admin_Link_Test = () => {
         <div className="flex items-center justify-center p-4 text-3xl border-b-2 shadow-lg border-umkc_light_blue bg-umkc_light_blue text-umkc_yellow">
           Open Courses
         </div>
-        <div className="grid grid-cols-1 gap-3 pt-4 overflow-auto h-3/4 md:h-5/6 justify-items-center md:grid-cols-2 lg:grid-cols-3 lg:h-3/4 ">
+        <div className="grid grid-cols-1 gap-3 pt-4 overflow-auto h-3/4 md:h-5/6 justify-items-center md:grid-cols-2 lg:grid-cols-3 lg:h-3/4 lg:landscape:h-2/3 ">
           {filteredClasses &&
             filteredClasses.map(
               ({
@@ -398,6 +510,7 @@ const Admin_Link_Test = () => {
                   applications={applications}
                   id={_id}
                   key={_id}
+                  onDelete={handleDelete}
                 />
               )
             )}

@@ -3,7 +3,7 @@ import Test from '../Components/Login_page_Components/Test'
 
 const Login = () => {
   return (
-    <div className="">
+    <div className="h-full fade-in">
       <Login_content />
     </div>
   )
