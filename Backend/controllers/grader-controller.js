@@ -3,6 +3,7 @@ const Grader = require('../model/Grader')
 const User = require('../model/User')
 
 const getAllGraders = async (req, res, next) => {
+  // get all graders
   let graders
   try {
     graders = await Grader.find()
@@ -16,6 +17,7 @@ const getAllGraders = async (req, res, next) => {
 }
 
 const addGrade = async (req, res, next) => {
+  // add a grade
   const { title, description, image, user } = req.body
 
   let existingUser

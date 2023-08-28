@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const applicationSchema = new Schema({
+  // define the schema for an application
   firstName: {
     type: String,
     required: true,
@@ -52,6 +53,7 @@ const applicationSchema = new Schema({
 })
 
 const courseSchema = new Schema({
+  // define the schema for a course
   code: {
     type: String,
     required: true,
@@ -85,7 +87,7 @@ const courseSchema = new Schema({
     required: false,
   },
 
-  applications: [applicationSchema],
+  applications: [applicationSchema], // an array of applications
 })
 
-module.exports = mongoose.model('Course', courseSchema)
+module.exports = mongoose.model('Course', courseSchema) // export the model

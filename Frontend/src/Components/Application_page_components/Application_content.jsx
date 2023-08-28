@@ -150,11 +150,12 @@ const Application_content = () => {
       }
 
       if (selectedFile) {
-        const formData = new FormData()
-        formData.append('resume', selectedFile)
-        formData.append('gtaCertification', gtaCertificationFile)
+        const formData = new FormData() // Create a new FormData object
+        formData.append('resume', selectedFile) // Append the file to the FormData object
+        formData.append('gtaCertification', gtaCertificationFile) // Append the file to the FormData object
 
         const uploadResponse = await fetch(
+          // Send the file to the server
           'https://weekend-warriors-umkc-grader.onrender.com/uploads',
           {
             method: 'POST',
@@ -177,7 +178,7 @@ const Application_content = () => {
         const applications = courses.find(
           (course) => course._id === cls._id
         ).applications
-        await addAPP(cls._id, applications, application)
+        await addAPP(cls._id, applications, application) // Add the application to the database utilizing the addAPP function from the useApplication hook
         navigate('/thanks')
       }
     } catch (err) {

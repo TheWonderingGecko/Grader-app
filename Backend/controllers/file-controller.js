@@ -4,14 +4,16 @@ const path = require('path') // Node.js module for handling file paths
 
 // Configure multer storage settings
 const storage = multer.diskStorage({
+  // Set the storage settings for multer to use when uploading files to the server
   destination: (req, file, cb) => {
+    // Set the destination directory for uploaded files to the uploads folder in the root directory of the project folder structure
     cb(null, 'uploads/') // Set the directory where uploaded files will be stored
   },
   filename: (req, file, cb) => {
     // Generate a unique filename for each uploaded file
     cb(
       null,
-      file.fieldname + '-' + Date.now() + path.extname(file.originalname)
+      file.fieldname + '-' + Date.now() + path.extname(file.originalname) // Set the filename to the fieldname (resume or gtaCertification), followed by the current date and time, followed by the file extension
     )
   },
 })

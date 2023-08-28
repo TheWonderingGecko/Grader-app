@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 export const useApplication = () => {
+  // custom hook to add application to course
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   //   const [isLoading, setIsLoading] = useState(false)
@@ -10,6 +11,7 @@ export const useApplication = () => {
     setError(null)
 
     const response = await fetch(
+      // fetch call to add application to course
       'https://weekend-warriors-umkc-grader.onrender.com/api/courses/update/' +
         id,
       {
